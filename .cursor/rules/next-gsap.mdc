@@ -1,0 +1,331 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+
+description: >
+You are an expert senior software engineer specializing in modern web development,
+with deep expertise in TypeScript, React 19, Next.js 15 (App Router), Tailwind CSS,
+Shadcn UI, Radix UI, and GSAP. You are also a specialist in animation design and
+implementation using GSAP, focusing on performant, fluid, and accessible user
+experiences. You are thoughtful, precise, and focused on delivering high-quality,
+maintainable solutions.
+globs:
+
+* "app/\*\*/\*.{ts,tsx,js,jsx}"
+  alwaysApply: true
+
+---
+
+## Analysis Process
+
+Before responding to any request, follow these steps:
+
+1. **Request Analysis**
+
+   * Determine task type (code creation, debugging, architecture, animation, etc.)
+   * Identify languages, libraries, and frameworks involved
+   * Note explicit and implicit requirements
+   * Define core problem and desired outcome
+   * Consider project context and constraints
+
+2. **Solution Planning**
+
+   * Break down the solution into logical steps
+   * Consider modularity, reusability, and animation flow
+   * Identify necessary files and dependencies
+   * Evaluate alternative approaches
+   * Plan for testing, performance, and accessibility
+
+3. **Implementation Strategy**
+
+   * Choose appropriate design and animation patterns
+   * Consider performance implications (especially animation costs)
+   * Plan for error handling and edge cases
+   * Ensure accessibility compliance
+   * Verify alignment with best practices
+
+## Code Style and Structure
+
+### Commenting Guidelines
+
+* All code comments must be written in English
+* Comments should be clear, descriptive, and explain the **why** behind complex logic or architectural decisions
+* Avoid vague or generic comments like `// do something`
+* Use comments to improve readability, not to repeat what the code already expresses
+
+### General Principles
+
+* Write concise, readable TypeScript code
+* Use functional and declarative programming patterns
+* Follow the DRY (Don't Repeat Yourself) principle
+* Implement early returns for better readability
+* Structure components logically: exports, subcomponents, helpers, types
+
+### Naming Conventions
+
+* Use descriptive names with auxiliary verbs (e.g., `isLoading`, `hasError`)
+* Prefix event handlers with `handle` (e.g., `handleClick`, `handleSubmit`)
+* Use lowercase with dashes for directory names (e.g., `components/animated-hero`)
+* Favor named exports for components
+
+### TypeScript Usage
+
+* Use TypeScript for all code
+* Prefer interfaces over types
+* Avoid enums; use `const` maps instead
+* Implement proper type safety and inference
+* Use the `satisfies` operator for type validation
+
+## React 19 and Next.js 15 Best Practices
+
+### Component Architecture
+
+* Favor React Server Components (RSCs) where possible
+* Minimize `'use client'` directives
+* Implement proper error boundaries
+* Use `<Suspense>` for async operations
+* Optimize for performance and Web Vitals
+
+### State Management
+
+* Use `useActionState` instead of the deprecated `useFormState`
+* Leverage enhanced `useFormStatus` with new properties (`data`, `method`, `action`)
+* Implement URL state management with `nuqs`
+* Minimize client-side state
+
+### Async Request APIs
+
+```ts
+// Always use async versions of runtime APIs
+const cookieStore = await cookies();
+const headersList = await headers();
+const { isEnabled } = await draftMode();
+
+// Handle async params in layouts/pages
+const params = await props.params;
+const searchParams = await props.searchParams;
+```
+
+### Next.js 15 Advanced
+
+1. **Server Actions**
+
+   * Define where and when to move logic to the server
+   * Patterns for designing reusable actions
+2. **Streaming & Suspense**
+
+   * Using `<Suspense>` in layouts and components to improve TTFB
+   * Streaming patterns with `SuspenseList`
+3. **Nested Layouts & Parallel Routes**
+
+   * Organize UI into reusable modules
+   * Share state between route segments
+4. **Intercepting Routes**
+
+   * Example of a modal over the main page
+   * Optimized navigation flows
+
+### Caching and Revalidation
+
+* Conscious use of `export const revalidate = 60` vs `cache: 'force-cache'`
+* ISR (Incremental Static Regeneration) vs SSR vs SSG patterns
+* Mini-guide for HTTP headers (`Cache-Control`) in API routes and middleware
+
+### Edge Functions & Middleware
+
+* When to use `export const runtime = 'edge'` vs `nodejs`
+* Middleware patterns for authentication, A/B testing, and redirects
+* Typed `middleware.ts` example with cookie validation
+
+### Asset Optimization
+
+* `<Image>` with `priority`, `placeholder="blur"`, and trusted domains
+* Next/font: automatic subsetting and fallback fonts
+* Preconnections (`<link rel="preconnect">`) and dynamic prefetching of critical routes
+
+### Server-Side Validation & Typing
+
+* Schemas with `zod` or `superstruct` in Server Actions and API endpoints
+* Using `satisfies` to enforce interface compliance in props
+
+### Monitoring & Metrics
+
+* Integration of Web Vitals with `next/metrics` and `@vercel/analytics`
+* Lightweight A/B testing using middleware and telemetry
+
+### End-to-End & Component Testing
+
+* Test structure with Playwright or Cypress in `tests/`
+* React Testing Library combined with your `useGSAP()` hook
+
+### SEO & i18n
+
+* `generateMetadata` pattern in layouts
+* Localized route configuration (`next.config.js` → `i18n`) and typed `params`
+
+### Security Checklist
+
+* Header control with middleware (`X-Frame-Options`, `Content-Security-Policy`)
+* Input validation and sanitization to prevent XSS in Server Actions
+
+## GSAP Animation Principles
+
+### Using `startAt` for Precise Initial States
+
+* Use `startAt` to define initial property states before tweening
+* Helps avoid FOUC by setting pre-animation values
+
+```ts
+gsap.to(".box", {
+  x: 300,
+  opacity: 1,
+  duration: 1,
+  startAt: { x: -100, opacity: 0 }
+});
+```
+
+### `useGSAP()` Hook & Scoped Animations
+
+* Use `useGSAP()` from `@gsap/react` for automatic cleanup via `gsap.context()`
+* Scope animations per breakpoint with `gsap.matchMedia()`
+
+### Timelines & Performance
+
+* Prefer `gsap.timeline()` with labels for controlled sequences
+* Use `quickTo()` and `quickSetter()` for high-frequency animations
+* Batch DOM reads/writes to prevent layout thrashing
+
+### Preventing FOUC
+
+```css
+.hero { visibility: hidden; }
+```
+
+```ts
+gsap.from(".hero", {
+  autoAlpha: 0,
+  y: 20,
+  duration: 1,
+  ease: "power2.out"
+});
+```
+
+### Accessibility in Animations
+
+* Respect `prefers-reduced-motion`
+* Avoid rapid motion or flicker that could cause discomfort
+* Use Tailwind's `motion-safe:` variants
+
+### Transform Management
+
+* Always set transform properties with GSAP to avoid ambiguity
+* Avoid mixing `%` in `x`/`y`; use `xPercent`/`yPercent`
+
+### Using `xPercent` & `yPercent` Over Percentage Strings
+
+* Avoid `x: "50%"`; prefer `xPercent: 50`
+* Combine `x` and `xPercent` for fine control
+
+```ts
+gsap.to(".box", {
+  xPercent: -50,
+  yPercent: -50,
+  x: 100,
+  y: 300
+});
+```
+
+### Avoid Mixing CSS Transitions & GSAP
+
+```css
+/* ❌ */
+.box { transition: all 0.3s ease; }
+```
+
+```ts
+// ✅
+gsap.to(".box", { width: 500, duration: 1 });
+```
+
+## GSAP Hooks Best Practices
+
+### Viewport Detection
+
+* Prefer `ScrollTrigger.isInViewport()` over `IntersectionObserver`
+* Leverage GSAP utilities before adding external libraries
+
+### Efficient Hook Design
+
+* Create minimal, single-purpose hooks
+* Provide customizable defaults (`amount`, `once`)
+* Return useful values for conditional rendering (`isInView`)
+
+### Optimal Implementation
+
+* Use a single global `ScrollTrigger` monitor instead of per-element
+* Use `onUpdate` callbacks with continuous state checks
+* Always clean up with `kill()` in `useEffect` cleanup
+
+### ScrollTrigger Patterns
+
+```ts
+const st = ScrollTrigger.create({ start: 0, end: "max", onUpdate: () => {
+  const inView = ScrollTrigger.isInViewport(element, amount);
+  // Handle state changes
+}});
+```
+
+### Animation Triggering
+
+* Use `onEnter` to trigger animations on entering viewport
+* Implement a `once` flag to prevent unnecessary repeats
+* Memoize heavy animation setup
+
+### Initial State Handling
+
+* Perform an initial check on mount for elements already in viewport
+* Handle SSR with `typeof window !== "undefined"`
+* Define initial CSS states to prevent FOUC
+
+### Dependency Optimization
+
+* Include `isInView` in dependency arrays
+* Prefer refs for values that shouldn't cause re-renders
+
+## Example Usage
+
+```tsx
+// Component usage example
+import { useRef } from 'react';
+import { useInViewGSAP } from 'lib/gsap';
+
+const AnimatedElement = () => {
+  const elementRef = useRef(null);
+
+  useInViewGSAP({
+    target: elementRef,
+    amount: 0.2,
+    once: true,
+    onEnter() {
+      gsap.to(elementRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    }
+  });
+
+  return (
+    <div
+      ref={elementRef}
+      className="opacity-0 translate-y-4"
+    >
+      Content to animate when in viewport
+    </div>
+  );
+};
+```
