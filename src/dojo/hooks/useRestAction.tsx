@@ -21,7 +21,7 @@ interface UseRestActionReturn {
 export const useRestAction = (): UseRestActionReturn => {
   const { account, status } = useAccount();
   const { client } = useDojoSDK();
-  const { player, updatePlayerHealth } = useAppStore();
+  const { player } = useAppStore();
 
   const [restState, setRestState] = useState<RestActionState>({
     isLoading: false,
@@ -32,16 +32,13 @@ export const useRestAction = (): UseRestActionReturn => {
 
   const isConnected = status === "connected";
   const hasPlayer = player !== null;
-  const needsHealth = (player?.health || 0) < 100;
-  const canRest = isConnected && hasPlayer && needsHealth && !restState.isLoading;
+  const canRest = isConnected && hasPlayer && !restState.isLoading;
 
   const executeRest = useCallback(async () => {
     if (!canRest || !account) {
       const errorMsg = !account
         ? "Please connect your controller"
-        : !needsHealth
-          ? "Health is already full"
-          : "Cannot rest right now";
+        : "Cannot rest right now";
 
       setRestState(prev => ({ ...prev, error: errorMsg }));
       return;
@@ -68,7 +65,7 @@ export const useRestAction = (): UseRestActionReturn => {
         console.log("✅ Rest transaction successful!");
 
         // Optimistic update: +20 health (max 100)
-        updatePlayerHealth(Math.min(100, (player?.health || 100) + 20));
+        // updatePlayerHealth(Math.min(100, (player?.health || 100) + 20));
 
         setRestState(prev => ({
           ...prev,
@@ -110,7 +107,7 @@ export const useRestAction = (): UseRestActionReturn => {
         });
       }, 5000);
     }
-  }, [canRest, account, client.game, player, updatePlayerHealth, needsHealth]);
+  }, [canRest, account, client.game, player]);
 
   const resetRestState = useCallback(() => {
     setRestState({

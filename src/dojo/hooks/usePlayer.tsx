@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useAccount } from "@starknet-react/core";
 import { addAddressPadding } from "starknet";
 import { dojoConfig } from "../dojoConfig";
-import { Player } from '../../zustand/store';
+import { Player } from "../../lib/schema";
 import useAppStore from '../../zustand/store';
 
 interface UsePlayerReturn {
@@ -20,10 +20,13 @@ const PLAYER_QUERY = `
             edges {
                 node {
                     owner
-                    experience
-                    health
-                    coins
-                    creation_day
+                    fame
+                    charisma
+                    stamina
+                    intelligence
+                    leadership
+                    universe_currency
+                    last_login_at
                 }
             }
             totalCount
@@ -74,11 +77,18 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
 
     // Convert hex values to numbers - using your structure
     const playerData: Player = {
-      owner: rawPlayerData.owner,
-      experience: hexToNumber(rawPlayerData.experience),
-      health: hexToNumber(rawPlayerData.health),
-      coins: hexToNumber(rawPlayerData.coins),
-      creation_day: hexToNumber(rawPlayerData.creation_day)
+      id: rawPlayerData.owner,
+      user_id: rawPlayerData.owner,
+      name: rawPlayerData.owner,
+      created_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
+      last_updated_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
+      fame: hexToNumber(rawPlayerData.fame),
+      charisma: hexToNumber(rawPlayerData.charisma),
+      stamina: hexToNumber(rawPlayerData.stamina),
+      intelligence: hexToNumber(rawPlayerData.intelligence),
+      leadership: hexToNumber(rawPlayerData.leadership),
+      universe_currency: hexToNumber(rawPlayerData.universe_currency),
+      last_login_at: new Date(hexToNumber(rawPlayerData.last_login_at))
     };
 
     console.log("✅ Player data after conversion:", playerData);

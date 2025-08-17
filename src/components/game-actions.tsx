@@ -1,9 +1,7 @@
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Dumbbell, Hammer, Bed, Loader2, ExternalLink } from "lucide-react";
+import { Dumbbell, Loader2, ExternalLink } from "lucide-react";
 import { useTrainAction } from "../dojo/hooks/useTrainAction";
-import { useMineAction } from "../dojo/hooks/useMineAction";
-import { useRestAction } from "../dojo/hooks/useRestAction";
 import useAppStore from "../zustand/store";
 
 export function GameActions() {
@@ -11,45 +9,20 @@ export function GameActions() {
 
   // Separate hooks for each action
   const { trainState, executeTrain, canTrain } = useTrainAction();
-  const { mineState, executeMine, canMine } = useMineAction();
-  const { restState, executeRest, canRest } = useRestAction();
 
   const actions = [
     {
       icon: Dumbbell,
       label: "Train",
-      description: "+10 EXP",
+      description: "+10 shoot",
       onClick: executeTrain,
       color: "from-blue-500 to-blue-600",
       state: trainState,
       canExecute: canTrain,
+      name: "shoot",
+      value: 10,
     },
-    {
-      icon: Hammer,
-      label: "Mine",
-      description: "+5 Coins, -5 Health",
-      onClick: executeMine,
-      color: "from-yellow-500 to-yellow-600",
-      state: mineState,
-      canExecute: canMine,
-      disabledReason:
-        !canMine && player && (player.health || 0) <= 5
-          ? "Low Health!"
-          : undefined,
-    },
-    {
-      icon: Bed,
-      label: "Rest",
-      description: "+20 Health",
-      onClick: executeRest,
-      color: "from-green-500 to-green-600",
-      state: restState,
-      canExecute: canRest,
-      disabledReason:
-        !canRest && player && (player.health || 0) >= 100
-          ? "Full Health!"
-          : undefined,
-    },
+
   ];
 
   const formatAddress = (addr: string) => {
@@ -81,7 +54,7 @@ export function GameActions() {
           return (
             <div key={action.label} className="space-y-2">
               <Button
-                onClick={action.onClick}
+                onClick={() => action.onClick(action.name, action.value)}
                 disabled={!action.canExecute || isLoading}
                 className={`w-full h-14 bg-gradient-to-r ${action.color} hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed`}
               >
@@ -96,11 +69,11 @@ export function GameActions() {
                     {action.description}
                   </span>
                 </div>
-                {action.disabledReason && (
+                {/* {action.disabledReason && (
                   <span className="text-xs opacity-60">
                     {action.disabledReason}
                   </span>
-                )}
+                )} */}
               </Button>
 
               {/* Individual transaction state */}
