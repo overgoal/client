@@ -48,12 +48,12 @@
     --ring: 212.7 26.8% 83.9%;
   }
 }
-
+/* Mobile only and tablet */
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border max-w-4xl mx-auto;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground ;
   }
 }
