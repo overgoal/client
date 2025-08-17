@@ -1,8 +1,47 @@
 import { z } from "zod";
 
+// schema validation models
+
 // Shared primitives
 const uuid = z.string().uuid();
 const datetime = z.date();
+
+//Enums
+
+// Match status
+export enum MatchStatus {
+    Started = "started",
+    InProgress = "in_progress",
+    HalfTime = "half_time",
+    Finished = "finished",
+  }
+  
+  // Event types
+  export enum EventType {
+    Training = "training",
+    Personal = "personal",
+    Social = "social",
+    Injury = "injury",
+    Other = "other",
+  }
+  
+  // Action types
+  export enum ActionType {
+    OpenPlay = "open_play",
+    SetPiece = "set_piece",
+    CornerKick = "corner_kick",
+    FreeKick = "free_kick",
+    PenaltyKick = "penalty_kick",
+    Other = "other",
+  }
+  
+  // Match results
+  export enum MatchActionResult {
+    Positive = "positive",
+    Negative = "negative",
+  }
+  
+
 
 // ===== User & Player =====
 export const User = z.object({
@@ -122,7 +161,7 @@ export const Match = z.object({
   home_score: z.number().int(),
   away_score: z.number().int(),
   current_time: z.number().int(),
-  match_status: z.string(),
+  match_status: z.nativeEnum(MatchStatus),
 });
 export type Match = z.infer<typeof Match>;
 
@@ -153,8 +192,8 @@ export const MatchAction = z.object({
   match_id: uuid,
   season_club_id: uuid,
   player_id: uuid,
-  type: z.string(),
-  result: z.string(),
+  type: z.nativeEnum(ActionType),
+  result: z.nativeEnum(MatchActionResult),
   field_state_id: uuid,
   decision_id: uuid,
 });
@@ -183,7 +222,7 @@ export const NonMatchEventOutcome = z.object({
 export type NonMatchEventOutcome = z.infer<typeof NonMatchEventOutcome>;
 
 // ===== Aggregator =====
-export const s = {
+export const schema = {
   User,
   Player,
   OvergoalPlayer,

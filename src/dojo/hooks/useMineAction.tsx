@@ -21,7 +21,7 @@ interface UseMineActionReturn {
 export const useMineAction = (): UseMineActionReturn => {
   const { account, status } = useAccount();
   const { client } = useDojoSDK();
-  const { player, updatePlayerCoins, updatePlayerHealth } = useAppStore();
+  const { player } = useAppStore();
 
   const [mineState, setMineState] = useState<MineActionState>({
     isLoading: false,
@@ -32,16 +32,13 @@ export const useMineAction = (): UseMineActionReturn => {
 
   const isConnected = status === "connected";
   const hasPlayer = player !== null;
-  const hasEnoughHealth = (player?.health || 0) > 5;
-  const canMine = isConnected && hasPlayer && hasEnoughHealth && !mineState.isLoading;
+  const canMine = isConnected && hasPlayer && !mineState.isLoading;
 
   const executeMine = useCallback(async () => {
     if (!canMine || !account) {
       const errorMsg = !account
         ? "Please connect your controller"
-        : !hasEnoughHealth
-          ? "Not enough health to mine (need >5 HP)"
-          : "Cannot mine right now";
+        : "Cannot mine right now";
 
       setMineState(prev => ({ ...prev, error: errorMsg }));
       return;
@@ -68,8 +65,7 @@ export const useMineAction = (): UseMineActionReturn => {
         console.log("✅ Mine transaction successful!");
 
         // Optimistic update: +5 coins, -5 health
-        updatePlayerCoins((player?.coins || 0) + 5);
-        updatePlayerHealth(Math.max(0, (player?.health || 100) - 5));
+        // updatePlayerFame((player?.fame || 0) + 5);
 
         setMineState(prev => ({
           ...prev,
@@ -111,7 +107,7 @@ export const useMineAction = (): UseMineActionReturn => {
         });
       }, 5000);
     }
-  }, [canMine, account, client.game, player, updatePlayerCoins, updatePlayerHealth, hasEnoughHealth]);
+  }, [canMine, account, client.game, player]);
 
   const resetMineState = useCallback(() => {
     setMineState({
