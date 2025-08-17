@@ -13,7 +13,7 @@ interface TrainActionState {
 
 interface UseTrainActionReturn {
   trainState: TrainActionState;
-  executeTrain: () => Promise<void>;
+  executeTrain: (name: string, value: number) => Promise<void>;
   canTrain: boolean;
   resetTrainState: () => void;
 }
@@ -21,7 +21,7 @@ interface UseTrainActionReturn {
 export const useTrainAction = (): UseTrainActionReturn => {
   const { account, status } = useAccount();
   const { client } = useDojoSDK();
-  const { player, updatePlayerExperience } = useAppStore();
+  const { player } = useAppStore();
 
   const [trainState, setTrainState] = useState<TrainActionState>({
     isLoading: false,
@@ -34,7 +34,7 @@ export const useTrainAction = (): UseTrainActionReturn => {
   const hasPlayer = player !== null;
   const canTrain = isConnected && hasPlayer && !trainState.isLoading;
 
-  const executeTrain = useCallback(async () => {
+  const executeTrain = useCallback(async (name: string, value: number) => {
     if (!canTrain || !account) {
       setTrainState(prev => ({
         ...prev,
@@ -53,7 +53,7 @@ export const useTrainAction = (): UseTrainActionReturn => {
 
       console.log("📤 Executing train transaction...");
 
-      const tx = await client.game.train(account as Account);
+      const tx = await client.game.train(account as Account, name, value); // Here we update the player stats
       console.log("📥 Train transaction response:", tx);
 
       if (tx?.transaction_hash) {
@@ -64,7 +64,6 @@ export const useTrainAction = (): UseTrainActionReturn => {
         console.log("✅ Train transaction successful!");
 
         // Optimistic update: +10 experience
-        updatePlayerExperience((player?.experience || 0) + 10);
 
         setTrainState(prev => ({
           ...prev,
@@ -106,7 +105,7 @@ export const useTrainAction = (): UseTrainActionReturn => {
         });
       }, 5000);
     }
-  }, [canTrain, account, client.game, player, updatePlayerExperience]);
+  }, [canTrain, account, client.game, player]);
 
   const resetTrainState = useCallback(() => {
     setTrainState({
