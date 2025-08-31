@@ -1,5 +1,3 @@
-import { Header } from "../../../components/header";
-import { StatusBar } from "../../../components/status-bar";
 import { Card } from "../../../components/ui/card";
 import { Button } from "../../../components/ui/button";
 import { Link, useParams } from "react-router";
@@ -38,9 +36,6 @@ export default function SeasonScreen() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <Header />
-        <StatusBar />
-
         <div className="mt-8">
           <div className="mb-6">
             <Link to="/seasons">
