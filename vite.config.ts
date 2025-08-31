@@ -33,6 +33,13 @@ export default defineConfig(({ command }) => {
 
   return {
     plugins: [react(), wasm(), topLevelAwait()],
+    resolve: {
+      dedupe: ['three'],
+      alias: {
+        three: path.resolve("node_modules/three"),
+      },
+      
+    },
     server: {
       port: 3002,
       ...getHttpsConfig(),
@@ -45,7 +52,7 @@ export default defineConfig(({ command }) => {
       global: 'globalThis',
     },
     optimizeDeps: {
-      include: ['buffer'],
+      include: ['buffer', 'three'],
     },
   };
 });
