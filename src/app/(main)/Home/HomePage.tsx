@@ -1,7 +1,7 @@
-import { Header } from "../header"
-import { StatusBar } from "../status-bar"
-import { GameSection } from "../game-section"
-import { LinksSection } from "../links-section"
+import { Header } from "../../../components/header";
+import { StatusBar } from "../../../components/status-bar";
+import { GameSection } from "../../../components/game-section";
+import { LinksSection } from "../../../components/links-section";
 
 export default function HomePage() {
   return (
@@ -13,5 +13,6 @@ export default function HomePage() {
         <LinksSection />
       </div>
     </div>
-  )
+  );
 }
+

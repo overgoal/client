@@ -1,0 +1,15 @@
+export const main = "/";
+export const login = "/login";
+export const home = "/home";
+export const market = "/market";
+export const career = "/career";
+export const seasons = "/seasons";
+export const season = "/season/:seasonId";
+export const seasonClub = "/season-club/:seasonId/:clubId";
+export const tournamentAll = "/tournaments";
+export const tournamentCurrent = "/tournament/:tournamentId";
+export const profile = "/profile/:playerId";
+export const preMatch = "/pre-match/:matchId";
+export const match = "/match/:matchId";
+export const matchResult = "/match-result/:matchId";
+export const playerStats = "/player-stats/:playerId";
