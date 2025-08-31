@@ -1,16 +1,16 @@
-import { Header } from "../../../components/header";
-import { GameSection } from "../../../components/game-section";
-import { LinksSection } from "../../../components/links-section";
+// import { GameSection } from "../../../components/game-section";
+import Scene from "../../../components/webgl/Scene";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <Header />
-        <GameSection />
-        <LinksSection />
+    <div className="w-screen h-screen">
+      <div className="absolute  w-screen top-0  py-2  flex items-center justify-center z-100 text-white ">
+        <h1 className="text-4xl font-bold">Info</h1>
+      </div>
+      <Scene />
+      <div className="absolute bottom-0  left-0 w-screen py-4 flex items-center justify-center z-100 text-white">
+        <h1 className="text-4xl font-bold">Play Now</h1>
       </div>
     </div>
   );
 }
-
