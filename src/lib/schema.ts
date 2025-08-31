@@ -77,7 +77,7 @@ export const OvergoalPlayer = z.object({
   vision: z.number().int(),
   freekick: z.number().int(),
   strength: z.number().int(),
-  profile_image: z.string().url(),
+  profile_image: z.string().url().nullable(),
   is_retired: z.boolean(),
 });
 export type OvergoalPlayer = z.infer<typeof OvergoalPlayer>;

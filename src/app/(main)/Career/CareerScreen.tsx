@@ -1,5 +1,5 @@
   import { Header } from "../../../components/header";
-import { StatusBar } from "../../../components/status-bar";
+import { StatusBar } from "../../(login)/Login/components/login-player";
 import { Card } from "../../../components/ui/card";
 import { Progress } from "../../../components/ui/progress";
 

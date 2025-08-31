@@ -2,7 +2,7 @@ import { Routes, Route, BrowserRouter } from "react-router";
 
 // Import existing page components
 import HomePage from "./(main)/Home/HomePage";
-import LoginScreen from "./(main)/Login/LoginScreen";
+import LoginScreen from "./(login)/Login/LoginScreen";
 import MatchResultScreen from "./(main)/Match-Result/MatchResultScreen";
 import MatchScreen from "./(main)/Match/MatchScreen";
 import PreMatchScreen from "./(main)/Pre-Match/PreMatchScreen";
@@ -16,7 +16,6 @@ import SeasonClubScreen from "./(main)/Season-Club/SeasonClubScreen";
 import TournamentsScreen from "./(main)/Tournaments/TournamentsScreen";
 import TournamentScreen from "./(main)/Tournament/TournamentScreen";
 import ProfileScreen from "./(main)/Profile/ProfileScreen";
-import PlayerStatsScreen from "./(main)/Player-Stats/PlayerStatsScreen";
 
 // Import all routes
 import {
@@ -33,21 +32,23 @@ import {
   preMatch,
   match,
   matchResult,
-  playerStats,
+  characterCreation,
 } from "../routes";
+import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Existing routes */}
+        {/* Unauthenticated routes */}
         <Route path={login} element={<LoginScreen />} />
+
+        {/* Authenticated routes */}
+        <Route path={characterCreation} element={<CharacterCreationScreen />} />
         <Route path={main} element={<HomePage />} />
         <Route path={preMatch} element={<PreMatchScreen />} />
         <Route path={match} element={<MatchScreen />} />
         <Route path={matchResult} element={<MatchResultScreen />} />
-
-        {/* New routes */}
         <Route path={market} element={<MarketScreen />} />
         <Route path={career} element={<CareerScreen />} />
         <Route path={seasons} element={<SeasonsScreen />} />
@@ -56,7 +57,6 @@ function App() {
         <Route path={tournamentAll} element={<TournamentsScreen />} />
         <Route path={tournamentCurrent} element={<TournamentScreen />} />
         <Route path={profile} element={<ProfileScreen />} />
-        <Route path={playerStats} element={<PlayerStatsScreen />} />
       </Routes>
     </BrowserRouter>
   );

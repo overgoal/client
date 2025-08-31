@@ -7,6 +7,7 @@ import useAppStore from '../../zustand/store';
 
 interface UsePlayerReturn {
   player: Player | null;
+  isFetched: boolean;
   isLoading: boolean;
   error: Error | null;
   refetch: () => Promise<void>;
@@ -53,6 +54,7 @@ const hexToNumber = (hexValue: string | number): number => {
 const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
   try {
     console.log("🔍 Fetching player with owner:", playerOwner);
+    
 
     const response = await fetch(TORII_URL, {
       method: "POST",
@@ -76,6 +78,7 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
     console.log("📄 Raw player data:", rawPlayerData);
 
     // Convert hex values to numbers - using your structure
+
     const playerData: Player = {
       id: rawPlayerData.owner,
       user_id: rawPlayerData.owner,
@@ -103,6 +106,7 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
 // Main hook
 export const usePlayer = (): UsePlayerReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFetched, setIsFetched] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const { account } = useAccount();
 
@@ -128,6 +132,10 @@ export const usePlayer = (): UsePlayerReturn => {
       console.log("🎮 Player data fetched:", playerData);
 
       setPlayer(playerData);
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      setIsFetched(true);
 
       const updatedPlayer = useAppStore.getState().player;
       console.log("💾 Player in store after update:", updatedPlayer);
@@ -160,6 +168,7 @@ export const usePlayer = (): UsePlayerReturn => {
 
   return {
     player: storePlayer,
+    isFetched,
     isLoading,
     error,
     refetch
