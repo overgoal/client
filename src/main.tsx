@@ -11,7 +11,7 @@ import StarknetProvider from "./dojo/starknet-provider";
 
 // App Entry
 import App from "./app/app";
-import "./index.css";
+import "./styles/globals.css";
 
 // Init Dojo with error handling
 async function main() {

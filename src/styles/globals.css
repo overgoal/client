@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root{
+  --border: 0 0% 14.9%;
+  --background: red;
+}
+
+/* Tell Tailwind v4 about named colors */
+@theme {
+  --color-border: hsl(var(--border));
+  --color-background: hsl(var(--background));
+}
