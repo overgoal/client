@@ -8,13 +8,13 @@ import {  useEffect } from "react";
 import { useNavigate } from "react-router";
 import useAppStore from "../../../../zustand/store";
 import { Player } from "../../../../lib/schema";
-import { useCreatePlayer } from "../../../../dojo/hooks/useCreatePlayer";
+// import { useCreatePlayer } from "../../../../dojo/hooks/useCreatePlayer";
 
 export function LoginPlayer() {
   const { status, isConnecting, handleConnect } = useStarknetConnect();
 
   const { player, isLoading: playerLoading, isFetched } = usePlayer();
-  const {  initializePlayer} = useCreatePlayer();
+  // const {  initializePlayer} = useCreatePlayer();
   const storedPlayer = useAppStore((state) => state.player);
   const setPlayer = useAppStore((state) => state.setPlayer);
   const overgoalPlayer = useAppStore((state) => state.overgoalPlayer);

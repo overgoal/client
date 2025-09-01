@@ -51,6 +51,7 @@ export const useCreateOvergoalPlayer = () => {
   const initializeOvergoalPlayer = useCallback(async (playerId: number): Promise<InitializeOvergoalResponse> => {
     // Prevent multiple executions
     if (isInitializing) {
+      console.log(playerId);
       return { success: false, overgoalPlayerExists: false, error: "Already initializing" };
     }
 
