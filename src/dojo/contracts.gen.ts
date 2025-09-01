@@ -87,6 +87,27 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
+	const build_game_spawnOvergoalPlayer_calldata = (): DojoCall => {
+		return {
+			contractName: "game",
+			entrypoint: "spawn_overgoal_player",
+			calldata: [],
+		};
+	};
+
+	const game_spawnOvergoalPlayer = async (snAccount: Account | AccountInterface) => {
+		try {
+			return await provider.execute(
+				snAccount as any,
+				build_game_spawnOvergoalPlayer_calldata(),
+				"full_starter_react",
+			);
+		} catch (error) {
+			console.error(error);
+			throw error;
+		}
+	};
+
 
 
 	return {
@@ -97,6 +118,8 @@ export function setupWorld(provider: DojoProvider) {
 			buildRestCalldata: build_game_rest_calldata,
 			spawnPlayer: game_spawnPlayer,
 			buildSpawnPlayerCalldata: build_game_spawnPlayer_calldata,
+			spawnOvergoalPlayer: game_spawnOvergoalPlayer,
+			buildSpawnOvergoalPlayerCalldata: build_game_spawnOvergoalPlayer_calldata,
 			train: game_train,
 			buildTrainCalldata: build_game_train_calldata,
 		},

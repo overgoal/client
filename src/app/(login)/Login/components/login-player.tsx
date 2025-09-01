@@ -8,11 +8,13 @@ import {  useEffect } from "react";
 import { useNavigate } from "react-router";
 import useAppStore from "../../../../zustand/store";
 import { Player } from "../../../../lib/schema";
+import { useCreatePlayer } from "../../../../dojo/hooks/useCreatePlayer";
 
 export function LoginPlayer() {
   const { status, isConnecting, handleConnect } = useStarknetConnect();
 
   const { player, isLoading: playerLoading, isFetched } = usePlayer();
+  const {  initializePlayer} = useCreatePlayer();
   const storedPlayer = useAppStore((state) => state.player);
   const setPlayer = useAppStore((state) => state.setPlayer);
   const overgoalPlayer = useAppStore((state) => state.overgoalPlayer);
@@ -53,11 +55,12 @@ useEffect(() => {
   if(overgoalPlayer) navigate("/");
 
   // Player exists but overgoal player does not exist, navigate to character creation page
-  if(storedPlayer && !overgoalPlayer) navigate("/character-creation");
+  if(storedPlayer && !overgoalPlayer) navigate("/character-creation/" + storedPlayer.id);
 
   // Player does not exist, create player and navigate to character creation page
 
   if(isFetched && isConnected && !player){
+
 
     //simulate create player and save to store
     const newPlayer: Player = {
@@ -75,10 +78,11 @@ useEffect(() => {
       universe_currency: 100,
     };
 
+    //  initializePlayer(); with this we will call the world api to create a new player
 
 
     setPlayer(newPlayer);
-    navigate("/character-creation");
+    navigate("/character-creation/" + newPlayer.id);
 
   } 
 

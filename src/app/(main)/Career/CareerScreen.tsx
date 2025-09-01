@@ -1,5 +1,5 @@
   import { Header } from "../../../components/header";
-import { StatusBar } from "../../(login)/Login/components/login-player";
+import {  LoginPlayer } from "../../(login)/Login/components/login-player";
 import { Card } from "../../../components/ui/card";
 import { Progress } from "../../../components/ui/progress";
 
@@ -26,7 +26,7 @@ export default function CareerScreen() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <Header />
-        <StatusBar />
+        <LoginPlayer />
 
         <div className="mt-8">
           <h1 className="text-3xl font-bold text-white mb-6">Career</h1>

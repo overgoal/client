@@ -4,11 +4,11 @@ import { useAccount } from "@starknet-react/core";
 import { Account } from "starknet";
 import { useDojoSDK } from "@dojoengine/sdk/react";
 import { useStarknetConnect } from "./useStarknetConnect";
-import { usePlayer } from "./usePlayer";
+import { useOvergoalPlayer } from "./useOvergoalPlayer";
 import useAppStore from "../../zustand/store";
 
 // Types
-interface InitializeState {
+interface InitializeOvergoalState {
   isInitializing: boolean;
   error: string | null;
   completed: boolean;
@@ -17,23 +17,23 @@ interface InitializeState {
   txStatus: 'PENDING' | 'SUCCESS' | 'REJECTED' | null;
 }
 
-interface InitializeResponse {
+interface InitializeOvergoalResponse {
   success: boolean;
-  playerExists: boolean;
+  overgoalPlayerExists: boolean;
   transactionHash?: string;
   error?: string;
 }
 
-export const useSpawnPlayer = () => {
+export const useCreateOvergoalPlayer = () => {
   const { useDojoStore, client } = useDojoSDK();
   const dojoState = useDojoStore((state) => state);
   const { account } = useAccount();
   const { status } = useStarknetConnect();
-  const { player, isLoading: playerLoading, refetch: refetchPlayer } = usePlayer();
+  const { overgoalPlayer, isLoading: overgoalPlayerLoading, refetch: refetchOvergoalPlayer } = useOvergoalPlayer();
   const { setLoading } = useAppStore();
 
   // Local state
-  const [initState, setInitState] = useState<InitializeState>({
+  const [initState, setInitState] = useState<InitializeOvergoalState>({
     isInitializing: false,
     error: null,
     completed: false,
@@ -46,12 +46,12 @@ export const useSpawnPlayer = () => {
   const [isInitializing, setIsInitializing] = useState(false);
 
   /**
-   * Checks if the player exists and initializes as needed
+   * Checks if the overgoal player exists and initializes as needed
    */
-  const initializePlayer = useCallback(async (): Promise<InitializeResponse> => {
+  const initializeOvergoalPlayer = useCallback(async (playerId: number): Promise<InitializeOvergoalResponse> => {
     // Prevent multiple executions
     if (isInitializing) {
-      return { success: false, playerExists: false, error: "Already initializing" };
+      return { success: false, overgoalPlayerExists: false, error: "Already initializing" };
     }
 
     setIsInitializing(true);
@@ -61,7 +61,7 @@ export const useSpawnPlayer = () => {
       const error = "Controller not connected. Please connect your controller first.";
       setInitState(prev => ({ ...prev, error }));
       setIsInitializing(false);
-      return { success: false, playerExists: false, error };
+      return { success: false, overgoalPlayerExists: false, error };
     }
 
     // Validation: Check that the account exists
@@ -69,7 +69,7 @@ export const useSpawnPlayer = () => {
       const error = "No account found. Please connect your controller.";
       setInitState(prev => ({ ...prev, error }));
       setIsInitializing(false);
-      return { success: false, playerExists: false, error };
+      return { success: false, overgoalPlayerExists: false, error };
     }
 
     const transactionId = uuidv4();
@@ -83,30 +83,30 @@ export const useSpawnPlayer = () => {
         step: 'checking'
       }));
 
-      console.log("🎮 Starting player initialization...");
+      console.log("🎮 Starting overgoal player initialization...");
 
-      // Refetch player data
-      console.log("🔄 Fetching latest player data...");
-      await refetchPlayer();
+      // Refetch overgoal player data
+      console.log("🔄 Fetching latest overgoal player data...");
+      await refetchOvergoalPlayer();
 
       // Wait a bit to ensure data is loaded
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Direct check from the store
-      const storePlayer = useAppStore.getState().player;
+      const storeOvergoalPlayer = useAppStore.getState().overgoalPlayer;
 
-      // Simple check if the player exists in the store
-      const playerExists = storePlayer !== null;
+      // Simple check if the overgoal player exists in the store
+      const overgoalPlayerExists = storeOvergoalPlayer !== null;
 
-      console.log("🎮 Final player check:", {
-        playerExists,
-        playerInStore: !!storePlayer,
+      console.log("🎮 Final overgoal player check:", {
+        overgoalPlayerExists,
+        overgoalPlayerInStore: !!storeOvergoalPlayer,
         accountAddress: account.address
       });
 
-      if (playerExists) {
-        // Player exists - load data and continue
-        console.log("✅ Player already exists, continuing with existing data...");
+      if (overgoalPlayerExists) {
+        // Overgoal player exists - load data and continue
+        console.log("✅ Overgoal player already exists, continuing with existing data...");
 
         setInitState(prev => ({
           ...prev,
@@ -126,12 +126,12 @@ export const useSpawnPlayer = () => {
         setIsInitializing(false);
         return {
           success: true,
-          playerExists: true
+          overgoalPlayerExists: true
         };
 
       } else {
-        // Player does not exist - create new player
-        console.log("🆕 Player does not exist, spawning new player...");
+        // Overgoal player does not exist - create new overgoal player
+        console.log("🆕 Overgoal player does not exist, spawning new overgoal player...");
 
         setInitState(prev => ({
           ...prev,
@@ -140,10 +140,10 @@ export const useSpawnPlayer = () => {
         }));
 
         // Execute spawn transaction
-        console.log("📤 Executing spawn transaction...");
-        const spawnTx = await client.game.spawnPlayer(account as Account);
+        console.log("📤 Executing spawn overgoal player transaction...");
+        const spawnTx = await client.game.spawnOvergoalPlayer(account as Account);
 
-        console.log("📥 Spawn transaction response:", spawnTx);
+        console.log("📥 Spawn overgoal player transaction response:", spawnTx);
 
         if (spawnTx?.transaction_hash) {
           setInitState(prev => ({
@@ -153,7 +153,7 @@ export const useSpawnPlayer = () => {
         }
 
         if (spawnTx && spawnTx.code === "SUCCESS") {
-          console.log("🎉 Player spawned successfully!");
+          console.log("🎉 Overgoal player spawned successfully!");
 
           setInitState(prev => ({
             ...prev,
@@ -164,9 +164,9 @@ export const useSpawnPlayer = () => {
           console.log("⏳ Waiting for transaction to be processed...");
           await new Promise(resolve => setTimeout(resolve, 3500));
 
-          // Refetch player data
-          console.log("🔄 Refetching player data after spawn...");
-          await refetchPlayer();
+          // Refetch overgoal player data
+          console.log("🔄 Refetching overgoal player data after spawn...");
+          await refetchOvergoalPlayer();
 
           setInitState(prev => ({
             ...prev,
@@ -181,7 +181,7 @@ export const useSpawnPlayer = () => {
           setIsInitializing(false);
           return {
             success: true,
-            playerExists: false,
+            overgoalPlayerExists: false,
             transactionHash: spawnTx.transaction_hash
           };
         } else {
@@ -190,16 +190,16 @@ export const useSpawnPlayer = () => {
             ...prev,
             txStatus: 'REJECTED'
           }));
-          throw new Error("Spawn transaction failed with code: " + spawnTx?.code);
+          throw new Error("Spawn overgoal player transaction failed with code: " + spawnTx?.code);
         }
       }
 
     } catch (error) {
       const errorMessage = error instanceof Error
         ? error.message
-        : "Failed to initialize player. Please try again.";
+        : "Failed to initialize overgoal player. Please try again.";
 
-      console.error("❌ Error initializing player:", error);
+      console.error("❌ Error initializing overgoal player:", error);
 
       // Revert optimistic update if applicable
       dojoState.revertOptimisticUpdate(transactionId);
@@ -220,15 +220,15 @@ export const useSpawnPlayer = () => {
       }));
 
       setIsInitializing(false);
-      return { success: false, playerExists: false, error: errorMessage };
+      return { success: false, overgoalPlayerExists: false, error: errorMessage };
     }
-  }, [status, account, refetchPlayer, player, isInitializing, client.game, dojoState]);
+  }, [status, account, refetchOvergoalPlayer, overgoalPlayer, isInitializing, client.game, dojoState]);
 
   /**
    * Reset the initialization state
    */
   const resetInitializer = useCallback(() => {
-    console.log("🔄 Resetting initializer state...");
+    console.log("🔄 Resetting overgoal player initializer state...");
     setIsInitializing(false);
     setInitState({
       isInitializing: false,
@@ -242,8 +242,8 @@ export const useSpawnPlayer = () => {
 
   // Sync loading state with the store
   useEffect(() => {
-    setLoading(initState.isInitializing || playerLoading);
-  }, [initState.isInitializing, playerLoading, setLoading]);
+    setLoading(initState.isInitializing || overgoalPlayerLoading);
+  }, [initState.isInitializing, overgoalPlayerLoading, setLoading]);
 
   return {
     // State
@@ -254,10 +254,10 @@ export const useSpawnPlayer = () => {
     txHash: initState.txHash,
     txStatus: initState.txStatus,
     isConnected: status === "connected",
-    playerExists: useAppStore.getState().player !== null,
+    overgoalPlayerExists: useAppStore.getState().overgoalPlayer !== null,
 
     // Actions
-    initializePlayer,
+    initializeOvergoalPlayer,
     resetInitializer
   };
 };

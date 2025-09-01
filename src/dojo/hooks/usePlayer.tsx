@@ -103,6 +103,7 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
   }
 };
 
+
 // Main hook
 export const usePlayer = (): UsePlayerReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(true);

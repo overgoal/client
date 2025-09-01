@@ -1,6 +1,6 @@
 // Pre game
 export const login = "/login";
-export const characterCreation = "/character-creation";
+export const characterCreation = "/character-creation/:playerId";
 
 // Game
 export const main = "/";
