@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { OvergoalPlayer } from "../../../lib/schema";
 import useAppStore from "../../../zustand/store";
 import { useState } from "react";
+import { usePlayer, useSpawnPlayer} from "@universe/react-sdk";
 
 export default function CharacterCreationScreen() {
   //overgoal playe fetchs the overgoal player data from the overgoal player contract
@@ -13,6 +14,9 @@ export default function CharacterCreationScreen() {
   const navigate = useNavigate();
 
   const setOvergoalPlayer = useAppStore((state) => state.setOvergoalPlayer);
+  const { player } = usePlayer({network: "localhost"});
+  const { initializePlayer } = useSpawnPlayer({network: "localhost"});
+
 
 //   const { initializeOvergoalPlayer, completed } = useCreateOvergoalPlayer();
 
@@ -55,6 +59,11 @@ export default function CharacterCreationScreen() {
     navigate("/");
   };
 
+
+  const handleSpawnPlayer = () => {
+    initializePlayer();
+  };
+
   return (
     <div className="h-screen w-screen px-12 flex flex-col items-center justify-between py-12 gap-5 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <h2 className="text-2xl font-bold text-white">Character Creation</h2>
@@ -70,6 +79,17 @@ export default function CharacterCreationScreen() {
           onClick={handleContinue}
         >
           <span className="text-lg font-bold text-white">Continue</span>
+        </Button>
+
+        <div className="text-white">
+          PLAYER {player?.name}
+        </div>
+
+        <Button
+          variant="outline"
+          onClick={handleSpawnPlayer}
+        >
+          <span className="text-lg font-bold text-white">Spawn Player</span>
         </Button>
       </div>
     </div>

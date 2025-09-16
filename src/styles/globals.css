@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 @import "tailwindcss";
+@import "../typography.css";
+@theme {
+  --color-overgoal-blue: #00e4e8;
+  --font-orbitron: "Orbitron", sans-serif;
+}
 
-:root{
+:root {
   --border: 0 0% 14.9%;
   --background: red;
 }
@@ -9,4 +15,77 @@
 @theme {
   --color-border: hsl(var(--border));
   --color-background: hsl(var(--background));
+}
+
+.orbitron-normal {
+  font-family: var(--font-orbitron);
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.orbitron-medium {
+  font-family: var(--font-orbitron);
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.orbitron-bold {
+  font-family: var(--font-orbitron);
+  font-weight: 700;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.home-footer {
+  background-color: transparent;
+  width: 100%;
+  max-height: 160px;
+  height: 100%;
+  margin-top: auto;
+  position: relative;
+}
+
+.home-footer::before {
+  content: "";
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  max-height: 140px;
+  height: 100%;
+
+  /* -webkit-clip-path: polygon(0 0, 0% 0, 0% 0%, 30% 100%, 0% 100%, 0 0%); */
+  clip-path: polygon(9% 34%, 91% 34%, 100% 0, 100% 100%, 0 100%, 0 0);
+  @apply shadow-[0_-8px_10px_rgba(255,255,255,1)];
+}
+
+@media (min-width: 420px) {
+  .home-footer {
+    max-height: 160px;
+  }
+  .home-footer::before {
+    max-height: 130px;
+  }
+}
+
+.menu-item {
+  /* box-shadow: inset 0 0 0 1px var(--color-overgoal-blue); */
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-overgoal-blue);
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+}
+
+.menu-item::before {
+  content: "";
+  position: absolute;
+  background-color: black;
+  width: 98%;
+  height: 98%;
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+  @apply shadow-[inset_0_0px_8px_rgba(3,228,232,100)];
 }

@@ -34,6 +34,7 @@
     "@starknet-react/chains": "^5.0.1",
     "@starknet-react/core": "^5.0.1",
     "@types/three": "^0.179.0",
+    "@universe/react-sdk": "file:../universe-sdk/packages/sdk-react/universe-react-sdk-0.1.0.tgz",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fs": "^0.0.1-security",
