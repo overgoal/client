@@ -18,9 +18,8 @@ const getIcon = (iconName: string) => {
   );
 };
 
-type Props = {};
 
-export default function MenuFooter({}: Props) {
+export default function MenuFooter() {
   return (
     <div className="relative w-full bg-black max-h-[175px] h-full home-footer">
       <div
