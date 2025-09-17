@@ -8,7 +8,6 @@
     "dev:https": "VITE_LOCAL_HTTPS=true vite",
     "dev:http": "VITE_LOCAL_HTTPS=false vite",
     "build": "tsc -b && vite build",
-    "prebuild": "node ./src/config/build.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:https": "VITE_LOCAL_HTTPS=true vite preview",

@@ -4,7 +4,10 @@ import { useNavigate, useParams } from "react-router";
 import { OvergoalPlayer } from "../../../lib/schema";
 import useAppStore from "../../../zustand/store";
 import { useState } from "react";
-import { usePlayer, useSpawnPlayer} from "@universe/react-sdk";
+import { usePlayer } from "../../../dojo/hooks/usePlayer";
+// import { usePlayer, useSpawnPlayer} from "@universe/react-sdk";
+
+// import useSpawnPlayer from "../../../dojo/hooks/useSpawnPlayer";
 
 export default function CharacterCreationScreen() {
   //overgoal playe fetchs the overgoal player data from the overgoal player contract
@@ -14,8 +17,8 @@ export default function CharacterCreationScreen() {
   const navigate = useNavigate();
 
   const setOvergoalPlayer = useAppStore((state) => state.setOvergoalPlayer);
-  const { player } = usePlayer({network: "localhost"});
-  const { initializePlayer } = useSpawnPlayer({network: "localhost"});
+  const { player } = usePlayer();
+  // const { initializePlayer } = useSpawnPlayer();
 
 
 //   const { initializeOvergoalPlayer, completed } = useCreateOvergoalPlayer();
@@ -61,7 +64,8 @@ export default function CharacterCreationScreen() {
 
 
   const handleSpawnPlayer = () => {
-    initializePlayer();
+console.log("Spawning player");
+    // initializePlayer();
   };
 
   return (

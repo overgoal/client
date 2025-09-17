@@ -36,3 +36,5 @@ mkcert+1.pem
 *.njsproj
 *.sln
 *.sw?
+
+src/config/build.js
