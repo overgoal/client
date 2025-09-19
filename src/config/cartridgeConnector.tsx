@@ -40,20 +40,21 @@ const getGameContractAddress = () => {
 };
 
 const CONTRACT_ADDRESS_GAME = getGameContractAddress();
-console.log("Using game contract address:", CONTRACT_ADDRESS_GAME);
 
 const policies = {
   contracts: {
     [CONTRACT_ADDRESS_GAME]: {
       methods: [
-        { name: "spawn_player", entrypoint: "spawn_player" },
-        { name: "train", entrypoint: "train" },
-        { name: "mine", entrypoint: "mine" },
-        { name: "rest", entrypoint: "rest" },
+        { name: "create_player", entrypoint: "create_player" },
+        { name: "update_attributes", entrypoint: "update_attributes" },
+        { name: "add_currency", entrypoint: "add_currency" },
+        { name: "spend_currency", entrypoint: "spend_currency" },
+        { name: "record_login", entrypoint: "record_login" },
       ],
     },
   },
 }
+
 
 const options: ControllerOptions = {
   chains: [{ rpcUrl: getRpcUrl() }],
