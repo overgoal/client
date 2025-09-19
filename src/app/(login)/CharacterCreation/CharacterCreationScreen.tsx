@@ -3,7 +3,7 @@ import { Button } from "../../../components/ui/button";
 import { useNavigate, useParams } from "react-router";
 import { OvergoalPlayer } from "../../../lib/schema";
 import useAppStore from "../../../zustand/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePlayer } from "../../../dojo/hooks/usePlayer";
 import { useCreatePlayer } from "../../../dojo/hooks/useCreatePlayer";
 import { useAccount } from "@starknet-react/core";
@@ -21,7 +21,7 @@ export default function CharacterCreationScreen() {
   const { player } = usePlayer();
   const { initializePlayer } = useCreatePlayer();
 
-  const { account, status, address, isConnecting } = useAccount();
+  const {  status, address } = useAccount();
   const { isInitializing, txStatus } = useCreatePlayer();
   const { handleDisconnect } = useStarknetConnect();
 
