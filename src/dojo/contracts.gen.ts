@@ -3,19 +3,19 @@ import { Account, AccountInterface } from "starknet";
 
 export function setupWorld(provider: DojoProvider) {
 
-	const build_game_mine_calldata = (): DojoCall => {
+	const build_game_createPlayer_calldata = (player_id: string): DojoCall => {
 		return {
 			contractName: "game",
-			entrypoint: "mine",
-			calldata: [],
+			entrypoint: "create_player",
+			calldata: [player_id],
 		};
 	};
 
-	const game_mine = async (snAccount: Account | AccountInterface) => {
+	const game_createPlayer = async (snAccount: Account | AccountInterface, player_id: string) => {
 		try {
 			return await provider.execute(
 				snAccount as any,
-				build_game_mine_calldata(),
+				build_game_createPlayer_calldata(player_id),
 				"full_starter_react",
 			);
 		} catch (error) {
@@ -24,19 +24,34 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_game_rest_calldata = (): DojoCall => {
+	const build_game_updateAttributes_calldata = (
+		player_id: string,
+		fame: number,
+		charisma: number,
+		stamina: number,
+		intelligence: number,
+		leadership: number
+	): DojoCall => {
 		return {
 			contractName: "game",
-			entrypoint: "rest",
-			calldata: [],
+			entrypoint: "update_attributes",
+			calldata: [player_id, fame.toString(), charisma.toString(), stamina.toString(), intelligence.toString(), leadership.toString()],
 		};
 	};
 
-	const game_rest = async (snAccount: Account | AccountInterface) => {
+	const game_updateAttributes = async (
+		snAccount: Account | AccountInterface,
+		player_id: string,
+		fame: number,
+		charisma: number,
+		stamina: number,
+		intelligence: number,
+		leadership: number
+	) => {
 		try {
 			return await provider.execute(
 				snAccount as any,
-				build_game_rest_calldata(),
+				build_game_updateAttributes_calldata(player_id, fame, charisma, stamina, intelligence, leadership),
 				"full_starter_react",
 			);
 		} catch (error) {
@@ -45,19 +60,19 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_game_spawnPlayer_calldata = (): DojoCall => {
+	const build_game_addCurrency_calldata = (player_id: string, amount: string): DojoCall => {
 		return {
 			contractName: "game",
-			entrypoint: "spawn_player",
-			calldata: [],
+			entrypoint: "add_currency",
+			calldata: [player_id, amount],
 		};
 	};
 
-	const game_spawnPlayer = async (snAccount: Account | AccountInterface) => {
+	const game_addCurrency = async (snAccount: Account | AccountInterface, player_id: string, amount: string) => {
 		try {
 			return await provider.execute(
 				snAccount as any,
-				build_game_spawnPlayer_calldata(),
+				build_game_addCurrency_calldata(player_id, amount),
 				"full_starter_react",
 			);
 		} catch (error) {
@@ -66,19 +81,19 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_game_train_calldata = (): DojoCall => {
+	const build_game_spendCurrency_calldata = (player_id: string, amount: string): DojoCall => {
 		return {
 			contractName: "game",
-			entrypoint: "train",
-			calldata: [],
+			entrypoint: "spend_currency",
+			calldata: [player_id, amount],
 		};
 	};
 
-	const game_train = async (snAccount: Account | AccountInterface) => {
+	const game_spendCurrency = async (snAccount: Account | AccountInterface, player_id: string, amount: string) => {
 		try {
 			return await provider.execute(
 				snAccount as any,
-				build_game_train_calldata(),
+				build_game_spendCurrency_calldata(player_id, amount),
 				"full_starter_react",
 			);
 		} catch (error) {
@@ -87,19 +102,19 @@ export function setupWorld(provider: DojoProvider) {
 		}
 	};
 
-	const build_game_spawnOvergoalPlayer_calldata = (): DojoCall => {
+	const build_game_recordLogin_calldata = (player_id: string): DojoCall => {
 		return {
 			contractName: "game",
-			entrypoint: "spawn_overgoal_player",
-			calldata: [],
+			entrypoint: "record_login",
+			calldata: [player_id],
 		};
 	};
 
-	const game_spawnOvergoalPlayer = async (snAccount: Account | AccountInterface) => {
+	const game_recordLogin = async (snAccount: Account | AccountInterface, player_id: string) => {
 		try {
 			return await provider.execute(
 				snAccount as any,
-				build_game_spawnOvergoalPlayer_calldata(),
+				build_game_recordLogin_calldata(player_id),
 				"full_starter_react",
 			);
 		} catch (error) {
@@ -107,21 +122,19 @@ export function setupWorld(provider: DojoProvider) {
 			throw error;
 		}
 	};
-
-
 
 	return {
 		game: {
-			mine: game_mine,
-			buildMineCalldata: build_game_mine_calldata,
-			rest: game_rest,
-			buildRestCalldata: build_game_rest_calldata,
-			spawnPlayer: game_spawnPlayer,
-			buildSpawnPlayerCalldata: build_game_spawnPlayer_calldata,
-			spawnOvergoalPlayer: game_spawnOvergoalPlayer,
-			buildSpawnOvergoalPlayerCalldata: build_game_spawnOvergoalPlayer_calldata,
-			train: game_train,
-			buildTrainCalldata: build_game_train_calldata,
+			createPlayer: game_createPlayer,
+			buildCreatePlayerCalldata: build_game_createPlayer_calldata,
+			updateAttributes: game_updateAttributes,
+			buildUpdateAttributesCalldata: build_game_updateAttributes_calldata,
+			addCurrency: game_addCurrency,
+			buildAddCurrencyCalldata: build_game_addCurrency_calldata,
+			spendCurrency: game_spendCurrency,
+			buildSpendCurrencyCalldata: build_game_spendCurrency_calldata,
+			recordLogin: game_recordLogin,
+			buildRecordLoginCalldata: build_game_recordLogin_calldata,
 		},
 	};
 }

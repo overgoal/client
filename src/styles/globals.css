@@ -1,6 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 @import "tailwindcss";
+@import "../typography.css";
+@theme {
+  --color-overgoal-blue: #00e4e8;
+  --color-overgoal-light-blue: #03e4e8;
+  --font-orbitron: "Orbitron", sans-serif;
+}
 
-:root{
+:root {
   --border: 0 0% 14.9%;
   --background: red;
 }
@@ -9,4 +16,204 @@
 @theme {
   --color-border: hsl(var(--border));
   --color-background: hsl(var(--background));
+}
+
+.orbitron-normal {
+  font-family: var(--font-orbitron);
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.orbitron-medium {
+  font-family: var(--font-orbitron);
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.orbitron-bold {
+  font-family: var(--font-orbitron);
+  font-weight: 700;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.home-footer {
+  background-color: transparent;
+  width: 100%;
+  max-height: 160px;
+  height: 100%;
+  margin-top: auto;
+  position: relative;
+}
+
+.home-footer::before {
+  content: "";
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  max-height: 140px;
+  height: 100%;
+
+  /* -webkit-clip-path: polygon(0 0, 0% 0, 0% 0%, 30% 100%, 0% 100%, 0 0%); */
+  clip-path: polygon(9% 34%, 91% 34%, 100% 0, 100% 100%, 0 100%, 0 0);
+  @apply shadow-[0_-8px_10px_rgba(255,255,255,1)];
+}
+
+@media (min-width: 420px) {
+  .home-footer {
+    max-height: 160px;
+  }
+  .home-footer::before {
+    max-height: 130px;
+  }
+}
+
+.menu-item {
+  /* box-shadow: inset 0 0 0 1px var(--color-overgoal-blue); */
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-overgoal-blue);
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+}
+
+.menu-item::before {
+  content: "";
+  position: absolute;
+  background-color: black;
+  width: 98%;
+  height: 98%;
+  clip-path: polygon(16% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+  @apply shadow-[inset_0_0px_8px_rgba(3,228,232,100)];
+}
+
+.lifestyle-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-overgoal-light-blue);
+  clip-path: polygon(
+    17% 8%,
+    100% 0,
+    100% 60%,
+    100% 88%,
+    15% 100%,
+    0 83%,
+    0 26%
+  );
+}
+
+.lifestyle-container::before {
+  content: "";
+  position: absolute;
+  background-color: #0b3d41;
+  /* backdrop-filter: blur(10px); */
+  /* opacity: 0.5; */
+  width: 95%;
+  height: 95%;
+  z-index: 1;
+  clip-path: polygon(
+    17% 8%,
+    100% 0,
+    100% 60%,
+    100% 88%,
+    15% 100%,
+    0 83%,
+    0 26%
+  );
+}
+
+.lifestyle-container::after {
+  content: "";
+  position: absolute;
+  background-color: var(--color-overgoal-light-blue);
+  /* backdrop-filter: blur(10px); */
+  /* opacity: 0.5; */
+  width: 82%;
+  height: 82%;
+  z-index: 1;
+  clip-path: polygon(
+    17% 8%,
+    100% 0,
+    100% 60%,
+    100% 88%,
+    15% 100%,
+    0 83%,
+    0 26%
+  );
+}
+
+.lifestyle-inner-container {
+  position: relative;
+  z-index: 2;
+  background-color: #0b3d41;
+  clip-path: polygon(
+    17% 8%,
+    100% 0,
+    100% 60%,
+    100% 88%,
+    15% 100%,
+    0 83%,
+    0 26%
+  );
+}
+
+.cyber-container {
+  position: relative;
+  background-color: var(--color-overgoal-light-blue);
+  clip-path: polygon(
+    93.289% 100%,
+    100% 72.56%,
+    100% 27.455%,
+    93.289% 0%,
+    6.711% 0%,
+    0% 27.455%,
+    0% 72.56%,
+    6.711% 100%,
+    93.289% 100%
+  );
+}
+
+.cyber-container::before {
+  content: "";
+  position: absolute;
+  background-color: black;
+  backdrop-filter: blur(20px);
+  opacity: 0.9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 98%;
+  height: 90%;
+  z-index: -1;
+  clip-path: polygon(
+    93.289% 100%,
+    100% 72.56%,
+    100% 27.455%,
+    93.289% 0%,
+    6.711% 0%,
+    0% 27.455%,
+    0% 72.56%,
+    6.711% 100%,
+    93.289% 100%
+  );
+}
+
+
+.cyberpunk-clip {
+  clip-path: polygon(
+    93.289% 100%,
+    100% 72.56%,
+    100% 27.455%,
+    93.289% 0%,
+    6.711% 0%,
+    0% 27.455%,
+    0% 72.56%,
+    6.711% 100%,
+    93.289% 100%
+  );
 }

@@ -1,39 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
-import { Button } from "../../../components/ui/button";
-
+// import { useNavigate } from "react-router";
+import { usePlayer } from "../../../dojo/hooks/usePlayer";
+// import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
+// import useAppStore from "../../../zustand/store";
+import background from "/homepage/background.png";
+import HomeMenu from "./components/menu";
 import Scene from "../../../components/webgl/Scene";
 
-import { useNavigate } from "react-router";
-import { usePlayer } from "../../../dojo/hooks/usePlayer";
-import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
-import useAppStore from "../../../zustand/store";
-
 export default function HomePage() {
-const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { player } = usePlayer();
-  const {handleDisconnect} = useStarknetConnect();
-  const resetStore = useAppStore((state) => state.resetStore);
+  // const { handleDisconnect } = useStarknetConnect();
+  // const resetStore = useAppStore((state) => state.resetStore);
 
   useEffect(() => {
     console.log(player);
-  }, [player]); 
+  }, [player]);
 
-  const handleDisconnectAction = () => {
-    handleDisconnect();
-    navigate("/login");
-    resetStore();
-  }
+  // Memoize static styles to prevent re-creation
+  const containerStyles = useMemo(() => ({
+    touchAction: 'none' as const
+  }), [])
+
+  // const handleDisconnectAction = () => {
+  //   handleDisconnect();
+  //   navigate("/login");
+  //   resetStore();
+  // };
 
   return (
-    <div className="w-screen h-screen">
-      <div className="absolute  w-screen top-0   flex items-center justify-between px-12 py-4 z-100 text-white ">
-        <h1 className="text-2xl font-bold">Welcome, {player?.name}</h1>
-        <Button variant="outline" className="px-4 py-2 bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all duration-300" onClick={handleDisconnectAction}>Disconnect</Button>
+    <div className="w-screen h-screen relative" style={containerStyles}>
+      {/* Background Image Layer */}
+      <img
+        src={background}
+        alt="background"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        width={1000}
+        height={1000}
+      />
+      
+      {/* 3D Scene Layer - positioned behind UI */}
+      <div className="absolute inset-0 z-20">
+        <Scene />
       </div>
-      <Scene />
-      <div className="absolute bottom-0  left-0 w-screen py-4 flex items-center justify-center z-100 text-white">
-        <h1 className="text-4xl font-bold">Play Now</h1>
+      
+      {/* UI Overlay Layer - positioned on top */}
+      <div className="absolute h-screen inset-0 z-20 ">
+        <div className=" h-screen">
+          <HomeMenu />
+        </div>
       </div>
     </div>
   );

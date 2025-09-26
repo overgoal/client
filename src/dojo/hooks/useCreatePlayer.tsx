@@ -143,7 +143,8 @@ export const useCreatePlayer = () => {
         console.log("📤 Executing spawn transaction...");
         //here we should call the world api to create a new player
         
-        const spawnTx = await client.game.spawnPlayer(account as Account);
+        
+        const spawnTx = await client.game.createPlayer(account as Account, "1");
 
         console.log("📥 Spawn transaction response:", spawnTx);
 

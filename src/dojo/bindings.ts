@@ -1,20 +1,25 @@
 import type { SchemaType as ISchemaType } from "@dojoengine/sdk";
 
-// Type definition for `full_starter_react::models::player::Player` struct
-export interface Player {
-	owner: string;
-	experience: number;
-	health: number;
-	coins: number;
-	creation_day: number;
+// Type definition for `full_starter_react::models::user::User` struct
+export interface User {
+    owner: string;
+    username: string;
+    created_at: number;
 }
 
-// Type definition for `full_starter_react::models::player::PlayerValue` struct
-export interface PlayerValue {
-	experience: number;
-	health: number;
-	coins: number;
-	creation_day: number;
+// Type definition for `full_starter_react::models::player::Player` struct
+export interface Player {
+    id: string;
+    user_id: string;
+    created_at: number;
+    last_updated_at: number;
+    last_login_at: number;
+    fame: number;
+    charisma: number;
+    stamina: number;
+    intelligence: number;
+    leadership: number;
+    universe_currency: number;
 }
 
 // Type definition for `achievement::events::index::TrophyCreation` struct
@@ -71,8 +76,8 @@ export interface Task {
 
 export interface SchemaType extends ISchemaType {
 	full_starter_react: {
+		User: User,
 		Player: Player,
-		PlayerValue: PlayerValue,
 	},
 	achievement: {
 		TrophyCreation: TrophyCreation,
@@ -84,18 +89,23 @@ export interface SchemaType extends ISchemaType {
 }
 export const schema: SchemaType = {
 	full_starter_react: {
-		Player: {
+		User: {
 			owner: "",
-			experience: 0,
-			health: 0,
-			coins: 0,
-			creation_day: 0,
+			username: "",
+			created_at: 0,
 		},
-		PlayerValue: {
-			experience: 0,
-			health: 0,
-			coins: 0,
-			creation_day: 0,
+		Player: {
+			id: "",
+			user_id: "",
+			created_at: 0,
+			last_updated_at: 0,
+			last_login_at: 0,
+			fame: 0,
+			charisma: 0,
+			stamina: 0,
+			intelligence: 0,
+			leadership: 0,
+			universe_currency: 0,
 		},
 	},
 	achievement: {
@@ -144,8 +154,8 @@ export const schema: SchemaType = {
 	}
 };
 export enum ModelsMapping {
+	User = 'full_starter_react-User',
 	Player = 'full_starter_react-Player',
-	PlayerValue = 'full_starter_react-PlayerValue',
 	TrophyCreation = 'achievement-TrophyCreation',
 	TrophyCreationValue = 'achievement-TrophyCreationValue',
 	TrophyProgression = 'achievement-TrophyProgression',
