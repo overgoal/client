@@ -1,8 +1,9 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { useMemo } from "react";
-import { CharacterModel } from "./components/Character-1";
 import Lights from "./components/lights";
+import { Model } from "./components/Character-2";
+import { Perf } from "r3f-perf";
 // Memoize the Scene component to prevent unnecessary re-renders
 const Scene = () => {
   // Mobile-first: Reduce quality on smaller screens for better performance
@@ -42,7 +43,7 @@ const Scene = () => {
   // Memoize OrbitControls settings
   const orbitControlsSettings = useMemo(
     () => ({
-      enablePan: false,
+      enablePan: true,
       enableZoom: true,
       enableRotate: true,
       minDistance: 300,
@@ -65,10 +66,12 @@ const Scene = () => {
         background: "transparent", // Make canvas background transparent
       }}
     >
+      <Perf position="top-left" />
       {/* <Suspense fallback={null}> */}
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
-      <CharacterModel scale={275} position={[0, -110, 100]} />
+      {/* <CharacterModel scale={275} position={[0, -110, 100]} /> */}
+      <Model scale={0.95} position={[0, -35, 230]} />
       <Preload all />
       {/* </Suspense> */}
     </Canvas>

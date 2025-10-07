@@ -18,7 +18,6 @@ const getIcon = (iconName: string) => {
   );
 };
 
-
 export default function MenuFooter() {
   return (
     <div className="relative w-full bg-black max-h-[175px] h-full home-footer">
@@ -41,6 +40,7 @@ export default function MenuFooter() {
             key={item.title}
             title={item.title}
             icon={getIcon(item.iconName)}
+            href={item.href}
           />
         ))}
       </div>
