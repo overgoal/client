@@ -3,8 +3,6 @@ import { OrbitControls, Preload } from "@react-three/drei";
 import { useMemo } from "react";
 import Lights from "./components/lights";
 import { MaleBody1 } from "./components/character-models/Male_body_1";
-import { useControls } from "leva";
-
 
 
 // import { Perf } from "r3f-perf";

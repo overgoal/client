@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.3 ./Male/male_body_2.glb -t
 */
 
 import * as THREE from 'three'
-import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 
