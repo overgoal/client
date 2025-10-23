@@ -2,8 +2,11 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { useMemo } from "react";
 import Lights from "./components/lights";
-import { Model } from "./components/Character-2";
-import { Perf } from "r3f-perf";
+import { Model1 } from "./components/Male_body_1";
+
+
+
+// import { Perf } from "r3f-perf";
 // Memoize the Scene component to prevent unnecessary re-renders
 const Scene = () => {
   // Mobile-first: Reduce quality on smaller screens for better performance
@@ -66,12 +69,13 @@ const Scene = () => {
         background: "transparent", // Make canvas background transparent
       }}
     >
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
       {/* <Suspense fallback={null}> */}
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
       {/* <CharacterModel scale={275} position={[0, -110, 100]} /> */}
-      <Model scale={0.95} position={[0, -35, 230]} />
+      {/* <Model scale={0.95} position={[0, -35, 230]} /> */}
+      <Model1 scale={100} position={[0, -35, 230]} />
       <Preload all />
       {/* </Suspense> */}
     </Canvas>

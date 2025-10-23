@@ -34,11 +34,12 @@ export function Model(props: JSX.IntrinsicElements['group']) {
   const { nodes, animations } = model
   const { actions } = useAnimations(animations, ref)
 
-  // useEffect(() => {
-  //   const anim = actions['animation_0']
-  //   console.log(anim)
-  //   anim?.play()
-  // }, [])
+
+  useEffect(() => {
+    const anim = actions['animation_0']
+    console.log(anim)
+    anim?.play()
+  }, [])
 
 
   return (
