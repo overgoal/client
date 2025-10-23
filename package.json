@@ -36,6 +36,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fs": "^0.0.1-security",
+    "leva": "^0.10.0",
     "lucide-react": "^0.542.0",
     "r3f-perf": "^7.2.3",
     "react": "18.3.1",

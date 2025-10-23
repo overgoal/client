@@ -2,7 +2,8 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { useMemo } from "react";
 import Lights from "./components/lights";
-import { Model1 } from "./components/Male_body_1";
+import { MaleBody1 } from "./components/character-models/Male_body_1";
+import { useControls } from "leva";
 
 
 
@@ -58,6 +59,8 @@ const Scene = () => {
     []
   );
 
+  
+
   return (
     <Canvas
       camera={cameraSettings}
@@ -73,9 +76,7 @@ const Scene = () => {
       {/* <Suspense fallback={null}> */}
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
-      {/* <CharacterModel scale={275} position={[0, -110, 100]} /> */}
-      {/* <Model scale={0.95} position={[0, -35, 230]} /> */}
-      <Model1 scale={100} position={[0, -35, 230]} />
+      <MaleBody1 scale={100} position={[-1, -34 , 225]} rotation={[.1,0,0]} />
       <Preload all />
       {/* </Suspense> */}
     </Canvas>
