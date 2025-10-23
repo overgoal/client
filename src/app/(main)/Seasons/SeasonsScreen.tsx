@@ -1,97 +1,57 @@
-import { Card } from "../../../components/ui/card";
-import { Button } from "../../../components/ui/button";
-import { Link } from "react-router";
+import TeamsList from "./components/teams-list";
+import CyberContainer from "../Home/components/cyber-container";
+import SeasonTeamItem from "./components/team-item";
+import teamsData from "./components/teams.json";
+
+const myTeam = teamsData[0];
 
 export default function SeasonsScreen() {
-  const seasons = [
-    {
-      id: 1,
-      name: "Season 2024",
-      status: "active",
-      startDate: "2024-01-01",
-      endDate: "2024-12-31",
-      participants: 1250,
-      description: "The current season with exciting tournaments and competitions."
-    },
-    {
-      id: 2,
-      name: "Season 2023",
-      status: "completed",
-      startDate: "2023-01-01",
-      endDate: "2023-12-31",
-      participants: 980,
-      description: "Previous season with legendary matches and champions."
-    },
-    {
-      id: 3,
-      name: "Season 2022",
-      status: "completed",
-      startDate: "2022-01-01",
-      endDate: "2022-12-31",
-      participants: 756,
-      description: "The season that started it all."
-    },
-  ];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active':
-        return 'bg-green-600';
-      case 'completed':
-        return 'bg-blue-600';
-      default:
-        return 'bg-gray-600';
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-
-        <div className="mt-8">
-          <h1 className="text-3xl font-bold text-white mb-6">Seasons</h1>
-
-          <div className="space-y-6">
-            {seasons.map((season) => (
-              <Card key={season.id} className="bg-slate-800/50 border-slate-700 p-6">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-4 mb-4">
-                      <h2 className="text-2xl font-semibold text-white">{season.name}</h2>
-                      <span className={`px-3 py-1 rounded-full text-white text-sm font-medium ${getStatusColor(season.status)}`}>
-                        {season.status.charAt(0).toUpperCase() + season.status.slice(1)}
-                      </span>
-                    </div>
-                    <p className="text-slate-300 mb-4">{season.description}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                      <div>
-                        <span className="text-slate-400">Duration:</span>
-                        <span className="text-white ml-2">{season.startDate} - {season.endDate}</span>
-                      </div>
-                      <div>
-                        <span className="text-slate-400">Participants:</span>
-                        <span className="text-white ml-2">{season.participants.toLocaleString()}</span>
-                      </div>
-                      <div>
-                        <span className="text-slate-400">Status:</span>
-                        <span className="text-white ml-2 capitalize">{season.status}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-6 lg:mt-0 lg:ml-6">
-                    <Link to={`/season/${season.id}`}>
-                      <Button className="w-full lg:w-auto bg-blue-600 hover:bg-blue-700">
-                        View Season
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </Card>
-            ))}
+    <>
+      <div className="min-h-screen w-scren flex items-center flex-col justify-center bg-black backdrop-blur-sm p-2 gap-4">
+        <div className="w-full flex flex-row items-center justify-between my-4 mr-2">
+          <div className="flex flex-row items-center justify-center gap-2">
+            <div></div>
+            <div className="text-white text-sm font-orbitron font-medium">
+              Season 2
+            </div>
+          </div>
+          <CyberContainer className="!w-1/3 !h-1/3 px-3 flex flex-row items-center justify-between  ">
+            <svg
+              width="14"
+              height="11"
+              viewBox="0 0 14 11"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.8843 3.66923L10.6168 0.15C10.5271 0.0538462 10.4006 0 10.266 0H3.73511C3.6005 0 3.47404 0.0538462 3.38429 0.15L0.116812 3.66923C-0.0422787 3.83846 -0.0381994 4.09615 0.124971 4.25769L6.65994 10.8577C6.83534 11.0346 7.12905 11.0462 7.32078 10.8808C7.32893 10.8731 7.33709 10.8654 7.34525 10.8577L13.8802 4.25769C14.0434 4.09231 14.0475 3.83846 13.8884 3.66923H13.8843ZM12.5055 3.51923H10.0335L7.93266 0.880769H10.0539L12.5055 3.51923ZM3.88604 4.4L5.6442 8.54231L1.54047 4.4H3.88196H3.88604ZM9.11157 4.4L7.00259 9.37692L4.89362 4.4H9.11565H9.11157ZM5.13429 3.51923L7.00259 1.17308L8.87089 3.51923H5.13837H5.13429ZM10.1191 4.4H12.4606L8.36098 8.54231L10.1191 4.4ZM3.94723 0.880769H6.06844L3.96763 3.51923H1.4956L3.94723 0.880769Z"
+                fill="#00EDF7"
+              />
+            </svg>
+            <h2 className="text-white text-sm  font-orbitron font-medium">
+              5000
+            </h2>
+          </CyberContainer>
+        </div>
+        <div className="w-full flex flex-row items-center justify-center gap-2">
+          <div className="flex flex-col items-center justify-center max-w-2/3 w-full">
+            <div className="text-white text-sm font-orbitron font-medium">
+              Season ends:
+            </div>
+            <div className="text-overgoal-blue text-lg font-orbitron font-medium">
+              3d 15h 21m
+            </div>
+          </div>
+          <div className="text-white text-sm font-orbitron font-medium max-w-1/3 w-full">
+            Season 2
           </div>
         </div>
+        <TeamsList />
       </div>
-    </div>
+      <div className="fixed  bottom-0 w-full bg-black max-h-[120px] h-full !z-100 flex items-center justify-center">
+        <SeasonTeamItem color="purple" {...myTeam} index={1} />
+      </div>
+    </>
   );
 }
-

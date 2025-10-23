@@ -19,9 +19,12 @@ export default function HomePage() {
   }, [player]);
 
   // Memoize static styles to prevent re-creation
-  const containerStyles = useMemo(() => ({
-    touchAction: 'none' as const
-  }), [])
+  const containerStyles = useMemo(
+    () => ({
+      touchAction: "none" as const,
+    }),
+    []
+  );
 
   // const handleDisconnectAction = () => {
   //   handleDisconnect();
@@ -39,12 +42,13 @@ export default function HomePage() {
         width={1000}
         height={1000}
       />
-      
+
+
       {/* 3D Scene Layer - positioned behind UI */}
       <div className="absolute inset-0 z-20">
         <Scene />
       </div>
-      
+
       {/* UI Overlay Layer - positioned on top */}
       <div className="absolute h-screen inset-0 z-20 ">
         <div className=" h-screen">

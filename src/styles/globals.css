@@ -1,9 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
 @import "tailwindcss";
 @import "../typography.css";
+
 @theme {
   --color-overgoal-blue: #00e4e8;
   --color-overgoal-light-blue: #03e4e8;
+  --color-overgoal-cyan: #03e4e8;
+  --color-overgoal-dark-blue: #011627;
+  --color-overgoal-magenta: #ae00f7;
+  --color-overgoal-lime-green: #72f700;
+  --color-overgoal-purple: #9400ff;
+  --color-overgoal-dark-purple: #19001d;
+  --color-overgoal-error: #ea2470;
+  --color-overgoal-positive: #00f485;
   --font-orbitron: "Orbitron", sans-serif;
 }
 
@@ -203,7 +212,6 @@
   );
 }
 
-
 .cyberpunk-clip {
   clip-path: polygon(
     93.289% 100%,
@@ -216,4 +224,97 @@
     6.711% 100%,
     93.289% 100%
   );
+}
+
+.box-container {
+  position: relative;
+  background-color: transparent;
+  /* border-left: 1px solid var(--color-overgoal-blue);
+  border-bottom: 1px solid var(--color-overgoal-blue); */
+  /* clip-path: polygon(6% 0, 100% 0, 100% 88%, 93% 100%, 0 100%, 0 12%); */
+}
+
+.box-container::before {
+  content: "";
+  position: absolute;
+  background-color: var(--container-color, var(--color-overgoal-blue));
+  opacity: 0.9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 97%;
+  height: 98%;
+  z-index: -1;
+  clip-path: polygon(4% 0, 100% 0, 100% 85%, 96% 100%, 0 100%, 0 15%);
+}
+
+.box-container::after {
+  content: "";
+  background-color: var(--container-bg-color, var(--color-overgoal-dark-blue));
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 96%;
+  height: 95%;
+  z-index: -1;
+  clip-path: polygon(4% 0, 100% 0, 100% 85%, 96% 100%, 0 100%, 0 15%);
+}
+
+.box-container-single-side {
+  position: relative;
+  background-color: transparent;
+  /* border-left: 1px solid var(--color-overgoal-blue); */
+  /* border-bottom: 1px solid var(--color-overgoal-blue); */
+  /* clip-path: polygon(6% 0, 100% 0, 100% 88%, 93% 100%, 0 100%, 0 12%); */
+}
+
+.box-container-single-side::before {
+  content: "";
+  position: absolute;
+  background-color: var(--container-color, var(--color-overgoal-blue));
+  opacity: 0.9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 98%;
+  height: 98%;
+  z-index: -1;
+  clip-path: polygon(20% 0, 100% 0, 100% 88%, 100% 100%, 0 100%, 0 20%);
+}
+
+.box-container-single-side::after {
+  content: "";
+  background-color: var(--container-bg-color, var(--color-overgoal-blue));
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 94%;
+  height: 94%;
+  z-index: -1;
+  clip-path: polygon(20% 0, 100% 0, 100% 88%, 100% 100%, 0 100%, 0 20%);
+}
+
+
+.bg-overgoal-blue {
+  --container-color: var(--color-overgoal-blue);
+  --container-bg-color: var(--color-overgoal-dark-blue);
+}
+
+.bg-overgoal-purple {
+  --container-color: var(--color-overgoal-purple);
+  --container-bg-color: var(--color-overgoal-dark-purple);
+}
+
+/* Blue variant (existing) */
+.bg-overgoal-blue.box-container::before,
+.bg-overgoal-blue.box-container-single-side::before {
+  background-color: var(--color-overgoal-blue);
+}
+
+/* Purple variant */
+.bg-overgoal-purple.box-container::before,
+.bg-overgoal-purple.box-container-single-side::before {
+  background-color: var(--color-overgoal-purple);
 }
