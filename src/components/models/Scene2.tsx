@@ -70,7 +70,7 @@ nodes.Body_1.material = new THREE.MeshBasicMaterial({
   }, [actions, names]);
   
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group as React.RefObject<THREE.Group>} {...props} dispose={null}>
       <group name="Scene">
         <group name="AmbientLight" />
         <group name="sceneglb">
