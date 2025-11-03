@@ -5,7 +5,8 @@ import HomePage from "./(main)/Home/HomePage";
 import LoginScreen from "./(login)/Login/LoginScreen";
 import MatchResultScreen from "./(main)/Match-Result/MatchResultScreen";
 import MatchScreen from "./(main)/Match/MatchScreen";
-import PreMatchScreen from "./(main)/Pre-Match/PreMatchScreen";
+import PreNonMatchScreen from "./(main)/Pre-Match/PreMatchScreenNonMatch";
+import PreMatchScreen from "./(main)/Pre-Match/pre-match";
 
 // import HomeScreen from "./routes/Home";
 import MarketScreen from "./(main)/Market/MarketScreen";
@@ -33,6 +34,7 @@ import {
   match,
   matchResult,
   characterCreation,
+  preMatchNonMatch,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 
@@ -46,6 +48,7 @@ function App() {
         {/* Authenticated routes */}
         <Route path={characterCreation} element={<CharacterCreationScreen />} />
         <Route path={main} element={<HomePage />} />
+        <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
         <Route path={preMatch} element={<PreMatchScreen />} />
         <Route path={match} element={<MatchScreen />} />
         <Route path={matchResult} element={<MatchResultScreen />} />

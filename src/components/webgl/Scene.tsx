@@ -2,7 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { useMemo } from "react";
 import Lights from "./components/lights";
-import { MaleBody1 } from "./components/character-models/Male_body_1";
+// import AuxModel from "./components/aux";
+import {ModelScene2} from "../../components/models/Scene2";
+// import { MaleBody1 } from "./components/character-models/Male_body_1";
 
 
 // import { Perf } from "r3f-perf";
@@ -57,7 +59,7 @@ const Scene = () => {
     []
   );
 
-  
+
 
   return (
     <Canvas
@@ -74,7 +76,10 @@ const Scene = () => {
       {/* <Suspense fallback={null}> */}
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
-      <MaleBody1 scale={100} position={[-1, -34 , 225]} rotation={[.1,0,0]} />
+
+      <ModelScene2 scale={1} position={[-1, -34 , 225]} rotation={[.1,0,0]} />
+      {/* <AuxModel /> */}
+      {/* <MaleBody1 scale={100} position={[-1, -34 , 225]} rotation={[.1,0,0]} /> */}
       <Preload all />
       {/* </Suspense> */}
     </Canvas>

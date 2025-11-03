@@ -33,7 +33,7 @@ export default function HomePage() {
   // };
 
   return (
-    <div className="w-screen h-screen relative" style={containerStyles}>
+    <div className="w-full min-h-dvh h-full relative  " style={containerStyles}>
       {/* Background Image Layer */}
       <img
         src={background}
@@ -50,8 +50,8 @@ export default function HomePage() {
       </div>
 
       {/* UI Overlay Layer - positioned on top */}
-      <div className="absolute h-screen inset-0 z-20 ">
-        <div className=" h-screen">
+      <div className="relative h-dvh  z-20 ">
+        <div className=" h-full  min-h-dvh">
           <HomeMenu />
         </div>
       </div>
