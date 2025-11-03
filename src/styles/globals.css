@@ -13,6 +13,7 @@
   --color-overgoal-dark-purple: #19001d;
   --color-overgoal-error: #ea2470;
   --color-overgoal-positive: #00f485;
+  --color-overgoal-dark-purple: #000213;
   --font-orbitron: "Orbitron", sans-serif;
 }
 
@@ -296,7 +297,6 @@
   clip-path: polygon(20% 0, 100% 0, 100% 88%, 100% 100%, 0 100%, 0 20%);
 }
 
-
 .bg-overgoal-blue {
   --container-color: var(--color-overgoal-blue);
   --container-bg-color: var(--color-overgoal-dark-blue);
@@ -318,3 +318,24 @@
 .bg-overgoal-purple.box-container-single-side::before {
   background-color: var(--color-overgoal-purple);
 }
+
+.pre-match-item-container {
+  position: relative;
+  z-index: 1;
+  background-color:   var(--color-overgoal-purple);
+  clip-path: polygon(78% 0, 80% 11%, 100% 11%, 100% 100%, 0 100%, 0% 60%, 0 0);
+}
+
+.pre-match-item-container::before {
+  content: "";
+  position: absolute;
+  background-color: var(--color-overgoal-dark-purple);
+  clip-path: polygon(78% 0, 80% 11%, 100% 11%, 100% 100%, 0 100%, 0% 60%, 0 0);
+  width: 99%;
+  height: 98%;
+  z-index: -1;
+  top: 52%;
+  left: 52%;
+  transform: translate(-52%, -52%);
+}
+
