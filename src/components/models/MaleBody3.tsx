@@ -64,6 +64,7 @@ export function ModelBody3(props: JSX.IntrinsicElements["group"]) {
     }
 
     return material;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bodyTexture]);
 
   const accesoriesMaterial = useMemo(() => {
