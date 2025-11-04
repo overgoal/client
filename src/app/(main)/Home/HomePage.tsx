@@ -45,7 +45,7 @@ export default function HomePage() {
 
 
       {/* 3D Scene Layer - positioned behind UI */}
-      <div className="absolute inset-0 z-20">
+      <div className="absolute inset-0 z-20 pointer-events-auto">
         <Scene />
       </div>
 

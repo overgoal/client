@@ -1,16 +1,12 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import Lights from "./components/lights";
-// import AuxModel from "./components/aux";
-import {ModelScene2} from "../../components/models/Scene2";
-// import { MaleBody1 } from "./components/character-models/Male_body_1";
+import { ModelLast } from "../../components/models/MaleLast";
+import { ModelBody2 } from "../../components/models/MaleBody2";
+import { ModelBody3 } from "../../components/models/MaleBody3";
 
-
-// import { Perf } from "r3f-perf";
-// Memoize the Scene component to prevent unnecessary re-renders
 const Scene = () => {
-  // Mobile-first: Reduce quality on smaller screens for better performance
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
     []
@@ -30,7 +26,7 @@ const Scene = () => {
     () => ({
       antialias: !isMobile,
       powerPreference: "high-performance" as const,
-      stencil: false,
+      // stencil: false,
       depth: true,
       alpha: true, // Enable transparency to blend with background
     }),
@@ -50,6 +46,8 @@ const Scene = () => {
       enablePan: true,
       enableZoom: true,
       enableRotate: true,
+      autoRotate: false,
+      autoRotateSpeed: 5,
       minDistance: 300,
       maxDistance: 1000,
       minPolarAngle: Math.PI / 6,
@@ -59,29 +57,27 @@ const Scene = () => {
     []
   );
 
-
-
   return (
     <Canvas
       camera={cameraSettings}
       gl={glSettings}
       dpr={dpr}
-      className="w-full h-full"
+      className="w-full h-full pointer-events-auto"
       style={{
         touchAction: "none", // Prevent default touch behaviors
         background: "transparent", // Make canvas background transparent
       }}
     >
       {/* <Perf position="top-left" /> */}
-      {/* <Suspense fallback={null}> */}
-      <OrbitControls {...orbitControlsSettings} />
-      <Lights />
+      <Suspense fallback={null}>
+        <OrbitControls {...orbitControlsSettings} />
+        <Lights />
 
-      <ModelScene2 scale={1} position={[-1, -34 , 225]} rotation={[.1,0,0]} />
-      {/* <AuxModel /> */}
-      {/* <MaleBody1 scale={100} position={[-1, -34 , 225]} rotation={[.1,0,0]} /> */}
-      <Preload all />
-      {/* </Suspense> */}
+        <ModelLast scale={4} position={[-250, -150, 0]} rotation={[0, 1, 0]} />
+        <ModelBody2 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} />
+        <ModelBody3 scale={4} position={[250, -150, 0]} rotation={[0, 0, 0]} />
+        <Preload all />
+      </Suspense>
     </Canvas>
   );
 };
