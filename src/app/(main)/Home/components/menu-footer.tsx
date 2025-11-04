@@ -21,10 +21,10 @@ const getIcon = (iconName: string) => {
 
 export default function MenuFooter() {
   return (
-    <div className="relative w-full bg-black max-h-[175px] h-full home-footer">
+    <div className="relative w-full bg-black max-h-[175px] h-full home-footer ">
       <div
         className={cn(
-          "max-w-[236px] max-h-[73px] w-full h-full absolute left-1/2 -translate-x-1/2 z-100 -top-3",
+          "max-w-[236px] max-h-[73px] w-full h-full absolute left-1/2 -translate-x-1/2 z-100 -top-3 ",
           "flex items-center justify-center",
           "bg-[url('/homepage/play_button.svg')] bg-contain bg-center"
         )}

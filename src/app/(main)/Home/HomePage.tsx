@@ -45,13 +45,13 @@ export default function HomePage() {
 
 
       {/* 3D Scene Layer - positioned behind UI */}
-      <div className="absolute inset-0 z-20">
+      <div className="absolute inset-0 z-20 pointer-events-auto">
         <Scene />
       </div>
 
       {/* UI Overlay Layer - positioned on top */}
-      <div className="relative h-dvh  z-20 ">
-        <div className=" h-full  min-h-dvh">
+      <div className="relative min-h-dvh h-screen  z-20 ">
+        <div className=" h-dvh  ">
           <HomeMenu />
         </div>
       </div>

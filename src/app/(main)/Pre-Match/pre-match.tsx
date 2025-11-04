@@ -4,14 +4,16 @@ import { Link } from "react-router";
 import { cn } from "../../../utils/utils";
 import preMatchBackground from "/backgrounds/glitch-bg.jpg";
 import PreMatchTeam from "./components/pre-match-team";
+import SemiSquareContainer from "../Home/components/semi-square/semi-square-container";
+import CyberContainer from "../Home/components/cyber-container";
 
 export default function PreMatchScreen() {
   return (
-    <div className="w-full h-screen p-4 bg-overgoal-dark-blue">
+    <div className="w-full min-h-dvh h-full  p-4 bg-overgoal-dark-blue">
       <img
         src={preMatchBackground}
         alt="pre-match-background"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full min-h-dvh h-screen object-cover z-0"
       />
       <div className="w-full flex flex-col items-center justify-between z-100! relative">
         <BackButton className="w-12 h-12 mr-auto" to="/" />
@@ -41,9 +43,45 @@ export default function PreMatchScreen() {
             />
           </div>
 
-          <div className="w-full text-center text-white px-4">
-            iae impedit adipisci perferendis nisi consequatur consectetur?
-            Perspiciatis harum repellat obcaecati omnis.
+          <div className="w-full flex flex-row items-center justify-between gap-4  text-center text-white p-4 border-1 bg-[#002601] border-overgoal-positive">
+            <div className=" relative  w-10 h-10 bg-amber-50">
+              <div className="absolute  bg-amber-50">
+                <img
+                  src="/pre-match/stamina.png"
+                  alt="stamina"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full h-10 flex items-center justify-center">
+              <CyberContainer className="!w-3/4 !h-[65%]"> </CyberContainer>
+            </div>
+            <div className="flex flex-row gap-2">
+              <SemiSquareContainer
+                bgColor="#002601"
+                noShadow={true}
+                borderColor="var(--color-overgoal-positive)"
+                className="w-10 h-10"
+              >
+                hola
+              </SemiSquareContainer>
+              <SemiSquareContainer
+                bgColor="#002601"
+                borderColor="var(--color-overgoal-positive)"
+                noShadow={true}
+                className="w-10 h-10"
+              >
+                hola
+              </SemiSquareContainer>
+              <SemiSquareContainer
+                bgColor="#002601"
+                borderColor="var(--color-overgoal-positive)"
+                noShadow={true}
+                className="w-10 h-10"
+              >
+                hola
+              </SemiSquareContainer>
+            </div>
           </div>
 
           <div

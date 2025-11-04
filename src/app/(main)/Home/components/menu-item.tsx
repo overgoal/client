@@ -13,7 +13,7 @@ const MenuItem = (props: MenuItemProps) => {
   return (
     <div
       className={cn(
-        "bg-black max-w-[66px] flex justify-center  items-center max-h-[64px] w-full h-full",
+        "bg-black max-w-[66px] flex justify-center items-center max-h-[64px] w-full h-full",
         "menu-item"
       )}
     >
