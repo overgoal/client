@@ -11,7 +11,7 @@ export default function SeasonsScreen() {
     <>
       <div className="min-h-screen w-scren flex items-center flex-col justify-center bg-black backdrop-blur-sm p-2 gap-4">
         <div className="w-full flex flex-row items-center justify-between my-4 mr-2">
-        <BackButton className="w-12 h-12 " />
+          <BackButton className="w-12 h-12 " />
           <div className="flex flex-row items-center justify-center gap-2">
             <div></div>
             <div className="text-white text-sm font-orbitron font-medium">
@@ -56,5 +56,4 @@ export default function SeasonsScreen() {
       </div>
     </>
   );
-
 }

@@ -26,7 +26,7 @@ export default function MenuFooter() {
         className={cn(
           "max-w-[236px] max-h-[73px] w-full h-full absolute left-1/2 -translate-x-1/2 z-100 -top-3 ",
           "flex items-center justify-center",
-          "bg-[url('/homepage/play_button.svg')] bg-contain bg-center"
+          "bg-[url('/homepage/play_button.svg')] bg-contain bg-center",
         )}
       >
         <Link to="/pre-match/1">

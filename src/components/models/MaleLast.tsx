@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { useEffect, useMemo, useRef } from "react";
 import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { useCharacterShader } from "../webgl/components/character-models/programs/useCharacterShader";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,7 +28,7 @@ type GLTFResult = GLTF & {
 export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>(null);
   const { nodes, animations } = useGLTF(
-    "/models/Male/male_last_2.glb"
+    "/models/Male/male_last_2.glb",
   ) as GLTFResult;
   const { actions } = useAnimations(animations, group);
 
@@ -37,10 +38,14 @@ export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
     }
   }, [actions]);
 
-  const bodyTexture = useTexture("/models/Male/textures/MainBody_Skin1_BaseColor.png");
-  const accesoriesTexture = useTexture(
-    "/models/Male/textures/Accesories_Mat_BaseColor.png"
+  const bodyTexture = useTexture(
+    "/models/Male/textures/MainBody_Skin1_BaseColor.png",
   );
+  const accesoriesTexture = useTexture(
+    "/models/Male/textures/Accesories_Mat_BaseColor.png",
+  );
+
+  const characterShader = useCharacterShader({ baseTexture: bodyTexture });
 
   const baseMaterial = useMemo(() => {
     const material = new THREE.MeshBasicMaterial({

@@ -27,7 +27,7 @@ type GLTFResult = GLTF & {
 export function ModelBody3(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>();
   const { nodes, animations } = useGLTF(
-    "/models/Male/male_body_3.glb"
+    "/models/Male/male_body_3.glb",
   ) as GLTFResult;
   const { actions } = useAnimations(animations, group);
 
@@ -38,14 +38,14 @@ export function ModelBody3(props: JSX.IntrinsicElements["group"]) {
   }, [actions]);
 
   const bodyTexture = useTexture(
-    "/models/Male/textures/MainBody_Skin3_BaseColor.png"
+    "/models/Male/textures/MainBody_Skin3_BaseColor.png",
   );
   const accesoriesTexture = useTexture(
-    "/models/Male/textures/Accesories_Mat_BaseColor.png"
+    "/models/Male/textures/Accesories_Mat_BaseColor.png",
   );
 
   const maskMainBodyTexture = useTexture(
-    "/models/Male/textures/Mask_MainBody_Mat_BaseColor.png"
+    "/models/Male/textures/Mask_MainBody_Mat_BaseColor.png",
   );
 
   const baseMaterial = useMemo(() => {
@@ -54,7 +54,7 @@ export function ModelBody3(props: JSX.IntrinsicElements["group"]) {
       color: new THREE.Color(0xffffff),
       vertexColors: false,
       alphaMap: maskMainBodyTexture,
-    //   transparent: true,
+      //   transparent: true,
     });
 
     // Ensure proper color space

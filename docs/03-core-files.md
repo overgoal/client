@@ -29,11 +29,11 @@ src/
 ```typescript
 // Auto-generated from Cairo contracts (via `sozo build --typescript`)
 export interface Player {
-  owner: string;          // Player's wallet address
-  experience: number;     // Game experience points
-  health: number;         // Current health status
-  coins: number;          // Player's currency
-  creation_day: number;   // When player was created
+  owner: string; // Player's wallet address
+  experience: number; // Game experience points
+  health: number; // Current health status
+  coins: number; // Player's currency
+  creation_day: number; // When player was created
 }
 
 // Achievement system types
@@ -57,19 +57,25 @@ export const schema: SchemaType = {
     },
   },
   achievement: {
-    TrophyCreation: { /* ... */ },
-    TrophyProgression: { /* ... */ },
+    TrophyCreation: {
+      /* ... */
+    },
+    TrophyProgression: {
+      /* ... */
+    },
   },
 };
 ```
 
 **✨ Key Features:**
+
 - **Auto-generation**: Updates automatically when Cairo contracts change
 - **Full Type Safety**: Catches type errors at compile time
 - **Default Values**: Provides sensible defaults for all properties
 - **Achievement Integration**: Includes trophy and task system types
 
 **🔄 How It Works:**
+
 1. Cairo contracts define models (e.g., `Player` struct)
 2. Dojo tooling generates TypeScript interfaces
 3. Frontend imports these types for complete type safety
@@ -96,21 +102,23 @@ const {
 } = import.meta.env;
 
 export const dojoConfig = createDojoConfig({
-  manifest,                                                    // Contract deployment info
-  masterAddress: VITE_PUBLIC_MASTER_ADDRESS || '',            // Master account for transactions
-  masterPrivateKey: VITE_PUBLIC_MASTER_PRIVATE_KEY || '',     // Master account private key
-  rpcUrl: VITE_PUBLIC_NODE_URL || '',                         // Starknet RPC endpoint
-  toriiUrl: VITE_PUBLIC_TORII || '',                          // Torii GraphQL indexer URL
+  manifest, // Contract deployment info
+  masterAddress: VITE_PUBLIC_MASTER_ADDRESS || "", // Master account for transactions
+  masterPrivateKey: VITE_PUBLIC_MASTER_PRIVATE_KEY || "", // Master account private key
+  rpcUrl: VITE_PUBLIC_NODE_URL || "", // Starknet RPC endpoint
+  toriiUrl: VITE_PUBLIC_TORII || "", // Torii GraphQL indexer URL
 });
 ```
 
 **✨ Key Components:**
+
 - **`manifest`**: Contains deployed contract addresses and ABIs
 - **RPC URL**: Direct connection to Starknet network
 - **Torii URL**: GraphQL endpoint for indexed blockchain data
 - **Master Account**: For contract administration (development only)
 
 **🌍 Environment Configuration:**
+
 ```bash
 # .env.local
 VITE_PUBLIC_NODE_URL=https://api.cartridge.gg/x/starknet/sepolia
@@ -129,7 +137,6 @@ VITE_PUBLIC_MASTER_PRIVATE_KEY=0x...
 
 ```typescript
 export function setupWorld(provider: DojoProvider) {
-
   // Build calldata for game actions
   const build_game_train_calldata = (): DojoCall => {
     return {
@@ -145,7 +152,7 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_train_calldata(),
-        "full_starter_react",  // Namespace from dojo.toml
+        "full_starter_react", // Namespace from dojo.toml
       );
     } catch (error) {
       console.error("Training failed:", error);
@@ -171,12 +178,14 @@ export function setupWorld(provider: DojoProvider) {
 ```
 
 **🎯 Game Actions Available:**
+
 - **`spawnPlayer()`**: Create new player on blockchain
 - **`train()`**: Increase experience (+10 EXP)
 - **`mine()`**: Earn coins but lose health (+5 coins, -5 health)
 - **`rest()`**: Recover health (+20 health)
 
 **✨ Features:**
+
 - **Error Handling**: Built-in try/catch for all contract calls
 - **Consistent API**: All functions follow the same pattern
 - **Calldata Builders**: For advanced transaction composition
@@ -228,6 +237,7 @@ export default function StarknetProvider({ children }: PropsWithChildren) {
 ```
 
 **✨ Key Features:**
+
 - **Environment Awareness**: Automatic network selection
 - **Auto-reconnection**: Remembers wallet connections
 - **Cartridge Integration**: Gaming-focused wallet support
@@ -284,6 +294,7 @@ async function main() {
 ```
 
 **🎯 Initialization Steps:**
+
 1. **Dojo SDK Init**: Connect to Torii indexer and World contract
 2. **Provider Setup**: Establish DojoSdkProvider → StarknetProvider hierarchy
 3. **Error Handling**: Graceful fallback if initialization fails
@@ -324,16 +335,17 @@ export function useStarknetConnect() {
   }, [connect, connectors]);
 
   return {
-    status,           // 'connected' | 'disconnected' | 'connecting'
-    address,          // Wallet address when connected
-    isConnecting,     // Loading state
-    handleConnect,    // Function to initiate connection
+    status, // 'connected' | 'disconnected' | 'connecting'
+    address, // Wallet address when connected
+    isConnecting, // Loading state
+    handleConnect, // Function to initiate connection
     handleDisconnect, // Function to disconnect wallet
   };
 }
 ```
 
 **✨ Connection States:**
+
 - **`disconnected`**: No wallet connected
 - **`connecting`**: Connection in progress
 - **`connected`**: Wallet successfully connected
@@ -383,11 +395,11 @@ export const usePlayer = (): UsePlayerReturn => {
     try {
       setIsLoading(true);
       const response = await fetch(TORII_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           query: PLAYER_QUERY,
-          variables: { playerAddress: addAddressPadding(account.address) }
+          variables: { playerAddress: addAddressPadding(account.address) },
         }),
       });
 
@@ -423,48 +435,52 @@ export const useSpawnPlayer = () => {
   const { player, refetch: refetchPlayer } = usePlayer();
   const [isInitializing, setIsInitializing] = useState(false);
 
-  const initializePlayer = useCallback(async (): Promise<InitializeResponse> => {
-    if (isInitializing) {
-      return { success: false, playerExists: false, error: "Already initializing" };
-    }
-
-    setIsInitializing(true);
-
-    try {
-      // Check if player already exists
-      await refetchPlayer();
-
-      if (player) {
-        console.log("✅ Player already exists");
-        return { success: true, playerExists: true };
+  const initializePlayer =
+    useCallback(async (): Promise<InitializeResponse> => {
+      if (isInitializing) {
+        return {
+          success: false,
+          playerExists: false,
+          error: "Already initializing",
+        };
       }
 
-      // Create new player
-      console.log("🎮 Creating new player...");
-      const txResult = await client.game.spawnPlayer(account);
+      setIsInitializing(true);
 
-      console.log("✅ Player created:", txResult.transaction_hash);
+      try {
+        // Check if player already exists
+        await refetchPlayer();
 
-      // Refresh player data
-      await refetchPlayer();
+        if (player) {
+          console.log("✅ Player already exists");
+          return { success: true, playerExists: true };
+        }
 
-      return {
-        success: true,
-        playerExists: false,
-        transactionHash: txResult.transaction_hash
-      };
+        // Create new player
+        console.log("🎮 Creating new player...");
+        const txResult = await client.game.spawnPlayer(account);
 
-    } catch (error) {
-      console.error("❌ Player initialization failed:", error);
-      return {
-        success: false,
-        playerExists: false,
-        error: error.message
-      };
-    } finally {
-      setIsInitializing(false);
-    }
-  }, [client, account, player, refetchPlayer, isInitializing]);
+        console.log("✅ Player created:", txResult.transaction_hash);
+
+        // Refresh player data
+        await refetchPlayer();
+
+        return {
+          success: true,
+          playerExists: false,
+          transactionHash: txResult.transaction_hash,
+        };
+      } catch (error) {
+        console.error("❌ Player initialization failed:", error);
+        return {
+          success: false,
+          playerExists: false,
+          error: error.message,
+        };
+      } finally {
+        setIsInitializing(false);
+      }
+    }, [client, account, player, refetchPlayer, isInitializing]);
 
   return { initializePlayer, isInitializing };
 };
@@ -493,11 +509,13 @@ export const useSpawnPlayer = () => {
 ```
 
 ### **Type Safety Chain**
+
 ```
 Cairo Contracts → bindings.ts → Custom Hooks → React Components
 ```
 
 ### **Connection Chain**
+
 ```
 starknet-provider.tsx → useStarknetConnect.tsx → Game Components
 ```

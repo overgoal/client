@@ -88,7 +88,7 @@ export default function PreMatchScreen() {
             className={cn(
               "max-w-[236px] max-h-[73px] w-full h-full z-100 ",
               "flex items-center justify-center",
-              "bg-[url('/homepage/play_button.svg')] bg-no-repeat bg-contain bg-center"
+              "bg-[url('/homepage/play_button.svg')] bg-no-repeat bg-contain bg-center",
             )}
           >
             <Link to="/pre-match/1">

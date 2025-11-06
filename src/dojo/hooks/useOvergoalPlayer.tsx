@@ -55,7 +55,7 @@ const hexToNumber = (hexValue: string | number): number => {
 
 // Function to fetch overgoal player data from GraphQL
 const fetchOvergoalPlayerData = async (
-  playerId: string
+  playerId: string,
 ): Promise<OvergoalPlayer | null> => {
   try {
     console.log("🔍 Fetching overgoal player with player_id:", playerId);
@@ -99,7 +99,7 @@ const fetchOvergoalPlayerData = async (
 
     console.log(
       "✅ Overgoal player data after conversion:",
-      overgoalPlayerData
+      overgoalPlayerData,
     );
     return overgoalPlayerData;
   } catch (error) {
@@ -107,7 +107,6 @@ const fetchOvergoalPlayerData = async (
     throw error;
   }
 };
-
 
 // Main hook
 export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
@@ -121,7 +120,7 @@ export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
 
   const userAddress = useMemo(
     () => (account ? addAddressPadding(account.address).toLowerCase() : ""),
-    [account]
+    [account],
   );
 
   const refetch = useCallback(async () => {
@@ -146,7 +145,7 @@ export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
       const updatedOvergoalPlayer = useAppStore.getState().overgoalPlayer;
       console.log(
         "💾 Overgoal player in store after update:",
-        updatedOvergoalPlayer
+        updatedOvergoalPlayer,
       );
     } catch (err) {
       const error =

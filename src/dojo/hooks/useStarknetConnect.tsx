@@ -15,7 +15,7 @@ export function useStarknetConnect() {
       console.error("No connector found");
       return;
     }
-    
+
     try {
       setIsConnecting(true);
       setHasTriedConnect(true);
@@ -45,16 +45,16 @@ export function useStarknetConnect() {
     address: address ? `${address.slice(0, 6)}...${address.slice(-4)}` : null,
     isConnecting,
     hasTriedConnect,
-    availableConnectors: connectors.length
+    availableConnectors: connectors.length,
   });
 
-  return { 
-    status, 
+  return {
+    status,
     address,
     isConnecting,
-    hasTriedConnect, 
+    hasTriedConnect,
     handleConnect,
     handleDisconnect,
-    setHasTriedConnect 
+    setHasTriedConnect,
   };
 }

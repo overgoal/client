@@ -7,5 +7,7 @@ type Props = {
 };
 
 export default function CyberContainer({ className, children }: Props) {
-  return <div className={cn(" cyber-container p-1   ", className)}>{children}</div>;
+  return (
+    <div className={cn(" cyber-container p-1   ", className)}>{children}</div>
+  );
 }

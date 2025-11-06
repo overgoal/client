@@ -8,7 +8,7 @@ interface TrainActionState {
   isLoading: boolean;
   error: string | null;
   txHash: string | null;
-  txStatus: 'PENDING' | 'SUCCESS' | 'REJECTED' | null;
+  txStatus: "PENDING" | "SUCCESS" | "REJECTED" | null;
 }
 
 interface UseTrainActionReturn {
@@ -27,92 +27,97 @@ export const useTrainAction = (): UseTrainActionReturn => {
     isLoading: false,
     error: null,
     txHash: null,
-    txStatus: null
+    txStatus: null,
   });
 
   const isConnected = status === "connected";
   const hasPlayer = player !== null;
   const canTrain = isConnected && hasPlayer && !trainState.isLoading;
 
-  const executeTrain = useCallback(async (name: string, value: number) => {
-    if (!canTrain || !account) {
-      setTrainState(prev => ({
-        ...prev,
-        error: !account ? "Please connect your controller" : "Cannot train right now"
-      }));
-      return;
-    }
-
-    try {
-      setTrainState({
-        isLoading: true,
-        error: null,
-        txHash: null,
-        txStatus: 'PENDING'
-      });
-
-      console.log("📤 Executing train transaction...");
-
-      const tx = await client.game.train(account as Account, name, value); // Here we update the player stats
-      console.log("📥 Train transaction response:", tx);
-
-      if (tx?.transaction_hash) {
-        setTrainState(prev => ({ ...prev, txHash: tx.transaction_hash }));
+  const executeTrain = useCallback(
+    async (name: string, value: number) => {
+      if (!canTrain || !account) {
+        setTrainState((prev) => ({
+          ...prev,
+          error: !account
+            ? "Please connect your controller"
+            : "Cannot train right now",
+        }));
+        return;
       }
 
-      if (tx && tx.code === "SUCCESS") {
-        console.log("✅ Train transaction successful!");
+      try {
+        setTrainState({
+          isLoading: true,
+          error: null,
+          txHash: null,
+          txStatus: "PENDING",
+        });
 
-        // Optimistic update: +10 experience
+        console.log("📤 Executing train transaction...");
 
-        setTrainState(prev => ({
-          ...prev,
-          txStatus: 'SUCCESS',
-          isLoading: false
-        }));
+        const tx = await client.game.train(account as Account, name, value); // Here we update the player stats
+        console.log("📥 Train transaction response:", tx);
 
-        // Auto-clear after 3 seconds
+        if (tx?.transaction_hash) {
+          setTrainState((prev) => ({ ...prev, txHash: tx.transaction_hash }));
+        }
+
+        if (tx && tx.code === "SUCCESS") {
+          console.log("✅ Train transaction successful!");
+
+          // Optimistic update: +10 experience
+
+          setTrainState((prev) => ({
+            ...prev,
+            txStatus: "SUCCESS",
+            isLoading: false,
+          }));
+
+          // Auto-clear after 3 seconds
+          setTimeout(() => {
+            setTrainState({
+              isLoading: false,
+              error: null,
+              txHash: null,
+              txStatus: null,
+            });
+          }, 3000);
+        } else {
+          throw new Error(
+            `Train transaction failed with code: ${tx?.code || "unknown"}`,
+          );
+        }
+      } catch (error) {
+        console.error("❌ Error executing train:", error);
+
+        setTrainState({
+          isLoading: false,
+          error: error instanceof Error ? error.message : "Unknown error",
+          txHash: null,
+          txStatus: "REJECTED",
+        });
+
+        // Auto-clear error after 5 seconds
         setTimeout(() => {
           setTrainState({
             isLoading: false,
             error: null,
             txHash: null,
-            txStatus: null
+            txStatus: null,
           });
-        }, 3000);
-
-      } else {
-        throw new Error(`Train transaction failed with code: ${tx?.code || 'unknown'}`);
+        }, 5000);
       }
-
-    } catch (error) {
-      console.error("❌ Error executing train:", error);
-
-      setTrainState({
-        isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
-        txHash: null,
-        txStatus: 'REJECTED'
-      });
-
-      // Auto-clear error after 5 seconds
-      setTimeout(() => {
-        setTrainState({
-          isLoading: false,
-          error: null,
-          txHash: null,
-          txStatus: null
-        });
-      }, 5000);
-    }
-  }, [canTrain, account, client.game, player]);
+    },
+    [canTrain, account, client.game, player],
+  );
 
   const resetTrainState = useCallback(() => {
     setTrainState({
       isLoading: false,
       error: null,
       txHash: null,
-      txStatus: null
+      txStatus: null,
     });
   }, []);
 
@@ -120,6 +125,6 @@ export const useTrainAction = (): UseTrainActionReturn => {
     trainState,
     executeTrain,
     canTrain,
-    resetTrainState
+    resetTrainState,
   };
 };

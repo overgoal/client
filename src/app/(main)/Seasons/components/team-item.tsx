@@ -29,7 +29,12 @@ export default function SeasonTeamItem({
         isSingleSide={true}
         className="w-[50px] h-[50px] !z-100 flex items-center justify-center"
       >
-        <span className="text-lg font-orbitron font-medium text-center " style={{ color: color === "blue" ? "var(--color-overgoal-blue)" : "white" }}>
+        <span
+          className="text-lg font-orbitron font-medium text-center "
+          style={{
+            color: color === "blue" ? "var(--color-overgoal-blue)" : "white",
+          }}
+        >
           {formatIndex(index)}
         </span>
       </BoxContainer>
@@ -38,7 +43,15 @@ export default function SeasonTeamItem({
           <span className="text-white text-sm font-orbitron font-medium ml-2">
             {name}
           </span>
-          <span className="w-full h-[1px] " style={{ backgroundColor: color === "blue" ? "var(--color-overgoal-blue)" : "var(--color-overgoal-purple)" }}></span>
+          <span
+            className="w-full h-[1px] "
+            style={{
+              backgroundColor:
+                color === "blue"
+                  ? "var(--color-overgoal-blue)"
+                  : "var(--color-overgoal-purple)",
+            }}
+          ></span>
           <div className="flex flex-row gap-6 items-center justify-start ml-2">
             <div className="text-white text-xs font-orbitron  flex flex-row gap-2 items-center justify-center !font-light">
               <span className="text-white text-xs font-orbitron !font-medium">

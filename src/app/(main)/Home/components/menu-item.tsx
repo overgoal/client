@@ -14,7 +14,7 @@ const MenuItem = (props: MenuItemProps) => {
     <div
       className={cn(
         "bg-black max-w-[66px] flex justify-center items-center max-h-[64px] w-full h-full",
-        "menu-item"
+        "menu-item",
       )}
     >
       <Link to={props.href}>

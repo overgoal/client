@@ -5,11 +5,12 @@ import Lights from "./components/lights";
 import { MaleBody1 } from "../../components/models/MaleLast";
 import { ModelBody2 } from "../../components/models/MaleBody2";
 import { ModelBody3 } from "../../components/models/MaleBody3";
+import ChangeableModels from "../models/ChangeableModels";
 
 const Scene = () => {
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
-    []
+    [],
   );
 
   // Memoize camera settings
@@ -17,9 +18,12 @@ const Scene = () => {
     () => ({
       position: [0, 0, 5] as [number, number, number],
       fov: 75,
+      near: 0.1,
+      far: 1000,
     }),
-    []
+    [],
   );
+
 
   // Memoize WebGL settings
   const glSettings = useMemo(
@@ -30,14 +34,14 @@ const Scene = () => {
       depth: true,
       alpha: true, // Enable transparency to blend with background
     }),
-    [isMobile]
+    [isMobile],
   );
 
   // Memoize DPR settings
   const dpr = useMemo(
     () =>
       isMobile ? ([1, 1.5] as [number, number]) : ([1, 2] as [number, number]),
-    [isMobile]
+    [isMobile],
   );
 
   // Memoize OrbitControls settings
@@ -54,7 +58,7 @@ const Scene = () => {
       maxPolarAngle: Math.PI - Math.PI / 6,
       target: [0, 0, 0] as [number, number, number],
     }),
-    []
+    [],
   );
 
   return (
@@ -62,7 +66,7 @@ const Scene = () => {
       camera={cameraSettings}
       gl={glSettings}
       dpr={dpr}
-      className="w-full h-full pointer-events-auto"
+      className="pointer-events-auto h-full w-full"
       style={{
         touchAction: "none", // Prevent default touch behaviors
         background: "transparent", // Make canvas background transparent
@@ -73,9 +77,15 @@ const Scene = () => {
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
 
-        <MaleBody1 scale={4} position={[-250, -150, 0]} rotation={[0, 1, 0]} />
-        <ModelBody2 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} />
-        <ModelBody3 scale={4} position={[250, -150, 0]} rotation={[0, 0, 0]} />
+        {/* <MaleBody1 scale={4.8} position={[0, -200, -20]} rotation={[0, 0, 0]} /> */}
+        {/* <ModelBody2 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} /> */}
+        {/* <ModelBody3 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} /> */}
+        <ChangeableModels
+          scale={4.8}
+          position={[0, -200, -20]}
+          rotation={[0, 0, 0]}
+          autoRandomizeInterval={2000}
+        />
         <Preload all />
       </Suspense>
     </Canvas>

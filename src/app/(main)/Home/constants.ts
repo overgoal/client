@@ -1,4 +1,3 @@
-
 export const HOME_MENU_ITEMS = [
   {
     title: "Career",

@@ -1,22 +1,16 @@
 import { useEffect, useMemo } from "react";
 
 // import { useNavigate } from "react-router";
-import { usePlayer } from "../../../dojo/hooks/usePlayer";
 // import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
 // import useAppStore from "../../../zustand/store";
-import background from "/homepage/background.png";
-import HomeMenu from "./components/menu";
-import Scene from "../../../components/webgl/Scene";
+import Scene from "../../components/webgl/Scene";
 
-export default function HomePage() {
+export default function CardScreen() {
   // const navigate = useNavigate();
-  const { player } = usePlayer();
   // const { handleDisconnect } = useStarknetConnect();
   // const resetStore = useAppStore((state) => state.resetStore);
 
-  useEffect(() => {
-    console.log(player);
-  }, [player]);
+  
 
   // Memoize static styles to prevent re-creation
   const containerStyles = useMemo(
@@ -33,12 +27,12 @@ export default function HomePage() {
   // };
 
   return (
-    <div className="w-full min-h-dvh h-full relative  " style={containerStyles}>
+    <div className="w-[670px] min-h-dvh h-[943px] relative  " style={containerStyles}>
       {/* Background Image Layer */}
       <img
-        src={background}
+        src={"/backgrounds/bg-card.png"}
         alt="background"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute  inset-0 w-full h-full object-cover z-0"
         width={1000}
         height={1000}
       />
@@ -48,12 +42,6 @@ export default function HomePage() {
         <Scene />
       </div>
 
-      {/* UI Overlay Layer - positioned on top */}
-      <div className="relative min-h-dvh h-screen  z-20 ">
-        <div className=" h-dvh  ">
-          <HomeMenu />
-        </div>
-      </div>
     </div>
   );
 }

@@ -41,13 +41,18 @@ The Cartridge Connector configuration is where the magic happens - defining whic
 ```typescript
 import { Connector } from "@starknet-react/core";
 import { ControllerConnector } from "@cartridge/connector";
-import { ColorMode, SessionPolicies, ControllerOptions } from "@cartridge/controller";
+import {
+  ColorMode,
+  SessionPolicies,
+  ControllerOptions,
+} from "@cartridge/controller";
 import { constants } from "starknet";
 
 const { VITE_PUBLIC_DEPLOY_TYPE } = import.meta.env;
 
 // Your deployed game contract address
-const CONTRACT_ADDRESS_GAME = '0x31b119987eeb1a6c0d13b029ad9a3c64856369dcdfd6e69d9af4c9fba6f507f';
+const CONTRACT_ADDRESS_GAME =
+  "0x31b119987eeb1a6c0d13b029ad9a3c64856369dcdfd6e69d9af4c9fba6f507f";
 
 // 🎯 SESSION POLICIES - The key to seamless gaming
 const policies: SessionPolicies = {
@@ -64,8 +69,8 @@ const policies: SessionPolicies = {
 };
 
 // 🎨 VISUAL CUSTOMIZATION
-const colorMode: ColorMode = "dark";                    // Dark theme for gaming
-const theme = "full-starter-react";                     // Custom game theme
+const colorMode: ColorMode = "dark"; // Dark theme for gaming
+const theme = "full-starter-react"; // Custom game theme
 
 const options: ControllerOptions = {
   // 🌐 Network Configuration
@@ -74,20 +79,23 @@ const options: ControllerOptions = {
       rpcUrl: "https://api.cartridge.gg/x/starknet/sepolia",
     },
   ],
-  defaultChainId: VITE_PUBLIC_DEPLOY_TYPE === 'mainnet'
-    ? constants.StarknetChainId.SN_MAIN
-    : constants.StarknetChainId.SN_SEPOLIA,
+  defaultChainId:
+    VITE_PUBLIC_DEPLOY_TYPE === "mainnet"
+      ? constants.StarknetChainId.SN_MAIN
+      : constants.StarknetChainId.SN_SEPOLIA,
 
   // 🎯 Core Configuration
-  policies,                                              // Pre-approved actions
-  theme,                                                 // Visual branding
-  colorMode,                                             // UI appearance
-  namespace: "full_starter_react",                       // Unique game identifier
-  slot: "full-starter-react",                           // Session slot name
+  policies, // Pre-approved actions
+  theme, // Visual branding
+  colorMode, // UI appearance
+  namespace: "full_starter_react", // Unique game identifier
+  slot: "full-starter-react", // Session slot name
 };
 
 // Create the connector instance
-const cartridgeConnector = new ControllerConnector(options) as never as Connector;
+const cartridgeConnector = new ControllerConnector(
+  options,
+) as never as Connector;
 
 export default cartridgeConnector;
 ```
@@ -107,10 +115,10 @@ const policies: SessionPolicies = {
     [CONTRACT_ADDRESS_GAME]: {
       methods: [
         // Each method that should work seamlessly in-game
-        { name: "spawn_player", entrypoint: "spawn_player" },     // Create new player
-        { name: "train", entrypoint: "train" },                   // +10 EXP action
-        { name: "mine", entrypoint: "mine" },                     // +5 coins, -5 health
-        { name: "rest", entrypoint: "rest" },                     // +20 health recovery
+        { name: "spawn_player", entrypoint: "spawn_player" }, // Create new player
+        { name: "train", entrypoint: "train" }, // +10 EXP action
+        { name: "mine", entrypoint: "mine" }, // +5 coins, -5 health
+        { name: "rest", entrypoint: "rest" }, // +20 health recovery
       ],
     },
   },
@@ -151,13 +159,13 @@ Session policies are **secure by design**:
 
 ```typescript
 // ✅ ALLOWED - These will execute seamlessly
-await client.game.train(account);        // Pre-approved ✅
-await client.game.mine(account);         // Pre-approved ✅
-await client.game.rest(account);         // Pre-approved ✅
+await client.game.train(account); // Pre-approved ✅
+await client.game.mine(account); // Pre-approved ✅
+await client.game.rest(account); // Pre-approved ✅
 
 // ❌ BLOCKED - These will require explicit approval
 await client.game.deletePlayer(account); // Not in policies ❌
-await otherContract.transfer(account);    // Different contract ❌
+await otherContract.transfer(account); // Different contract ❌
 ```
 
 ---
@@ -176,12 +184,13 @@ const options: ControllerOptions = {
   ],
 
   // Automatic network selection based on deployment
-  defaultChainId: VITE_PUBLIC_DEPLOY_TYPE === 'mainnet'
-    ? constants.StarknetChainId.SN_MAIN      // Mainnet for production
-    : constants.StarknetChainId.SN_SEPOLIA,  // Sepolia for testing
+  defaultChainId:
+    VITE_PUBLIC_DEPLOY_TYPE === "mainnet"
+      ? constants.StarknetChainId.SN_MAIN // Mainnet for production
+      : constants.StarknetChainId.SN_SEPOLIA, // Sepolia for testing
 
-  namespace: "full_starter_react",           // Unique identifier
-  slot: "full-starter-react",               // Session storage key
+  namespace: "full_starter_react", // Unique identifier
+  slot: "full-starter-react", // Session storage key
 };
 ```
 
@@ -202,12 +211,12 @@ This automatically switches between networks without code changes!
 
 ```typescript
 // Visual configuration for gaming experience
-const colorMode: ColorMode = "dark";        // Perfect for gaming
-const theme = "full-starter-react";         // Your game's branding
+const colorMode: ColorMode = "dark"; // Perfect for gaming
+const theme = "full-starter-react"; // Your game's branding
 
 const options: ControllerOptions = {
-  colorMode,                                 // Dark theme
-  theme,                                     // Custom styling
+  colorMode, // Dark theme
+  theme, // Custom styling
   // ... other options
 };
 ```
@@ -258,10 +267,10 @@ export function useStarknetConnect() {
   }, [connect, connectors]);
 
   return {
-    status,           // 'connected' | 'disconnected' | 'connecting'
-    address,          // Player's wallet address
-    isConnecting,     // Loading state
-    handleConnect,    // Function to open Controller
+    status, // 'connected' | 'disconnected' | 'connecting'
+    address, // Player's wallet address
+    isConnecting, // Loading state
+    handleConnect, // Function to open Controller
     handleDisconnect, // Function to disconnect
   };
 }
@@ -296,13 +305,13 @@ The Controller provides built-in profile management:
 const { connector } = useAccount();
 
 const handlePlayerReady = useCallback(() => {
-  if (!connector || !('controller' in connector)) {
+  if (!connector || !("controller" in connector)) {
     console.error("Connector not initialized");
     return;
   }
 
   // Open player profile with achievements
-  if (connector.controller && 'openProfile' in connector.controller) {
+  if (connector.controller && "openProfile" in connector.controller) {
     connector.controller.openProfile("achievements");
   }
 }, [connector]);
@@ -315,7 +324,6 @@ const handlePlayerReady = useCallback(() => {
 const openAchievements = () => {
   connector.controller.openProfile("achievements");
 };
-
 ```
 
 ---
@@ -350,7 +358,7 @@ useEffect(() => {
 
     // Automatically create player if needed
     setTimeout(() => {
-      initializePlayer().then(result => {
+      initializePlayer().then((result) => {
         console.log("🎮 Auto-initialization result:", result);
       });
     }, 500);
@@ -380,7 +388,6 @@ const executeTrain = useCallback(async () => {
       console.log("✅ Train successful!");
       // UI already updated optimistically
     }
-
   } catch (error) {
     // 4. ❌ Rollback on error
     updatePlayerExperience((player?.experience || 0) - 10);
@@ -407,13 +414,13 @@ User clicks "Train" → UI updates instantly → Transaction processes in backgr
 
 ### **Why Controller is Perfect for Onchain Games**
 
-| Traditional Wallet | Cartridge Controller | Impact |
-|-------------------|---------------------|---------|
-| Popup per action | Pre-approved actions | 🚀 **10x faster** gameplay |
-| User attention required | Background execution | 🎯 **Uninterrupted** focus |
-| Complex UI | Gaming-focused design | 😊 **Better** user experience |
-| Generic branding | Custom game themes | 🎨 **Branded** experience |
-| No achievements | Built-in achievement system | 🏆 **Enhanced** engagement |
+| Traditional Wallet      | Cartridge Controller        | Impact                        |
+| ----------------------- | --------------------------- | ----------------------------- |
+| Popup per action        | Pre-approved actions        | 🚀 **10x faster** gameplay    |
+| User attention required | Background execution        | 🎯 **Uninterrupted** focus    |
+| Complex UI              | Gaming-focused design       | 😊 **Better** user experience |
+| Generic branding        | Custom game themes          | 🎨 **Branded** experience     |
+| No achievements         | Built-in achievement system | 🏆 **Enhanced** engagement    |
 
 ---
 

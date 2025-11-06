@@ -8,7 +8,7 @@ interface MineActionState {
   isLoading: boolean;
   error: string | null;
   txHash: string | null;
-  txStatus: 'PENDING' | 'SUCCESS' | 'REJECTED' | null;
+  txStatus: "PENDING" | "SUCCESS" | "REJECTED" | null;
 }
 
 interface UseMineActionReturn {
@@ -27,7 +27,7 @@ export const useMineAction = (): UseMineActionReturn => {
     isLoading: false,
     error: null,
     txHash: null,
-    txStatus: null
+    txStatus: null,
   });
 
   const isConnected = status === "connected";
@@ -40,7 +40,7 @@ export const useMineAction = (): UseMineActionReturn => {
         ? "Please connect your controller"
         : "Cannot mine right now";
 
-      setMineState(prev => ({ ...prev, error: errorMsg }));
+      setMineState((prev) => ({ ...prev, error: errorMsg }));
       return;
     }
 
@@ -49,7 +49,7 @@ export const useMineAction = (): UseMineActionReturn => {
         isLoading: true,
         error: null,
         txHash: null,
-        txStatus: 'PENDING'
+        txStatus: "PENDING",
       });
 
       console.log("📤 Executing mine transaction...");
@@ -58,7 +58,7 @@ export const useMineAction = (): UseMineActionReturn => {
       console.log("📥 Mine transaction response:", tx);
 
       if (tx?.transaction_hash) {
-        setMineState(prev => ({ ...prev, txHash: tx.transaction_hash }));
+        setMineState((prev) => ({ ...prev, txHash: tx.transaction_hash }));
       }
 
       if (tx && tx.code === "SUCCESS") {
@@ -67,10 +67,10 @@ export const useMineAction = (): UseMineActionReturn => {
         // Optimistic update: +5 coins, -5 health
         // updatePlayerFame((player?.fame || 0) + 5);
 
-        setMineState(prev => ({
+        setMineState((prev) => ({
           ...prev,
-          txStatus: 'SUCCESS',
-          isLoading: false
+          txStatus: "SUCCESS",
+          isLoading: false,
         }));
 
         // Auto-clear after 3 seconds
@@ -79,22 +79,22 @@ export const useMineAction = (): UseMineActionReturn => {
             isLoading: false,
             error: null,
             txHash: null,
-            txStatus: null
+            txStatus: null,
           });
         }, 3000);
-
       } else {
-        throw new Error(`Mine transaction failed with code: ${tx?.code || 'unknown'}`);
+        throw new Error(
+          `Mine transaction failed with code: ${tx?.code || "unknown"}`,
+        );
       }
-
     } catch (error) {
       console.error("❌ Error executing mine:", error);
 
       setMineState({
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
         txHash: null,
-        txStatus: 'REJECTED'
+        txStatus: "REJECTED",
       });
 
       // Auto-clear error after 5 seconds
@@ -103,7 +103,7 @@ export const useMineAction = (): UseMineActionReturn => {
           isLoading: false,
           error: null,
           txHash: null,
-          txStatus: null
+          txStatus: null,
         });
       }, 5000);
     }
@@ -114,7 +114,7 @@ export const useMineAction = (): UseMineActionReturn => {
       isLoading: false,
       error: null,
       txHash: null,
-      txStatus: null
+      txStatus: null,
     });
   }, []);
 
@@ -122,6 +122,6 @@ export const useMineAction = (): UseMineActionReturn => {
     mineState,
     executeMine,
     canMine,
-    resetMineState
+    resetMineState,
   };
 };

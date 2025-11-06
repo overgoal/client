@@ -80,6 +80,7 @@ async function main() {
 ```
 
 **🎯 Key Responsibilities:**
+
 - **Dojo SDK Initialization**: Connects to Torii indexer and Starknet network
 - **Provider Hierarchy**: Establishes the context provider tree
 - **Error Handling**: Graceful fallbacks if initialization fails
@@ -88,11 +89,13 @@ async function main() {
 ### 2. **Provider Layer Architecture**
 
 #### **DojoSdkProvider** (Outer Provider)
+
 - **Purpose**: Provides Dojo-specific functionality and client access
 - **Scope**: Makes Dojo SDK available throughout the component tree
 - **Key Features**: Contract interaction, entity querying, transaction handling
 
 #### **StarknetProvider** (Inner Provider)
+
 - **Purpose**: Handles Starknet blockchain connection and wallet integration
 - **Configuration**: Network selection, RPC URLs, wallet connectors
 
@@ -129,6 +132,7 @@ export default function StarknetProvider({ children }: PropsWithChildren) {
 ### 3. **Configuration Layer**
 
 #### **Dojo Configuration** (`dojoConfig.ts`)
+
 Centralizes all Dojo-related settings and network endpoints:
 
 ```typescript
@@ -136,12 +140,13 @@ export const dojoConfig = createDojoConfig({
   manifest,
   masterAddress: VITE_PUBLIC_MASTER_ADDRESS,
   masterPrivateKey: VITE_PUBLIC_MASTER_PRIVATE_KEY,
-  rpcUrl: VITE_PUBLIC_NODE_URL || 'https://api.cartridge.gg/x/starknet/sepolia',
-  toriiUrl: VITE_PUBLIC_TORII || 'https://api.cartridge.gg/x/myproject/torii',
+  rpcUrl: VITE_PUBLIC_NODE_URL || "https://api.cartridge.gg/x/starknet/sepolia",
+  toriiUrl: VITE_PUBLIC_TORII || "https://api.cartridge.gg/x/myproject/torii",
 });
 ```
 
 #### **Cartridge Connector** (`cartridgeConnector.tsx`)
+
 Configures the gaming-focused wallet integration:
 
 ```typescript
@@ -173,6 +178,7 @@ const options: ControllerOptions = {
 ### 4. **Contract Integration Layer**
 
 #### **Type Definitions** (`bindings.ts`)
+
 Provides TypeScript interfaces for all Dojo models:
 
 ```typescript
@@ -198,6 +204,7 @@ export const schema: SchemaType = {
 ```
 
 #### **Contract Functions** (`contracts.gen.ts`)
+
 Auto-generated functions for smart contract interaction:
 
 ```typescript
@@ -267,39 +274,46 @@ export function setupWorld(provider: DojoProvider) {
 The system uses a **layered hook pattern** for maximum reusability and separation of concerns:
 
 ### **Connection Hooks**
+
 - `useStarknetConnect`: Wallet connection management
 - `useDojoSDK`: Dojo client access and configuration
 
 ### **Data Hooks**
+
 - `usePlayer`: Player data queries and state management
 - `useSpawnPlayer`: Player initialization logic
 
 ### **Action Hooks**
+
 - `useTrainAction`: Training action with optimistic updates
 - `useMineAction`: Mining action with state management
 - `useRestAction`: Rest action with health recovery
 
 ### **State Management Hooks**
+
 - Custom Zustand selectors for optimized re-renders
 - Computed properties for derived state
 
 ## 🚀 Performance Optimizations
 
 ### **1. Selective State Subscriptions**
+
 ```typescript
 // Optimized selector pattern
-const { player, coins } = useAppStore(state => ({
+const { player, coins } = useAppStore((state) => ({
   player: state.player,
-  coins: state.player?.coins || 0
+  coins: state.player?.coins || 0,
 }));
 ```
 
 ### **2. Optimistic Updates**
+
 - Immediate UI feedback for better UX
 - Background blockchain confirmation
 - Automatic rollback on transaction failure
 
 ### **3. Provider Scoping**
+
 - DojoSdkProvider for contract interactions
 - StarknetProvider for wallet/network management
 - Minimal context re-renders through proper provider hierarchy
@@ -307,16 +321,19 @@ const { player, coins } = useAppStore(state => ({
 ## 🛡️ Error Handling Strategy
 
 ### **1. Layered Error Boundaries**
+
 - Application-level error catching
 - Component-level error recovery
 - Hook-level error state management
 
 ### **2. Graceful Degradation**
+
 - Fallback UI when blockchain unavailable
 - Retry mechanisms for failed transactions
 - User-friendly error messages
 
 ### **3. State Consistency**
+
 - Transaction status tracking
 - Rollback mechanisms for failed operations
 - State validation and recovery
@@ -324,16 +341,19 @@ const { player, coins } = useAppStore(state => ({
 ## 📈 Scalability Considerations
 
 ### **1. Modular Architecture**
+
 - Each layer can be extended independently
 - New game features require minimal changes to existing code
 - Clean separation allows for easy testing
 
 ### **2. Hook Composability**
+
 - Hooks can be combined for complex operations
 - Reusable patterns across different game mechanics
 - Consistent error handling and state management
 
 ### **3. Type Safety**
+
 - End-to-end TypeScript integration
 - Contract changes automatically propagate to frontend
 - Compile-time error detection

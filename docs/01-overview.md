@@ -23,27 +23,30 @@ The Dojo Game Starter demonstrates a complete integration between **React fronte
 
 The starter game includes these onchain actions:
 
-| Action | Frontend Interaction | Smart Contract | State Update |
-|--------|---------------------|----------------|--------------|
-| **🏋️ Train** | Click "Train" button | Calls `game.train()` | +10 EXP |
-| **⛏️ Mine** | Click "Mine" button | Calls `game.mine()` | +5 Coins, -5 Health |
-| **💤 Rest** | Click "Rest" button | Calls `game.rest()` | +20 Health |
-| **🎯 Spawn** | Auto-triggered on login | Calls `game.spawn_player()` | Creates new player |
+| Action       | Frontend Interaction    | Smart Contract              | State Update        |
+| ------------ | ----------------------- | --------------------------- | ------------------- |
+| **🏋️ Train** | Click "Train" button    | Calls `game.train()`        | +10 EXP             |
+| **⛏️ Mine**  | Click "Mine" button     | Calls `game.mine()`         | +5 Coins, -5 Health |
+| **💤 Rest**  | Click "Rest" button     | Calls `game.rest()`         | +20 Health          |
+| **🎯 Spawn** | Auto-triggered on login | Calls `game.spawn_player()` | Creates new player  |
 
 ## 🔧 Key Integration Components
 
 ### 1. **Frontend Layer** (React + TypeScript)
+
 - **UI Components**: Game interface, player stats, action buttons
 - **State Management**: Zustand for global state
 - **Real-time Updates**: Optimistic UI updates + blockchain confirmation
 
 ### 2. **Connection Layer** (Custom Hooks)
+
 - **`usePlayer`**: Fetches player data from blockchain
 - **`useStarknetConnect`**: Manages wallet connection
 - **`useSpawnPlayer`**: Handles player creation/initialization
 - **`useTrainAction`**: Manages training action with optimistic updates
 
 ### 3. **Blockchain Layer** (Dojo + Starknet)
+
 - **Smart Contracts**: Game logic written in Cairo
 - **Dojo Framework**: ECS architecture for game state
 - **Torii GraphQL**: Indexes and queries blockchain data
@@ -52,6 +55,7 @@ The starter game includes these onchain actions:
 ## 🔄 How Data Flows
 
 ### Reading Data (Query Flow)
+
 ```
 1. Component renders → 2. usePlayer hook → 3. GraphQL query to Torii
                                                         ↓
@@ -59,6 +63,7 @@ The starter game includes these onchain actions:
 ```
 
 ### Writing Data (Transaction Flow)
+
 ```
 1. User clicks "Train" → 2. useTrainAction hook → 3. Optimistic UI update
                                                         ↓
@@ -68,16 +73,19 @@ The starter game includes these onchain actions:
 ## 🎨 What Makes This Integration Special?
 
 ### ✨ **Optimistic Updates**
+
 - **Instant Feedback**: UI updates immediately when user acts
 - **Progressive Enhancement**: Blockchain confirmation happens in background
 - **Rollback Capability**: Reverts changes if transaction fails
 
 ### 🔐 **Seamless Authentication**
+
 - **Cartridge Controller**: Gaming-focused wallet integration
 - **Auto-Detection**: Automatically detects existing players
 - **Auto-Creation**: Creates new players for first-time users
 
 ### 🚀 **Developer Experience**
+
 - **Clean Separation**: UI logic separated from blockchain logic
 - **TypeScript Safety**: Full type safety from contracts to UI
 - **Reusable Patterns**: Hooks can be extended for new game features
@@ -89,14 +97,15 @@ The integration uses **Zustand** as the single source of truth for:
 ```typescript
 // Global state structure
 interface AppState {
-  player: Player | null;        // Current player data
-  isLoading: boolean;          // Loading states
-  error: string | null;        // Error handling
-  gameStarted: boolean;        // Game state
+  player: Player | null; // Current player data
+  isLoading: boolean; // Loading states
+  error: string | null; // Error handling
+  gameStarted: boolean; // Game state
 }
 ```
 
 **Why Zustand?**
+
 - **Simple API**: Easy to understand and use
 - **Performance**: Minimal re-renders with selector patterns
 - **Persistence**: Automatic localStorage integration

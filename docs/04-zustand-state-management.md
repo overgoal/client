@@ -41,11 +41,11 @@ The Zustand store serves as the single source of truth for all application state
 ```typescript
 // Interface matching bindings from Cairo contracts
 export interface Player {
-  owner: string;          // Player's wallet address
-  experience: number;     // Game experience points
-  health: number;         // Current health (0-100)
-  coins: number;          // Player's currency
-  creation_day: number;   // Timestamp when created
+  owner: string; // Player's wallet address
+  experience: number; // Game experience points
+  health: number; // Current health (0-100)
+  coins: number; // Player's currency
+  creation_day: number; // Timestamp when created
 }
 
 // Application state structure
@@ -54,11 +54,11 @@ interface AppState {
   player: Player | null;
 
   // ⚡ UI State
-  isLoading: boolean;     // Global loading state
-  error: string | null;   // Error messages
+  isLoading: boolean; // Global loading state
+  error: string | null; // Error messages
 
   // 🎮 Game State
-  gameStarted: boolean;   // Whether game session is active
+  gameStarted: boolean; // Whether game session is active
 }
 
 // Store actions for state mutations
@@ -95,17 +95,20 @@ const useAppStore = create<AppStore>()(
       // Player actions - immutable updates
       setPlayer: (player) => set({ player }),
 
-      updatePlayerCoins: (coins) => set((state) => ({
-        player: state.player ? { ...state.player, coins } : null
-      })),
+      updatePlayerCoins: (coins) =>
+        set((state) => ({
+          player: state.player ? { ...state.player, coins } : null,
+        })),
 
-      updatePlayerExperience: (experience) => set((state) => ({
-        player: state.player ? { ...state.player, experience } : null
-      })),
+      updatePlayerExperience: (experience) =>
+        set((state) => ({
+          player: state.player ? { ...state.player, experience } : null,
+        })),
 
-      updatePlayerHealth: (health) => set((state) => ({
-        player: state.player ? { ...state.player, health } : null
-      })),
+      updatePlayerHealth: (health) =>
+        set((state) => ({
+          player: state.player ? { ...state.player, health } : null,
+        })),
 
       // UI actions
       setLoading: (isLoading) => set({ isLoading }),
@@ -117,17 +120,19 @@ const useAppStore = create<AppStore>()(
       resetStore: () => set(initialState),
     }),
     {
-      name: 'dojo-starter-store',           // localStorage key
-      partialize: (state) => ({            // Only persist these fields
+      name: "dojo-starter-store", // localStorage key
+      partialize: (state) => ({
+        // Only persist these fields
         player: state.player,
         gameStarted: state.gameStarted,
       }),
-    }
-  )
+    },
+  ),
 );
 ```
 
 **🔑 Key Features:**
+
 - **Immutable Updates**: All state changes create new objects (React optimization)
 - **Selective Persistence**: Only critical data survives page refreshes
 - **Type Safety**: Full TypeScript integration with interface definitions
@@ -215,9 +220,9 @@ const executeMine = useCallback(async () => {
   // Validation - check if player has enough health
   const hasEnoughHealth = (player?.health || 0) > 5;
   if (!hasEnoughHealth) {
-    setMineState(prev => ({
+    setMineState((prev) => ({
       ...prev,
-      error: "Not enough health to mine (need >5 HP)"
+      error: "Not enough health to mine (need >5 HP)",
     }));
     return;
   }
@@ -246,9 +251,9 @@ const executeRest = useCallback(async () => {
   // Validation - only rest if health < 100
   const needsHealth = (player?.health || 0) < 100;
   if (!needsHealth) {
-    setRestState(prev => ({
+    setRestState((prev) => ({
       ...prev,
-      error: "Health is already full"
+      error: "Health is already full",
     }));
     return;
   }
@@ -372,10 +377,12 @@ The store uses strategic persistence to balance performance with UX:
 ```
 
 **What Gets Persisted:**
+
 - **Player Data**: Cached to avoid re-fetching on every page load
 - **Game State**: Remember if user was in an active game session
 
 **What Doesn't Get Persisted:**
+
 - **Loading States**: Should always start fresh
 - **Error Messages**: Don't show stale errors
 - **Transaction Hashes**: Temporary transaction tracking
@@ -430,23 +437,23 @@ function GameActions() {
 
 ### **Why Zustand > Redux for Onchain Games**
 
-| Feature | Zustand | Redux | Impact |
-|---------|---------|-------|---------|
-| **Boilerplate** | Minimal | Heavy | Faster development |
-| **Bundle Size** | ~2.5KB | ~19KB+ | Better loading times |
-| **TypeScript** | Native | Requires setup | Better DX |
-| **Optimistic Updates** | Simple | Complex | Easier blockchain UX |
-| **Selectors** | Built-in | Requires reselect | Less dependencies |
-| **Persistence** | Middleware | External lib | Simpler setup |
+| Feature                | Zustand    | Redux             | Impact               |
+| ---------------------- | ---------- | ----------------- | -------------------- |
+| **Boilerplate**        | Minimal    | Heavy             | Faster development   |
+| **Bundle Size**        | ~2.5KB     | ~19KB+            | Better loading times |
+| **TypeScript**         | Native     | Requires setup    | Better DX            |
+| **Optimistic Updates** | Simple     | Complex           | Easier blockchain UX |
+| **Selectors**          | Built-in   | Requires reselect | Less dependencies    |
+| **Persistence**        | Middleware | External lib      | Simpler setup        |
 
 ### **Real Performance Impact:**
 
 ```typescript
 // Zustand - Direct, minimal re-renders
-const coins = useAppStore(state => state.player?.coins || 0);
+const coins = useAppStore((state) => state.player?.coins || 0);
 
 // Redux equivalent - More complex, potential over-rendering
-const coins = useSelector(state => state.player?.coins || 0);
+const coins = useSelector((state) => state.player?.coins || 0);
 const dispatch = useDispatch();
 ```
 
@@ -459,10 +466,10 @@ const dispatch = useDispatch();
 ```typescript
 // Comprehensive transaction state tracking
 interface ActionState {
-  isLoading: boolean;                               // UI loading state
-  error: string | null;                            // Error messages
-  txHash: string | null;                          // Blockchain tx hash
-  txStatus: 'PENDING' | 'SUCCESS' | 'REJECTED' | null; // Transaction status
+  isLoading: boolean; // UI loading state
+  error: string | null; // Error messages
+  txHash: string | null; // Blockchain tx hash
+  txStatus: "PENDING" | "SUCCESS" | "REJECTED" | null; // Transaction status
 }
 
 // Auto-cleanup patterns
@@ -471,7 +478,7 @@ const executeAction = async () => {
     // Execute optimistic update + transaction
   } catch (error) {
     // Set error state
-    setActionState({ error: error.message, txStatus: 'REJECTED' });
+    setActionState({ error: error.message, txStatus: "REJECTED" });
 
     // Auto-clear error after 5 seconds
     setTimeout(() => {

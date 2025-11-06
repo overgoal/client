@@ -27,7 +27,7 @@ type GLTFResult = GLTF & {
 export function ModelBody2(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>();
   const { nodes, animations } = useGLTF(
-    "/models/Male/male_body_2.glb"
+    "/models/Male/male_body_2.glb",
   ) as GLTFResult;
 
   const { actions } = useAnimations(animations, group);
@@ -39,11 +39,11 @@ export function ModelBody2(props: JSX.IntrinsicElements["group"]) {
   }, [actions]);
 
   const bodyTexture = useTexture(
-    "/models/Male/textures/MainBody_Skin2_BaseColor.png"
+    "/models/Male/textures/MainBody_Skin2_BaseColor.png",
   );
 
   const accesoriesTexture = useTexture(
-    "/models/Male/textures/Accesories_Mat_BaseColor.png"
+    "/models/Male/textures/Accesories_Mat_BaseColor.png",
   );
 
   const baseMaterial = useMemo(() => {

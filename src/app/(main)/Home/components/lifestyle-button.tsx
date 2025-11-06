@@ -8,7 +8,7 @@ export const LifestylesButton = () => {
       className={cn(
         "max-w-[85px] max-h-[97px] w-full h-full flex flex-col gap-1 items-center justify-center p-2",
         "lifestyle-container",
-        "ml-auto"
+        "ml-auto",
       )}
     >
       <Button className="lifestyle-inner-container w-full h-full p-4 flex flex-col gap-2 items-center justify-center">

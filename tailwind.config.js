@@ -10,4 +10,4 @@ export default {
     "*.{js,ts,jsx,tsx,mdx}",
   ],
   plugins: [],
-}
+};
