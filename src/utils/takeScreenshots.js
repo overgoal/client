@@ -5,7 +5,7 @@ async function takeScreenshots() {
   const page = await browser.newPage()
   
   // Set viewport size to ensure consistent dimensions
-  await page.setViewportSize({ width: 670, height: 1200 })
+  await page.setViewportSize({ width: 536, height: 760 })
   
   await page.goto('http://localhost:3002/card')
   
@@ -20,7 +20,7 @@ async function takeScreenshots() {
         height: document.documentElement.scrollHeight
       }))
       
-      const clipConfig = { x: 0, y: 0, width: 670, height: 1200 }
+      const clipConfig = { x: 0, y: 0, width: 536, height: 760 }
       
       // Validate clip bounds
       if (clipConfig.x + clipConfig.width > pageSize.width) {

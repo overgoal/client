@@ -52,6 +52,26 @@ interface CharacterConfig {
   accessoryColor: string; // Hex color for accessories
 }
 
+// Player data interface from JSON
+interface PlayerData {
+  player_id: number;
+  player_name: string;
+  body_type: 0 | 1 | 2; // 0-indexed
+  visor_type: 0 | 1 | 2; // 0-indexed
+  visor_color: 0 | 1 | 2; // 0=color1, 1=color2, 2=color3
+  skin_color: 0 | 1 | 2; // 0-indexed
+  hair_style: 0 | 1 | 2; // 0=none, 1=hair1, 2=hair2
+  beard_style: 0 | 1; // 0=no beard, 1=beard
+  team: number;
+  player_description: string;
+  shoot: number;
+  pass: number;
+  intelligence: number;
+  dribble: number;
+  strength: number;
+  player_type: string;
+}
+
 // Random utility functions
 function randomChoice<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -77,8 +97,42 @@ function generateRandomConfig(): CharacterConfig {
   };
 }
 
+// Convert player JSON data to CharacterConfig
+function playerDataToCharacterConfig(player: PlayerData): CharacterConfig {
+  // Map visor colors (0, 1, 2) to actual hex colors
+  const visorColorMap: Record<number, string> = {
+    0: "#ff0000", // Red
+    1: "#00ff00", // Green
+    2: "#0000ff", // Blue
+  };
+
+  // Map hair style numbers to hair style strings
+  const hairStyleMap: Record<number, "none" | "hair1" | "hair2"> = {
+    0: "none",
+    1: "hair1",
+    2: "hair2",
+  };
+
+  // Map visor type to visor style
+  const visorStyleMap: Record<number, "visor1" | "visor2" | "visor3"> = {
+    0: "visor1",
+    1: "visor2",
+    2: "visor3",
+  };
+
+  return {
+    bodyModel: (player.body_type + 1) as 1 | 2 | 3, // Convert 0-2 to 1-3
+    skinTexture: (player.skin_color + 1) as 1 | 2 | 3, // Convert 0-2 to 1-3
+    hasBeard: player.beard_style === 1,
+    hairStyle: hairStyleMap[player.hair_style],
+    visorStyle: visorStyleMap[player.visor_type],
+    accessoryColor: visorColorMap[player.visor_color],
+  };
+}
+
 interface ChangeableModelsProps {
   config?: CharacterConfig;
+  playerData?: PlayerData; // Accept player data from JSON
   autoRandomize?: boolean;
   autoRandomizeInterval?: number; // Interval in milliseconds to auto-randomize (e.g., 2000 for 2 seconds)
   position?: [number, number, number];
@@ -88,6 +142,7 @@ interface ChangeableModelsProps {
 
 export default function ChangeableModels({
   config,
+  playerData,
   autoRandomize = true,
   autoRandomizeInterval,
   ...props
@@ -171,8 +226,9 @@ export default function ChangeableModels({
 
   // Generate or use provided config
   const characterConfig = useMemo<CharacterConfig>(() => {
-    // Priority: dynamicConfig (from interval) > provided config > random > default
+    // Priority: dynamicConfig (from interval) > playerData > provided config > random > default
     if (dynamicConfig) return dynamicConfig;
+    if (playerData) return playerDataToCharacterConfig(playerData);
     if (config) return config;
     if (autoRandomize) return generateRandomConfig();
     // Default config
@@ -184,7 +240,7 @@ export default function ChangeableModels({
       visorStyle: "visor1",
       accessoryColor: "#ffffff",
     };
-  }, [dynamicConfig, config, autoRandomize]);
+  }, [dynamicConfig, playerData, config, autoRandomize]);
 
   // Select the appropriate model based on config
   const selectedModel = useMemo(() => {
@@ -221,7 +277,7 @@ export default function ChangeableModels({
     if (actions) {
       actions["Break"]?.play();
     }
-  }, [actions]);
+  }, [actions, selectedModel]);
 
   // Select skin texture based on config
   const selectedSkinTexture = useMemo(() => {
@@ -406,5 +462,5 @@ useGLTF.preload("/models/Male/male_body_2.glb");
 useGLTF.preload("/models/Male/male_body_3.glb");
 
 // Export utility functions for external use
-export { generateRandomConfig };
-export type { CharacterConfig };
+export { generateRandomConfig, playerDataToCharacterConfig };
+export type { CharacterConfig, PlayerData };

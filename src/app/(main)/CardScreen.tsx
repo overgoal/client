@@ -27,7 +27,7 @@ export default function CardScreen() {
   // };
 
   return (
-    <div className="w-[670px] min-h-dvh h-[943px] relative  " style={containerStyles}>
+    <div className="w-[536px] h-[760px]  relative  overflow-hidden " style={containerStyles}>
       {/* Background Image Layer */}
       <img
         src={"/backgrounds/bg-card.png"}
