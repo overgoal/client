@@ -73,9 +73,9 @@ const Scene = () => {
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
 
-        <MaleBody1 scale={4} position={[-250, -150, 0]} rotation={[0, 1, 0]} />
+        {/* <MaleBody1 scale={4} position={[-250, -150, 0]} rotation={[0, 1, 0]} /> */}
         <ModelBody2 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} />
-        <ModelBody3 scale={4} position={[250, -150, 0]} rotation={[0, 0, 0]} />
+        {/* <ModelBody3 scale={4} position={[250, -150, 0]} rotation={[0, 0, 0]} /> */}
         <Preload all />
       </Suspense>
     </Canvas>
