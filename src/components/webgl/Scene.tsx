@@ -2,9 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useMemo } from "react";
 import Lights from "./components/lights";
-import { MaleBody1 } from "../../components/models/MaleLast";
 import { ModelBody2 } from "../../components/models/MaleBody2";
-import { ModelBody3 } from "../../components/models/MaleBody3";
 
 const Scene = () => {
   const isMobile = useMemo(
