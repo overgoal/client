@@ -1,5 +1,5 @@
 // Pre game
-export const login = "/testlogin";
+export const login = "/login";
 export const characterCreation = "/character-creation/:playerId";
 
 // Game

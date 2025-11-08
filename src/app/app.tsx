@@ -21,7 +21,6 @@ import ProfileScreen from "./(main)/Profile/ProfileScreen";
 // Import all routes
 import {
   main,
-  login,
   market,
   career,
   seasons,
@@ -35,6 +34,7 @@ import {
   matchResult,
   characterCreation,
   preMatchNonMatch,
+  home,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 import CardScreen from "./(main)/CardScreen";
@@ -44,11 +44,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Unauthenticated routes */}
-        <Route path={login} element={<LoginScreen />} />
+        <Route path={main} element={<LoginScreen />} />
 
         {/* Authenticated routes */}
         <Route path={characterCreation} element={<CharacterCreationScreen />} />
-        <Route path={main} element={<HomePage />} />
+        <Route path={home} element={<HomePage />} />
         <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
         <Route path={preMatch} element={<PreMatchScreen />} />
         <Route path={match} element={<MatchScreen />} />
