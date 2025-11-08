@@ -44,11 +44,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Unauthenticated routes */}
-        <Route path={main} element={<LoginScreen />} />
+        <Route path={home} element={<LoginScreen />} />
 
         {/* Authenticated routes */}
         <Route path={characterCreation} element={<CharacterCreationScreen />} />
-        <Route path={home} element={<HomePage />} />
+        <Route path={main} element={<HomePage />} />
         <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
         <Route path={preMatch} element={<PreMatchScreen />} />
         <Route path={match} element={<MatchScreen />} />
