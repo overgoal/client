@@ -6,7 +6,6 @@ import * as THREE from "three";
 import { useEffect, useMemo, useRef } from "react";
 import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { useCharacterShader } from "../webgl/components/character-models/programs/useCharacterShader";
 
 type GLTFResult = GLTF & {
   nodes: {
