@@ -23,7 +23,7 @@ export default function HomePage() {
     () => ({
       touchAction: "none" as const,
     }),
-    []
+    [],
   );
 
   // const handleDisconnectAction = () => {
@@ -42,7 +42,6 @@ export default function HomePage() {
         width={1000}
         height={1000}
       />
-
 
       {/* 3D Scene Layer - positioned behind UI */}
       <div className="absolute inset-0 z-20 pointer-events-auto">

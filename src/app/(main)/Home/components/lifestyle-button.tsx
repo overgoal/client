@@ -15,7 +15,7 @@ export const LifestylesButton = ({ icon, title, href }: Props) => {
       className={cn(
         "max-w-[85px] max-h-[97px] w-full h-full flex flex-col gap-1 items-center justify-center p-2",
         "lifestyle-container",
-        "ml-auto"
+        "ml-auto",
       )}
     >
       <Link to={href}>

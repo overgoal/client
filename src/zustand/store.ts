@@ -1,17 +1,17 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-import { OvergoalPlayer, Player } from '../lib/schema';
+import { OvergoalPlayer, Player } from "../lib/schema";
 
 // Application state
 interface AppState {
   // Player data
   player: Player | null;
-  overgoalPlayer: OvergoalPlayer | null;    
+  overgoalPlayer: OvergoalPlayer | null;
   // UI state
   isLoading: boolean;
   error: string | null;
-  
+
   // Game state
   gameStarted: boolean;
 }
@@ -23,13 +23,13 @@ interface AppActions {
   setOvergoalPlayer: (overgoalPlayer: OvergoalPlayer | null) => void;
 
   // overgoal player actions
-  getPlayer: () => Player | null; 
+  getPlayer: () => Player | null;
   getOvergoalPlayer: () => OvergoalPlayer | null;
-  
+
   // UI actions
   setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void; 
-  
+  setError: (error: string | null) => void;
+
   // Utility actions
   resetStore: () => void;
 }
@@ -67,13 +67,13 @@ const useAppStore = create<AppStore>()(
       resetStore: () => set(initialState),
     }),
     {
-      name: 'overgoal-store',
+      name: "overgoal-store",
       partialize: (state) => ({
         player: state.player,
         gameStarted: state.gameStarted,
       }),
-    }
-  )
+    },
+  ),
 );
 
 export default useAppStore;

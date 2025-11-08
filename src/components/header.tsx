@@ -47,7 +47,7 @@ export function Header() {
       </h1>
       <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto px-4">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-blue-400 font-semibold">
-           ARG - URU
+          ARG - URU
         </span>{" "}
       </p>
     </div>

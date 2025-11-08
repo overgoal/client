@@ -10,38 +10,36 @@ const datetime = z.date();
 
 // Match status
 export enum MatchStatus {
-    Started = "started",
-    InProgress = "in_progress",
-    HalfTime = "half_time",
-    Finished = "finished",
-  }
-  
-  // Event types
-  export enum EventType {
-    Training = "training",
-    Personal = "personal",
-    Social = "social",
-    Injury = "injury",
-    Other = "other",
-  }
-  
-  // Action types
-  export enum ActionType {
-    OpenPlay = "open_play",
-    SetPiece = "set_piece",
-    CornerKick = "corner_kick",
-    FreeKick = "free_kick",
-    PenaltyKick = "penalty_kick",
-    Other = "other",
-  }
-  
-  // Match results
-  export enum MatchActionResult {
-    Positive = "positive",
-    Negative = "negative",
-  }
-  
+  Started = "started",
+  InProgress = "in_progress",
+  HalfTime = "half_time",
+  Finished = "finished",
+}
 
+// Event types
+export enum EventType {
+  Training = "training",
+  Personal = "personal",
+  Social = "social",
+  Injury = "injury",
+  Other = "other",
+}
+
+// Action types
+export enum ActionType {
+  OpenPlay = "open_play",
+  SetPiece = "set_piece",
+  CornerKick = "corner_kick",
+  FreeKick = "free_kick",
+  PenaltyKick = "penalty_kick",
+  Other = "other",
+}
+
+// Match results
+export enum MatchActionResult {
+  Positive = "positive",
+  Negative = "negative",
+}
 
 // ===== User & Player =====
 export const User = z.object({

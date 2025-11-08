@@ -1,13 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { Progress } from "./ui/progress"
-import { useAccount } from "@starknet-react/core"
-import useAppStore from "../zustand/store"
-import { Coins, Zap, Heart, Loader2 } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Progress } from "./ui/progress";
+import { useAccount } from "@starknet-react/core";
+import useAppStore from "../zustand/store";
+import { Coins, Zap, Heart, Loader2 } from "lucide-react";
 
 export function PlayerStats() {
   const { status } = useAccount();
-  const player = useAppStore(state => state.player);
-  const isLoading = useAppStore(state => state.isLoading);
+  const player = useAppStore((state) => state.player);
+  const isLoading = useAppStore((state) => state.isLoading);
 
   const isConnected = status === "connected";
 
@@ -17,21 +17,22 @@ export function PlayerStats() {
       label: "Fame",
       value: player?.fame || 0,
       color: "text-blue-400",
-      icon: Zap
+      icon: Zap,
     },
   ];
-
 
   // Calculate experience for level up (example: every 100 exp = 1 level)
   const currentFameLevel = Math.floor((player?.fame || 0) / 100) + 1;
   const fameInCurrentLevel = (player?.fame || 0) % 100;
-  const fameNeededForNextLevel = 100;  
+  const fameNeededForNextLevel = 100;
 
   if (isLoading) {
     return (
       <Card className="bg-white/5 backdrop-blur-xl border-white/10">
         <CardHeader>
-          <CardTitle className="text-white text-xl font-bold">Player Stats</CardTitle>
+          <CardTitle className="text-white text-xl font-bold">
+            Player Stats
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-center py-8">
@@ -42,13 +43,15 @@ export function PlayerStats() {
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
     <Card className="bg-white/5 backdrop-blur-xl border-white/10">
       <CardHeader>
-        <CardTitle className="text-white text-xl font-bold">Player Stats</CardTitle>
+        <CardTitle className="text-white text-xl font-bold">
+          Player Stats
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Main stats */}
@@ -73,12 +76,10 @@ export function PlayerStats() {
             </span>
           </div>
           <Progress
-              value={(fameInCurrentLevel / fameNeededForNextLevel) * 100}
+            value={(fameInCurrentLevel / fameNeededForNextLevel) * 100}
             className="h-2 bg-slate-700"
           />
         </div>
-
-       
 
         {/* Connection states */}
         {!isConnected && (
@@ -107,9 +108,7 @@ export function PlayerStats() {
             </div>
           </div>
         )}
-
-      
       </CardContent>
     </Card>
-  )
+  );
 }

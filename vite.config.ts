@@ -6,39 +6,38 @@ import fs from "fs";
 import path from "path";
 
 export default defineConfig(({ command }) => {
-  const isDev = command === 'serve';
-  const isLocalHttps = process.env.VITE_LOCAL_HTTPS === 'true';
+  const isDev = command === "serve";
+  const isLocalHttps = process.env.VITE_LOCAL_HTTPS === "true";
 
   const getHttpsConfig = () => {
     if (!isDev || !isLocalHttps) return {};
-    
-    const keyPath = path.resolve('./dev-key.pem');
-    const certPath = path.resolve('./dev.pem');
-    
+
+    const keyPath = path.resolve("./dev-key.pem");
+    const certPath = path.resolve("./dev.pem");
+
     try {
       if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
         return {
           https: {
             key: fs.readFileSync(keyPath),
             cert: fs.readFileSync(certPath),
-          }
+          },
         };
       }
     } catch (error) {
-      console.warn('⚠️  Error reading HTTPS certificates. Using HTTP.', error);
+      console.warn("⚠️  Error reading HTTPS certificates. Using HTTP.", error);
     }
-    
+
     return {};
   };
 
   return {
     plugins: [react(), wasm(), topLevelAwait()],
     resolve: {
-      dedupe: ['three'],
+      dedupe: ["three"],
       alias: {
         three: path.resolve("node_modules/three"),
       },
-      
     },
     server: {
       port: 3002,
@@ -49,10 +48,11 @@ export default defineConfig(({ command }) => {
       }),
     },
     define: {
-      global: 'globalThis',
+      global: "globalThis",
     },
     optimizeDeps: {
-      include: ['buffer', 'three'],
+      include: ["buffer", "three"],
     },
+    assetsInclude: ["**/*.glsl", "**/*.vert", "**/*.frag"],
   };
 });

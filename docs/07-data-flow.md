@@ -54,6 +54,7 @@ const sdk = await init<SchemaType>({
 ```
 
 **🎯 What Happens:**
+
 - Dojo SDK connects to Torii indexer
 - Starknet provider configures wallet connectors
 - React component tree renders with providers available
@@ -83,6 +84,7 @@ export function GameSection() {
 ```
 
 **🔄 Hook Activation Chain:**
+
 ```
 1. StatusBar mounts → useStarknetConnect + usePlayer + useSpawnPlayer
 2. PlayerStats mounts → useAppStore (player data subscription)
@@ -131,6 +133,7 @@ export function StatusBar() {
 ```
 
 **📊 Connection State Progression:**
+
 ```
 'disconnected' → 'connecting' → 'connected' → player check → player creation/load → 'ready'
 ```
@@ -153,7 +156,7 @@ export const usePlayer = () => {
       method: "POST",
       body: JSON.stringify({
         query: PLAYER_QUERY,
-        variables: { playerOwner }
+        variables: { playerOwner },
       }),
     });
 
@@ -166,7 +169,7 @@ export const usePlayer = () => {
         experience: hexToNumber(rawData.experience),
         health: hexToNumber(rawData.health),
         coins: hexToNumber(rawData.coins),
-        creation_day: hexToNumber(rawData.creation_day)
+        creation_day: hexToNumber(rawData.creation_day),
       };
     }
     return null;
@@ -184,6 +187,7 @@ export const usePlayer = () => {
 ```
 
 **🌊 Data Flow Steps:**
+
 ```
 1. Wallet connects → account.address available
 2. usePlayer detects address change → triggers fetchPlayerData
@@ -235,6 +239,7 @@ export function PlayerStats() {
 ```
 
 **⚡ Reactive Updates:**
+
 - Any change to `player` in Zustand store → PlayerStats re-renders
 - Computed values (level, progress) update automatically
 - UI reflects new state instantly
@@ -281,12 +286,12 @@ const executeTrain = useCallback(async () => {
   try {
     // 🎯 1. VALIDATION
     if (!canTrain || !account) {
-      setTrainState(prev => ({ ...prev, error: "Cannot train right now" }));
+      setTrainState((prev) => ({ ...prev, error: "Cannot train right now" }));
       return;
     }
 
     // ⚡ 2. OPTIMISTIC UPDATE
-    setTrainState({ isLoading: true, txStatus: 'PENDING' });
+    setTrainState({ isLoading: true, txStatus: "PENDING" });
     updatePlayerExperience((player?.experience || 0) + 10);
 
     // 🔗 3. BLOCKCHAIN TRANSACTION
@@ -295,7 +300,7 @@ const executeTrain = useCallback(async () => {
 
     // ✅ 4. SUCCESS HANDLING
     if (tx && tx.code === "SUCCESS") {
-      setTrainState({ txStatus: 'SUCCESS', isLoading: false });
+      setTrainState({ txStatus: "SUCCESS", isLoading: false });
 
       // Auto-clear success state
       setTimeout(() => {
@@ -304,7 +309,6 @@ const executeTrain = useCallback(async () => {
     } else {
       throw new Error(`Training failed: ${tx?.code}`);
     }
-
   } catch (error) {
     // ❌ 5. ROLLBACK ON FAILURE
     console.error("❌ Training failed:", error);
@@ -313,7 +317,7 @@ const executeTrain = useCallback(async () => {
     setTrainState({
       isLoading: false,
       error: error.message,
-      txStatus: 'REJECTED'
+      txStatus: "REJECTED",
     });
   }
 }, [canTrain, account, client, player, updatePlayerExperience]);
@@ -339,7 +343,7 @@ Multiple components react to the same state changes:
 
 ```typescript
 // Player data flows to multiple components simultaneously
-const player = useAppStore(state => state.player);
+const player = useAppStore((state) => state.player);
 
 // StatusBar uses player for status messages
 const getStatusMessage = () => {
@@ -364,14 +368,15 @@ const canRest = canTrain && (player?.health || 0) < 100;
 
 ```typescript
 // StatusBar.tsx - Coordinated loading states
-const isLoading = isConnecting || status === "connecting" || isInitializing || playerLoading;
+const isLoading =
+  isConnecting || status === "connecting" || isInitializing || playerLoading;
 
 const getStatusMessage = () => {
   if (!isConnected) return "Connect your controller to start playing";
   if (playerLoading) return "Loading player data...";
   if (isInitializing) {
-    if (txStatus === 'PENDING') return "Creating player on blockchain...";
-    if (txStatus === 'SUCCESS') return "Player created successfully!";
+    if (txStatus === "PENDING") return "Creating player on blockchain...";
+    if (txStatus === "SUCCESS") return "Player created successfully!";
     return "Initializing player...";
   }
   if (player) return "Ready to play!";
@@ -400,11 +405,11 @@ try {
   }
 } catch (error) {
   // Rollback optimistic changes
-  updatePlayerCoins(player.coins - 5);    // Revert coins
-  updatePlayerHealth(player.health + 5);  // Revert health
+  updatePlayerCoins(player.coins - 5); // Revert coins
+  updatePlayerHealth(player.health + 5); // Revert health
 
   // Show error to user
-  setMineState({ error: error.message, txStatus: 'REJECTED' });
+  setMineState({ error: error.message, txStatus: "REJECTED" });
 }
 ```
 
@@ -440,7 +445,6 @@ if (isConnected && !player) {
 
 ---
 
-
 ## 🎯 Real-Time Gameplay Example
 
 Let's trace a complete user action from click to final state:
@@ -462,6 +466,7 @@ Let's trace a complete user action from click to final state:
 ```
 
 **🎯 Key Insights:**
+
 - **User sees response in <10ms** (optimistic update)
 - **UI stays responsive** during 2-second blockchain delay
 - **Automatic error recovery** if transaction fails
