@@ -26,12 +26,13 @@ type GLTFResult = GLTF & {
 };
 
 export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
-  const { nodes, materials,animations } = useGLTF("/models/male_body_1.glb") as GLTFResult;
+  const { nodes, materials, animations } = useGLTF(
+    "/models/male_body_1.glb",
+  ) as GLTFResult;
 
   useEffect(() => {
-console.log(animations);
+    console.log(animations);
   }, [animations]);
-
 
   materials.Accesories_Mat.roughness = 0;
   materials.Accesories_Mat.metalness = 0;

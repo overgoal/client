@@ -17,6 +17,7 @@ Do not make changes that are not defined in this file.
 ### 1.1 Update `contract/src/models/player.cairo` (or corresponding model)
 
 #### a) Modify the main structure
+
 ```cairo
 #[derive(Copy, Drop, Serde, IntrospectPacked, Debug)]
 #[dojo::model]
@@ -36,6 +37,7 @@ pub struct Player {
 ```
 
 #### b) Update the `fn new` constructor
+
 ```cairo
 fn new(
     owner: ContractAddress,
@@ -65,6 +67,7 @@ fn new(
 ```
 
 #### c) Update `ZeroablePlayerTrait`
+
 ```cairo
 fn zero() -> Player {
     Player {
@@ -83,6 +86,7 @@ fn zero() -> Player {
 ```
 
 #### d) Create setter methods for new fields
+
 ```cairo
 fn add_shoot(ref self: Player, shoot_amount: u32) {
     self.shoot += shoot_amount;
@@ -106,6 +110,7 @@ fn remove_stamina(ref self: Player, stamina_amount: u32) {
 ```
 
 #### e) Update ALL tests
+
 ```cairo
 #[test]
 #[available_gas(1000000)]
@@ -140,6 +145,7 @@ fn test_player_new_constructor() {
 ### 2.1 Modify `contract/src/store.cairo`
 
 #### a) Update the constructor in `create_player`
+
 ```cairo
 fn create_player(mut self: Store) {
     let caller = get_caller_address();
@@ -163,6 +169,7 @@ fn create_player(mut self: Store) {
 ```
 
 #### b) Add functions for new actions
+
 ```cairo
 fn train_shooting(mut self: Store) {
     let mut player = self.read_player();
@@ -193,33 +200,33 @@ fn restore_stamina(mut self: Store) {
 
 ```typescript
 export interface Player {
-    owner: string;
-    experience: number;
-    health: number;
-    coins: number;
-    creation_day: number;
-    // ✅ ADD NEW FIELDS
-    shoot: number;
-    dribble: number;
-    energy: number;
-    stamina: number;
+  owner: string;
+  experience: number;
+  health: number;
+  coins: number;
+  creation_day: number;
+  // ✅ ADD NEW FIELDS
+  shoot: number;
+  dribble: number;
+  energy: number;
+  stamina: number;
 }
 
 export const schema: SchemaType = {
-    full_starter_react: {
-        Player: {
-            owner: "",
-            experience: 0,
-            health: 0,
-            coins: 0,
-            creation_day: 0,
-            // ✅ ADD WITH DEFAULT VALUES
-            shoot: 0,
-            dribble: 0,
-            energy: 0,
-            stamina: 0,
-        },
+  full_starter_react: {
+    Player: {
+      owner: "",
+      experience: 0,
+      health: 0,
+      coins: 0,
+      creation_day: 0,
+      // ✅ ADD WITH DEFAULT VALUES
+      shoot: 0,
+      dribble: 0,
+      energy: 0,
+      stamina: 0,
     },
+  },
 };
 ```
 
@@ -232,36 +239,36 @@ export const schema: SchemaType = {
 ```typescript
 // ✅ ADD CALLDATA BUILDER
 const build_game_trainShooting_calldata = (): DojoCall => {
-    return {
-        contractName: "game",
-        entrypoint: "train_shooting",
-        calldata: [],
-    };
+  return {
+    contractName: "game",
+    entrypoint: "train_shooting",
+    calldata: [],
+  };
 };
 
 // ✅ ADD EXECUTION FUNCTION
 const game_trainShooting = async (snAccount: Account | AccountInterface) => {
-    try {
-        return await provider.execute(
-            snAccount as any,
-            build_game_trainShooting_calldata(),
-            "full_starter_react",
-        );
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+  try {
+    return await provider.execute(
+      snAccount as any,
+      build_game_trainShooting_calldata(),
+      "full_starter_react",
+    );
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 // ✅ ADD TO RETURN OBJECT
 return {
-    game: {
-        // ... existing functions
-        trainShooting: game_trainShooting,
-        buildTrainShootingCalldata: build_game_trainShooting_calldata,
-        restoreStamina: game_restoreStamina,
-        buildRestoreStaminaCalldata: build_game_restoreStamina_calldata,
-    },
+  game: {
+    // ... existing functions
+    trainShooting: game_trainShooting,
+    buildTrainShootingCalldata: build_game_trainShooting_calldata,
+    restoreStamina: game_restoreStamina,
+    buildRestoreStaminaCalldata: build_game_restoreStamina_calldata,
+  },
 };
 ```
 
@@ -272,6 +279,7 @@ return {
 ### 5.1 Add to `contract/src/systems/game.cairo`
 
 #### a) Update interface
+
 ```cairo
 #[starknet::interface]
 pub trait IGame<T> {
@@ -282,6 +290,7 @@ pub trait IGame<T> {
 ```
 
 #### b) Implement methods
+
 ```cairo
 fn train_shooting(ref self: ContractState) {
     let mut world = self.world(@"full_starter_react");
@@ -309,13 +318,15 @@ fn train_shooting(ref self: ContractState) {
 **⚠️ CRITICAL:** Always follow the EXACT same pattern as existing functions. Do NOT use `emit!` or other custom patterns.
 
 **📋 Required Pattern for ALL System Functions:**
+
 1. `let mut world = self.world(@"full_starter_react");`
 2. `let store = StoreTrait::new(world);`
 3. `let achievement_store = AchievementStoreTrait::new(world);`
 4. `let player = store.read_player();`
 5. Call your store method (e.g., `store.improve_charisma();`)
 6. Achievement progression loop (copy exactly from other functions)
-```
+
+````
 
 ---
 
@@ -344,21 +355,22 @@ const PLAYER_QUERY = `
         }
     }
 `;
-```
+````
 
 #### b) Update data processing
+
 ```typescript
 return {
-    owner: rawPlayerData.owner,
-    experience: hexToNumber(rawPlayerData.experience),
-    health: hexToNumber(rawPlayerData.health),
-    coins: hexToNumber(rawPlayerData.coins),
-    creation_day: hexToNumber(rawPlayerData.creation_day),
-    // ✅ ADD NEW FIELDS WITH DEFAULTS
-    shoot: hexToNumber(rawPlayerData.shoot || 10),
-    dribble: hexToNumber(rawPlayerData.dribble || 10),
-    energy: hexToNumber(rawPlayerData.energy || 40),
-    stamina: hexToNumber(rawPlayerData.stamina || 40),
+  owner: rawPlayerData.owner,
+  experience: hexToNumber(rawPlayerData.experience),
+  health: hexToNumber(rawPlayerData.health),
+  coins: hexToNumber(rawPlayerData.coins),
+  creation_day: hexToNumber(rawPlayerData.creation_day),
+  // ✅ ADD NEW FIELDS WITH DEFAULTS
+  shoot: hexToNumber(rawPlayerData.shoot || 10),
+  dribble: hexToNumber(rawPlayerData.dribble || 10),
+  energy: hexToNumber(rawPlayerData.energy || 40),
+  stamina: hexToNumber(rawPlayerData.stamina || 40),
 };
 ```
 
@@ -368,40 +380,46 @@ Example: `client/src/dojo/hooks/useTrainShootingAction.tsx`
 
 ```typescript
 export const useTrainShootingAction = (): UseTrainShootingActionReturn => {
-    const { account, status } = useAccount();
-    const { client } = useDojoSDK();
-    const {
-        player,
-        updatePlayerShooting,
-        updatePlayerExperience,
-        updatePlayerStamina
-    } = useAppStore();
+  const { account, status } = useAccount();
+  const { client } = useDojoSDK();
+  const {
+    player,
+    updatePlayerShooting,
+    updatePlayerExperience,
+    updatePlayerStamina,
+  } = useAppStore();
 
-    // ✅ SPECIFIC VALIDATION
-    const hasEnoughStamina = (player?.stamina || 0) >= 10;
-    const canTrainShooting = isConnected && hasPlayer && hasEnoughStamina && !isLoading;
+  // ✅ SPECIFIC VALIDATION
+  const hasEnoughStamina = (player?.stamina || 0) >= 10;
+  const canTrainShooting =
+    isConnected && hasPlayer && hasEnoughStamina && !isLoading;
 
-    const executeTrainShooting = useCallback(async () => {
-        try {
-            // ✅ OPTIMISTIC UPDATE - MUST MATCH CONTRACT LOGIC
-            updatePlayerShooting((player?.shoot || 10) + 5);
-            updatePlayerExperience((player?.experience || 0) + 5);
-            updatePlayerStamina(Math.max(0, (player?.stamina || 40) - 10));
+  const executeTrainShooting = useCallback(
+    async () => {
+      try {
+        // ✅ OPTIMISTIC UPDATE - MUST MATCH CONTRACT LOGIC
+        updatePlayerShooting((player?.shoot || 10) + 5);
+        updatePlayerExperience((player?.experience || 0) + 5);
+        updatePlayerStamina(Math.max(0, (player?.stamina || 40) - 10));
 
-            const tx = await client.game.trainShooting(account as Account);
+        const tx = await client.game.trainShooting(account as Account);
 
-            if (tx && tx.code === "SUCCESS") {
-                // Success - optimistic updates remain
-            } else {
-                throw new Error(`Transaction failed: ${tx?.code}`);
-            }
-        } catch (error) {
-            // ✅ ROLLBACK - REVERT ALL OPTIMISTIC UPDATES
-            updatePlayerShooting((player?.shoot || 10) - 5);
-            updatePlayerExperience((player?.experience || 0) - 5);
-            updatePlayerStamina(Math.min(100, (player?.stamina || 40) + 10));
+        if (tx && tx.code === "SUCCESS") {
+          // Success - optimistic updates remain
+        } else {
+          throw new Error(`Transaction failed: ${tx?.code}`);
         }
-    }, [/* dependencies */]);
+      } catch (error) {
+        // ✅ ROLLBACK - REVERT ALL OPTIMISTIC UPDATES
+        updatePlayerShooting((player?.shoot || 10) - 5);
+        updatePlayerExperience((player?.experience || 0) - 5);
+        updatePlayerStamina(Math.min(100, (player?.stamina || 40) + 10));
+      }
+    },
+    [
+      /* dependencies */
+    ],
+  );
 };
 ```
 
@@ -412,22 +430,24 @@ export const useTrainShootingAction = (): UseTrainShootingActionReturn => {
 ### 7.1 Modify `client/src/zustand/store.ts`
 
 #### a) Update interface
+
 ```typescript
 export interface Player {
-    owner: string;
-    experience: number;
-    health: number;
-    coins: number;
-    creation_day: number;
-    // ✅ ADD NEW FIELDS
-    shoot: number;
-    dribble: number;
-    energy: number;
-    stamina: number;
+  owner: string;
+  experience: number;
+  health: number;
+  coins: number;
+  creation_day: number;
+  // ✅ ADD NEW FIELDS
+  shoot: number;
+  dribble: number;
+  energy: number;
+  stamina: number;
 }
 ```
 
 #### b) Add update actions
+
 ```typescript
 interface AppActions {
     // ... existing actions
@@ -486,33 +506,36 @@ import { useTrainShootingAction } from "../dojo/hooks/useTrainShootingAction";
 import { useRestoreStaminaAction } from "../dojo/hooks/useRestoreStaminaAction";
 
 // ✅ USE HOOKS
-const { trainShootingState, executeTrainShooting, canTrainShooting } = useTrainShootingAction();
-const { restoreStaminaState, executeRestoreStamina, canRestoreStamina } = useRestoreStaminaAction();
+const { trainShootingState, executeTrainShooting, canTrainShooting } =
+  useTrainShootingAction();
+const { restoreStaminaState, executeRestoreStamina, canRestoreStamina } =
+  useRestoreStaminaAction();
 
 // ✅ ADD TO ACTIONS ARRAY
 const actions = [
-    // ... existing actions
-    {
-        icon: Target,
-        label: "Train Shooting",
-        description: "+5 Shooting, +5 EXP, -10 Stamina",
-        onClick: executeTrainShooting,
-        color: "from-red-500 to-red-600",
-        state: trainShootingState,
-        canExecute: canTrainShooting,
-    },
-    {
-        icon: Battery,
-        label: "Restore Stamina",
-        description: "+20 Stamina",
-        onClick: executeRestoreStamina,
-        color: "from-purple-500 to-purple-600",
-        state: restoreStaminaState,
-        canExecute: canRestoreStamina,
-        disabledReason: !canRestoreStamina && player && (player.stamina || 0) >= 100
-            ? "Full Stamina!"
-            : undefined,
-    },
+  // ... existing actions
+  {
+    icon: Target,
+    label: "Train Shooting",
+    description: "+5 Shooting, +5 EXP, -10 Stamina",
+    onClick: executeTrainShooting,
+    color: "from-red-500 to-red-600",
+    state: trainShootingState,
+    canExecute: canTrainShooting,
+  },
+  {
+    icon: Battery,
+    label: "Restore Stamina",
+    description: "+20 Stamina",
+    onClick: executeRestoreStamina,
+    color: "from-purple-500 to-purple-600",
+    state: restoreStaminaState,
+    canExecute: canRestoreStamina,
+    disabledReason:
+      !canRestoreStamina && player && (player.stamina || 0) >= 100
+        ? "Full Stamina!"
+        : undefined,
+  },
 ];
 ```
 
@@ -524,16 +547,16 @@ const actions = [
 
 ```typescript
 const policies = {
-    contracts: {
-        [CONTRACT_ADDRESS_GAME]: {
-            methods: [
-                // ... existing methods
-                { name: "train_shooting", entrypoint: "train_shooting" },
-                { name: "restore_stamina", entrypoint: "restore_stamina" },
-            ],
-        },
+  contracts: {
+    [CONTRACT_ADDRESS_GAME]: {
+      methods: [
+        // ... existing methods
+        { name: "train_shooting", entrypoint: "train_shooting" },
+        { name: "restore_stamina", entrypoint: "restore_stamina" },
+      ],
     },
-}
+  },
+};
 ```
 
 ---
@@ -563,6 +586,7 @@ const policies = {
 ## ⚠️ Common Errors to Avoid
 
 ### 🚨 **Critical Error #1: Inconsistent System Function Pattern**
+
 ```cairo
 // ❌ BAD - Using custom emit! or different pattern
 fn improve_charisma(ref self: ContractState) {
@@ -600,6 +624,7 @@ fn improve_charisma(ref self: ContractState) {
 ```
 
 ### 🚨 **Critical Error #2: Hooks Don't Update All Fields**
+
 ```typescript
 // ❌ BAD - Only updates one field
 updatePlayerShooting((player?.shoot || 10) + 5);
@@ -611,6 +636,7 @@ updatePlayerStamina(Math.max(0, (player?.stamina || 40) - 10));
 ```
 
 ### 🚨 **Critical Error #3: Incomplete Tests**
+
 ```cairo
 // ❌ BAD - Forgetting to update existing tests
 let player = PlayerTrait::new(mock_address, 0, 100, 0, 1); // Missing new fields
@@ -620,14 +646,15 @@ let player = PlayerTrait::new(mock_address, 0, 100, 0, 1, 10, 10, 40, 40);
 ```
 
 ### 🚨 **Critical Error #4: Inconsistent Defaults**
+
 ```typescript
 // ❌ BAD - Different defaults in different places
-shoot: hexToNumber(rawPlayerData.shoot || 0),     // Default 0
-updatePlayerShooting((player?.shoot || 10) + 5); // Default 10
+shoot: (hexToNumber(rawPlayerData.shoot || 0), // Default 0
+  updatePlayerShooting((player?.shoot || 10) + 5)); // Default 10
 
 // ✅ GOOD - Consistent defaults
-shoot: hexToNumber(rawPlayerData.shoot || 10),    // Default 10
-updatePlayerShooting((player?.shoot || 10) + 5); // Default 10
+shoot: (hexToNumber(rawPlayerData.shoot || 10), // Default 10
+  updatePlayerShooting((player?.shoot || 10) + 5)); // Default 10
 ```
 
 ---

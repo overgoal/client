@@ -37,6 +37,7 @@ import {
   preMatchNonMatch,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
+import CardScreen from "./(main)/CardScreen";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path={tournamentAll} element={<TournamentsScreen />} />
         <Route path={tournamentCurrent} element={<TournamentScreen />} />
         <Route path={profile} element={<ProfileScreen />} />
+        <Route path={"/card"} element={<CardScreen />} />
       </Routes>
     </BrowserRouter>
   );

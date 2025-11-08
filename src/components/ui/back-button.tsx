@@ -32,20 +32,20 @@ const BackButton = React.forwardRef<HTMLButtonElement, BackButtonProps>(
       <Comp
         className={cn(
           "bg-[url('/homepage/button_settings.svg')] bg-contain bg-center w-1/5 h-1/2 bg-no-repeat flex items-center justify-center",
-          className
+          className,
         )}
         ref={ref}
         onClick={handleClick}
         {...props}
       >
-        <div >
+        <div>
           <Button className="w-full h-full text-white opacity-100">
-            <ChevronLeft className=" text-white w-6 h-6"/>
+            <ChevronLeft className=" text-white w-6 h-6" />
           </Button>
         </div>
       </Comp>
     );
-  }
+  },
 );
 
 BackButton.displayName = "BackButton";

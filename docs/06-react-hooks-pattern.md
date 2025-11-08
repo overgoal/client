@@ -43,6 +43,7 @@ The Dojo Game Starter uses a **sophisticated hook pattern** that separates conce
 This hook manages the **fundamental connection** to Starknet via Cartridge Controller.
 
 **🔑 Core Connection Logic:**
+
 ```typescript
 const handleConnect = useCallback(async () => {
   const connector = connectors[0]; // Cartridge Controller
@@ -64,17 +65,19 @@ const handleConnect = useCallback(async () => {
 ```
 
 **📤 Return Interface:**
+
 ```typescript
 return {
-  status,           // 'connected' | 'disconnected' | 'connecting'
-  address,          // Wallet address when connected
-  isConnecting,     // Connection loading state
-  handleConnect,    // Function to initiate connection
+  status, // 'connected' | 'disconnected' | 'connecting'
+  address, // Wallet address when connected
+  isConnecting, // Connection loading state
+  handleConnect, // Function to initiate connection
   handleDisconnect, // Function to disconnect
 };
 ```
 
 **🎯 Key Responsibilities:**
+
 - **Controller Integration**: Direct interface with Cartridge Controller
 - **Connection State**: Comprehensive connection status management
 - **Error Handling**: Robust error management for connection failures
@@ -89,6 +92,7 @@ return {
 The **data backbone** of the game, connecting GraphQL queries to Zustand state.
 
 **🔍 GraphQL Query Structure:**
+
 ```typescript
 const PLAYER_QUERY = `
   query GetPlayer($playerOwner: ContractAddress!) {
@@ -108,6 +112,7 @@ const PLAYER_QUERY = `
 ```
 
 **🔄 Data Fetching Logic:**
+
 ```typescript
 const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
   const response = await fetch(TORII_URL, {
@@ -115,7 +120,7 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       query: PLAYER_QUERY,
-      variables: { playerOwner }
+      variables: { playerOwner },
     }),
   });
 
@@ -132,16 +137,17 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
     experience: hexToNumber(rawData.experience),
     health: hexToNumber(rawData.health),
     coins: hexToNumber(rawData.coins),
-    creation_day: hexToNumber(rawData.creation_day)
+    creation_day: hexToNumber(rawData.creation_day),
   };
 };
 ```
 
 **🏪 Zustand Integration:**
+
 ```typescript
 // Get player from store and setter function
-const storePlayer = useAppStore(state => state.player);
-const setPlayer = useAppStore(state => state.setPlayer);
+const storePlayer = useAppStore((state) => state.player);
+const setPlayer = useAppStore((state) => state.setPlayer);
 
 // Auto-fetch when wallet address changes
 useEffect(() => {
@@ -152,6 +158,7 @@ useEffect(() => {
 ```
 
 **🎯 Key Features:**
+
 - **GraphQL Integration**: Direct queries to Torii indexer
 - **Data Transformation**: Converts hex blockchain values to JavaScript numbers
 - **Zustand Integration**: Seamless state management
@@ -167,6 +174,7 @@ useEffect(() => {
 The **most complex hook**, handling player creation and initialization logic.
 
 **🛡️ Race Condition Prevention:**
+
 ```typescript
 const [isInitializing, setIsInitializing] = useState(false);
 
@@ -181,6 +189,7 @@ const initializePlayer = useCallback(async () => {
 ```
 
 **✅ Validation Chain:**
+
 ```typescript
 // Multi-step validation before creating player
 if (status !== "connected") {
@@ -193,10 +202,11 @@ if (!account) {
 ```
 
 **🔍 Player Existence Check:**
+
 ```typescript
 // Check if player already exists
 console.log("🔄 Checking for existing player...");
-setInitState(prev => ({ ...prev, step: 'checking' }));
+setInitState((prev) => ({ ...prev, step: "checking" }));
 
 await refetchPlayer(); // Use usePlayer hook to refresh data
 
@@ -207,10 +217,11 @@ if (player) {
 ```
 
 **🎮 Player Creation Flow:**
+
 ```typescript
 // Create new player via Dojo SDK
 console.log("🎮 Creating new player...");
-setInitState(prev => ({ ...prev, step: 'spawning', txStatus: 'PENDING' }));
+setInitState((prev) => ({ ...prev, step: "spawning", txStatus: "PENDING" }));
 
 const txResult = await client.game.spawnPlayer(account);
 
@@ -221,23 +232,25 @@ if (txResult && txResult.code === "SUCCESS") {
   return {
     success: true,
     playerExists: false,
-    transactionHash: txResult.transaction_hash
+    transactionHash: txResult.transaction_hash,
   };
 }
 ```
 
 **📊 Complex State Tracking:**
+
 ```typescript
 interface InitializeState {
   isInitializing: boolean;
   error: string | null;
-  step: 'checking' | 'spawning' | 'loading' | 'success';
+  step: "checking" | "spawning" | "loading" | "success";
   txHash: string | null;
-  txStatus: 'PENDING' | 'SUCCESS' | 'REJECTED' | null;
+  txStatus: "PENDING" | "SUCCESS" | "REJECTED" | null;
 }
 ```
 
 **🎯 Complex State Management:**
+
 - **Multi-step Process**: Checking → Spawning → Loading → Success
 - **Transaction Tracking**: Complete transaction lifecycle
 - **Error Recovery**: Comprehensive error handling
@@ -253,6 +266,7 @@ interface InitializeState {
 Each game action follows the **same optimistic pattern** but with action-specific logic.
 
 **🎯 Action Validation:**
+
 ```typescript
 const { account, status } = useAccount();
 const { player } = useAppStore();
@@ -263,6 +277,7 @@ const canTrain = isConnected && hasPlayer && !trainState.isLoading;
 ```
 
 **⚡ Optimistic Update Pattern:**
+
 ```typescript
 const executeTrain = useCallback(async () => {
   try {
@@ -286,6 +301,7 @@ const executeTrain = useCallback(async () => {
 ```
 
 **🔄 Auto-Cleanup Logic:**
+
 ```typescript
 // Auto-clear success state after 3 seconds
 setTimeout(() => {
@@ -293,7 +309,7 @@ setTimeout(() => {
     isLoading: false,
     error: null,
     txHash: null,
-    txStatus: null
+    txStatus: null,
   });
 }, 3000);
 ```
@@ -303,9 +319,11 @@ setTimeout(() => {
 Each action hook follows the same pattern but with different validation and effects:
 
 **⛏️ useMineAction - Health Validation:**
+
 ```typescript
 const hasEnoughHealth = (player?.health || 0) > 5;
-const canMine = isConnected && hasPlayer && hasEnoughHealth && !mineState.isLoading;
+const canMine =
+  isConnected && hasPlayer && hasEnoughHealth && !mineState.isLoading;
 
 // Optimistic update: +5 coins, -5 health
 updatePlayerCoins((player?.coins || 0) + 5);
@@ -313,6 +331,7 @@ updatePlayerHealth(Math.max(0, (player?.health || 100) - 5));
 ```
 
 **💤 useRestAction - Full Health Check:**
+
 ```typescript
 const needsHealth = (player?.health || 0) < 100;
 const canRest = isConnected && hasPlayer && needsHealth && !restState.isLoading;

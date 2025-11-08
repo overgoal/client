@@ -41,29 +41,41 @@ export default function PlayerStatsScreen() {
                 ← Back to Home
               </Button>
             </Link>
-            <h1 className="text-3xl font-bold text-white">{playerStats.name} - Statistics</h1>
+            <h1 className="text-3xl font-bold text-white">
+              {playerStats.name} - Statistics
+            </h1>
             <p className="text-slate-300 mt-2">{playerStats.position}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             {/* Season Stats */}
             <Card className="bg-slate-800/50 border-slate-700 p-6">
-              <h2 className="text-2xl font-semibold text-white mb-4">Current Season</h2>
+              <h2 className="text-2xl font-semibold text-white mb-4">
+                Current Season
+              </h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white">{playerStats.seasonStats.matchesPlayed}</div>
+                  <div className="text-2xl font-bold text-white">
+                    {playerStats.seasonStats.matchesPlayed}
+                  </div>
                   <div className="text-sm text-slate-400">Matches</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-400">{playerStats.seasonStats.goals}</div>
+                  <div className="text-2xl font-bold text-yellow-400">
+                    {playerStats.seasonStats.goals}
+                  </div>
                   <div className="text-sm text-slate-400">Goals</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400">{playerStats.seasonStats.assists}</div>
+                  <div className="text-2xl font-bold text-blue-400">
+                    {playerStats.seasonStats.assists}
+                  </div>
                   <div className="text-sm text-slate-400">Assists</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-400">{playerStats.seasonStats.passAccuracy}%</div>
+                  <div className="text-2xl font-bold text-green-400">
+                    {playerStats.seasonStats.passAccuracy}%
+                  </div>
                   <div className="text-sm text-slate-400">Pass Accuracy</div>
                 </div>
               </div>
@@ -71,35 +83,51 @@ export default function PlayerStatsScreen() {
 
             {/* Detailed Stats */}
             <Card className="bg-slate-800/50 border-slate-700 p-6">
-              <h2 className="text-2xl font-semibold text-white mb-4">Detailed Statistics</h2>
+              <h2 className="text-2xl font-semibold text-white mb-4">
+                Detailed Statistics
+              </h2>
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Shots</span>
-                  <span className="text-white">{playerStats.seasonStats.shots}</span>
+                  <span className="text-white">
+                    {playerStats.seasonStats.shots}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Shots on Target</span>
-                  <span className="text-white">{playerStats.seasonStats.shotsOnTarget}</span>
+                  <span className="text-white">
+                    {playerStats.seasonStats.shotsOnTarget}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Total Passes</span>
-                  <span className="text-white">{playerStats.seasonStats.passes.toLocaleString()}</span>
+                  <span className="text-white">
+                    {playerStats.seasonStats.passes.toLocaleString()}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Tackles</span>
-                  <span className="text-white">{playerStats.seasonStats.tackles}</span>
+                  <span className="text-white">
+                    {playerStats.seasonStats.tackles}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Interceptions</span>
-                  <span className="text-white">{playerStats.seasonStats.interceptions}</span>
+                  <span className="text-white">
+                    {playerStats.seasonStats.interceptions}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Yellow Cards</span>
-                  <span className="text-yellow-400">{playerStats.seasonStats.yellowCards}</span>
+                  <span className="text-yellow-400">
+                    {playerStats.seasonStats.yellowCards}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Red Cards</span>
-                  <span className="text-red-400">{playerStats.seasonStats.redCards}</span>
+                  <span className="text-red-400">
+                    {playerStats.seasonStats.redCards}
+                  </span>
                 </div>
               </div>
             </Card>
@@ -107,22 +135,32 @@ export default function PlayerStatsScreen() {
 
           {/* Career Stats */}
           <Card className="bg-slate-800/50 border-slate-700 p-6">
-            <h2 className="text-2xl font-semibold text-white mb-4">Career Statistics</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">
+              Career Statistics
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">{playerStats.careerStats.matchesPlayed}</div>
+                <div className="text-3xl font-bold text-white">
+                  {playerStats.careerStats.matchesPlayed}
+                </div>
                 <div className="text-sm text-slate-400">Career Matches</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-yellow-400">{playerStats.careerStats.goals}</div>
+                <div className="text-3xl font-bold text-yellow-400">
+                  {playerStats.careerStats.goals}
+                </div>
                 <div className="text-sm text-slate-400">Career Goals</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-400">{playerStats.careerStats.assists}</div>
+                <div className="text-3xl font-bold text-blue-400">
+                  {playerStats.careerStats.assists}
+                </div>
                 <div className="text-sm text-slate-400">Career Assists</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-400">{playerStats.careerStats.trophies}</div>
+                <div className="text-3xl font-bold text-green-400">
+                  {playerStats.careerStats.trophies}
+                </div>
                 <div className="text-sm text-slate-400">Trophies Won</div>
               </div>
             </div>
@@ -132,4 +170,3 @@ export default function PlayerStatsScreen() {
     </div>
   );
 }
-

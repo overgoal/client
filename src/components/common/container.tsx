@@ -28,13 +28,7 @@ export default function BoxContainer({
   color = "blue",
 }: Props) {
   return (
-    <div
-      className={cn(
-        "p-4",
-        className,
-        variants({ isSingleSide, color }),
-      )}
-    >
+    <div className={cn("p-4", className, variants({ isSingleSide, color }))}>
       {children}
     </div>
   );

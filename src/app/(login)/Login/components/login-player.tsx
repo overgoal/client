@@ -4,7 +4,7 @@ import { useStarknetConnect } from "../../../../dojo/hooks/useStarknetConnect";
 import { usePlayer } from "../../../../dojo/hooks/usePlayer";
 // import { useAccount } from "@starknet-react/core";
 import { Loader2, Wallet } from "lucide-react";
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import useAppStore from "../../../../zustand/store";
 import { Player } from "../../../../lib/schema";
@@ -29,8 +29,7 @@ export function LoginPlayer() {
   // const { connector } = useAccount();
   const navigate = useNavigate();
   const isConnected = status === "connected";
-  const isLoading =
-    isConnecting || status === "connecting"  || playerLoading;
+  const isLoading = isConnecting || status === "connecting" || playerLoading;
 
   // 🎮 Auto-initialize player after connecting controller
   // useEffect(() => {
@@ -49,45 +48,39 @@ export function LoginPlayer() {
   //   }
   // }, [isConnected, player, isInitializing, playerLoading, initializePlayer]);
 
-useEffect(() => {
+  useEffect(() => {
+    // Overgoal player exists, navigate to home page
+    if (overgoalPlayer) navigate("/");
 
-  // Overgoal player exists, navigate to home page
-  if(overgoalPlayer) navigate("/");
+    // Player exists but overgoal player does not exist, navigate to character creation page
+    if (storedPlayer && !overgoalPlayer)
+      navigate("/character-creation/" + storedPlayer.id);
 
-  // Player exists but overgoal player does not exist, navigate to character creation page
-  if(storedPlayer && !overgoalPlayer) navigate("/character-creation/" + storedPlayer.id);
+    // Player does not exist, create player and navigate to character creation page
 
-  // Player does not exist, create player and navigate to character creation page
+    if (isFetched && isConnected && !player) {
+      //simulate create player and save to store
+      const newPlayer: Player = {
+        id: "1",
+        user_id: "1",
+        name: "Player",
+        created_at: new Date(),
+        last_updated_at: new Date(),
+        last_login_at: new Date(),
+        fame: 0,
+        charisma: 100,
+        stamina: 100,
+        intelligence: 100,
+        leadership: 100,
+        universe_currency: 100,
+      };
 
-  if(isFetched && isConnected && !player){
+      //  initializePlayer(); with this we will call the world api to create a new player
 
-
-    //simulate create player and save to store
-    const newPlayer: Player = {
-      id: "1",
-      user_id: "1",
-      name: "Player",
-      created_at: new Date(),
-      last_updated_at: new Date(),
-      last_login_at: new Date(),
-      fame: 0,
-      charisma: 100,
-      stamina: 100,
-      intelligence: 100,
-      leadership: 100,
-      universe_currency: 100,
-    };
-
-    //  initializePlayer(); with this we will call the world api to create a new player
-
-
-    setPlayer(newPlayer);
-    navigate("/character-creation/" + newPlayer.id);
-
-  } 
-
-}, [player, isFetched, isConnected, storedPlayer]);
-
+      setPlayer(newPlayer);
+      navigate("/character-creation/" + newPlayer.id);
+    }
+  }, [player, isFetched, isConnected, storedPlayer]);
 
   // const getDeploymentType = () => {
   //   switch (import.meta.env.VITE_PUBLIC_DEPLOY_TYPE) {
@@ -102,16 +95,14 @@ useEffect(() => {
   //   }
   // };
 
-
   // const deploymentType = getDeploymentType();
-
 
   const onHandleConnect = () => {
     //login
     //check ig player exists
     //if player exists, navigate to the home page
     //if player does not exist, navigate to creating player page
-  
+
     handleConnect();
   };
 

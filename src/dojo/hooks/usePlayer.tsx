@@ -3,7 +3,7 @@ import { useAccount } from "@starknet-react/core";
 import { addAddressPadding } from "starknet";
 import { dojoConfig } from "../dojoConfig";
 import { Player } from "../../lib/schema";
-import useAppStore from '../../zustand/store';
+import useAppStore from "../../zustand/store";
 
 interface UsePlayerReturn {
   player: Player | null;
@@ -37,13 +37,13 @@ const PLAYER_QUERY = `
 
 // Helper to convert hex values to numbers
 const hexToNumber = (hexValue: string | number): number => {
-  if (typeof hexValue === 'number') return hexValue;
+  if (typeof hexValue === "number") return hexValue;
 
-  if (typeof hexValue === 'string' && hexValue.startsWith('0x')) {
+  if (typeof hexValue === "string" && hexValue.startsWith("0x")) {
     return parseInt(hexValue, 16);
   }
 
-  if (typeof hexValue === 'string') {
+  if (typeof hexValue === "string") {
     return parseInt(hexValue, 10);
   }
 
@@ -54,14 +54,13 @@ const hexToNumber = (hexValue: string | number): number => {
 const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
   try {
     console.log("🔍 Fetching player with owner:", playerOwner);
-    
 
     const response = await fetch(TORII_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: PLAYER_QUERY,
-        variables: { playerOwner }
+        variables: { playerOwner },
       }),
     });
 
@@ -74,7 +73,8 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
     }
 
     // Extract player data
-    const rawPlayerData = result.data.fullStarterReactPlayerModels.edges[0].node;
+    const rawPlayerData =
+      result.data.fullStarterReactPlayerModels.edges[0].node;
     console.log("📄 Raw player data:", rawPlayerData);
 
     // Convert hex values to numbers - using your structure
@@ -91,18 +91,16 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
       intelligence: hexToNumber(rawPlayerData.intelligence),
       leadership: hexToNumber(rawPlayerData.leadership),
       universe_currency: hexToNumber(rawPlayerData.universe_currency),
-      last_login_at: new Date(hexToNumber(rawPlayerData.last_login_at))
+      last_login_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
     };
 
     console.log("✅ Player data after conversion:", playerData);
     return playerData;
-
   } catch (error) {
     console.error("❌ Error fetching player:", error);
     throw error;
   }
 };
-
 
 // Main hook
 export const usePlayer = (): UsePlayerReturn => {
@@ -111,12 +109,12 @@ export const usePlayer = (): UsePlayerReturn => {
   const [error, setError] = useState<Error | null>(null);
   const { account } = useAccount();
 
-  const storePlayer = useAppStore(state => state.player);
-  const setPlayer = useAppStore(state => state.setPlayer);
+  const storePlayer = useAppStore((state) => state.player);
+  const setPlayer = useAppStore((state) => state.setPlayer);
 
-  const userAddress = useMemo(() =>
-    account ? addAddressPadding(account.address).toLowerCase() : '',
-    [account]
+  const userAddress = useMemo(
+    () => (account ? addAddressPadding(account.address).toLowerCase() : ""),
+    [account],
   );
 
   const refetch = async () => {
@@ -134,15 +132,15 @@ export const usePlayer = (): UsePlayerReturn => {
 
       setPlayer(playerData);
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setIsFetched(true);
 
       const updatedPlayer = useAppStore.getState().player;
       console.log("💾 Player in store after update:", updatedPlayer);
-
     } catch (err) {
-      const error = err instanceof Error ? err : new Error('Unknown error occurred');
+      const error =
+        err instanceof Error ? err : new Error("Unknown error occurred");
       console.error("❌ Error in refetch:", error);
       setError(error);
       setPlayer(null);
@@ -172,6 +170,6 @@ export const usePlayer = (): UsePlayerReturn => {
     isFetched,
     isLoading,
     error,
-    refetch
+    refetch,
   };
 };

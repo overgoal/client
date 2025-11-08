@@ -21,7 +21,7 @@ export default function CharacterCreationScreen() {
   const { player } = usePlayer();
   const { initializePlayer } = useCreatePlayer();
 
-  const {  status, address } = useAccount();
+  const { status, address } = useAccount();
   const { isInitializing, txStatus } = useCreatePlayer();
   const { handleDisconnect } = useStarknetConnect();
 

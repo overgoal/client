@@ -35,7 +35,7 @@ export default function PrematchOptions({ className }: PrematchOptionsProps) {
     <div
       className={cn(
         "w-full flex flex-col items-center justify-center gap-6 px-2 z-100 ",
-        className
+        className,
       )}
     >
       {options.map((option) => (

@@ -8,7 +8,7 @@ interface RestActionState {
   isLoading: boolean;
   error: string | null;
   txHash: string | null;
-  txStatus: 'PENDING' | 'SUCCESS' | 'REJECTED' | null;
+  txStatus: "PENDING" | "SUCCESS" | "REJECTED" | null;
 }
 
 interface UseRestActionReturn {
@@ -27,7 +27,7 @@ export const useRestAction = (): UseRestActionReturn => {
     isLoading: false,
     error: null,
     txHash: null,
-    txStatus: null
+    txStatus: null,
   });
 
   const isConnected = status === "connected";
@@ -40,7 +40,7 @@ export const useRestAction = (): UseRestActionReturn => {
         ? "Please connect your controller"
         : "Cannot rest right now";
 
-      setRestState(prev => ({ ...prev, error: errorMsg }));
+      setRestState((prev) => ({ ...prev, error: errorMsg }));
       return;
     }
 
@@ -49,7 +49,7 @@ export const useRestAction = (): UseRestActionReturn => {
         isLoading: true,
         error: null,
         txHash: null,
-        txStatus: 'PENDING'
+        txStatus: "PENDING",
       });
 
       console.log("📤 Executing rest transaction...");
@@ -58,7 +58,7 @@ export const useRestAction = (): UseRestActionReturn => {
       console.log("📥 Rest transaction response:", tx);
 
       if (tx?.transaction_hash) {
-        setRestState(prev => ({ ...prev, txHash: tx.transaction_hash }));
+        setRestState((prev) => ({ ...prev, txHash: tx.transaction_hash }));
       }
 
       if (tx && tx.code === "SUCCESS") {
@@ -67,10 +67,10 @@ export const useRestAction = (): UseRestActionReturn => {
         // Optimistic update: +20 health (max 100)
         // updatePlayerHealth(Math.min(100, (player?.health || 100) + 20));
 
-        setRestState(prev => ({
+        setRestState((prev) => ({
           ...prev,
-          txStatus: 'SUCCESS',
-          isLoading: false
+          txStatus: "SUCCESS",
+          isLoading: false,
         }));
 
         // Auto-clear after 3 seconds
@@ -79,22 +79,22 @@ export const useRestAction = (): UseRestActionReturn => {
             isLoading: false,
             error: null,
             txHash: null,
-            txStatus: null
+            txStatus: null,
           });
         }, 3000);
-
       } else {
-        throw new Error(`Rest transaction failed with code: ${tx?.code || 'unknown'}`);
+        throw new Error(
+          `Rest transaction failed with code: ${tx?.code || "unknown"}`,
+        );
       }
-
     } catch (error) {
       console.error("❌ Error executing rest:", error);
 
       setRestState({
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : "Unknown error",
         txHash: null,
-        txStatus: 'REJECTED'
+        txStatus: "REJECTED",
       });
 
       // Auto-clear error after 5 seconds
@@ -103,7 +103,7 @@ export const useRestAction = (): UseRestActionReturn => {
           isLoading: false,
           error: null,
           txHash: null,
-          txStatus: null
+          txStatus: null,
         });
       }, 5000);
     }
@@ -114,7 +114,7 @@ export const useRestAction = (): UseRestActionReturn => {
       isLoading: false,
       error: null,
       txHash: null,
-      txStatus: null
+      txStatus: null,
     });
   }, []);
 
@@ -122,6 +122,6 @@ export const useRestAction = (): UseRestActionReturn => {
     restState,
     executeRest,
     canRest,
-    resetRestState
+    resetRestState,
   };
 };
