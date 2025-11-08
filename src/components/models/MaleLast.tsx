@@ -49,7 +49,6 @@ export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
     "/models/Male/new-text/Accesories_Mat_2.png",
   );
 
-  const characterShader = useCharacterShader({ baseTexture: bodyTexture });
 
   const baseMaterial = useMemo(() => {
     const material = new THREE.MeshBasicMaterial({

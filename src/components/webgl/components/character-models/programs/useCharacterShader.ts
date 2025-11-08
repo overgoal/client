@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
 import { useMemo } from "react";
-import characterVert from "./characterMaterial.vert?raw";
 import characterFrag from "./characterMaterial.frag?raw";
 
 

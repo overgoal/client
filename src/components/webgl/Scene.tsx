@@ -1,18 +1,15 @@
 import { Canvas } from "@react-three/fiber";
-import { Html, OrbitControls, Preload } from "@react-three/drei";
+import {  OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
 import ChangeableModels, { PlayerData } from "../models/ChangeableModels";
-import { cn } from "../../utils/utils";
-import QRCode from "react-qr-code";
-import { ModelBody2 } from "../models/MaleBody2";
 
-const getPlayerTeam = (team: number | undefined) => {
-  if (team === 0) return "/teams/Cartridge City.png";
-  if (team === 1) return "/teams/dojoUnited.png";
-  if (team === 2) return "/teams/Nova United.png";
-  return "/teams/Drakon core.png";
-};
+// const getPlayerTeam = (team: number | undefined) => {
+//   if (team === 0) return "/teams/Cartridge City.png";
+//   if (team === 1) return "/teams/dojoUnited.png";
+//   if (team === 2) return "/teams/Nova United.png";
+//   return "/teams/Drakon core.png";
+// };
 
 const Scene = () => {
   const [data, setData] = useState<PlayerData[]>([]);
