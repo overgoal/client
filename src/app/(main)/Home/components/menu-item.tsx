@@ -13,14 +13,14 @@ const MenuItem = (props: MenuItemProps) => {
   return (
     <div
       className={cn(
-        "bg-black max-w-[66px] flex justify-center items-center max-h-[64px] w-full h-full",
-        "menu-item",
+        "bg-[#170028] max-w-[75px] flex justify-center items-center max-h-[70px] w-full h-full",
+        "menu-item"
       )}
     >
       <Link to={props.href}>
-        <Button className="flex flex-col relative  justify-between p-3 items-center h-full w-full">
-          {props.icon}
-          <p className="text-[10px] text-white uppercase orbitron-medium">
+        <Button className="flex flex-col relative gap-1  justify-center p-3 items-center h-full w-full">
+          <img src={props.icon as string} alt={props.title} className="w-6 h-6" />
+          <p className="text-[11px] text-white  font-orbitron">
             {props.title}
           </p>
         </Button>

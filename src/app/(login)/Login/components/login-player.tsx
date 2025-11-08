@@ -107,13 +107,13 @@ export function LoginPlayer() {
   };
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8">
+    <div className=" rounded-2xl p-6 mb-8">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-4">
           <Button
             onClick={onHandleConnect}
             disabled={isLoading}
-            className="px-6 py-3 font-semibold transition-all duration-300 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg shadow-red-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-3 font-semibold transition-all duration-300 text-white bg-[#003a4f]  disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isConnecting || status === "connecting" ? (
               <>

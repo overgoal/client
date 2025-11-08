@@ -2,22 +2,10 @@ import { cn } from "../../../../utils/utils";
 import { Button } from "../../../../components/ui/button";
 import { HOME_MENU_ITEMS } from "../constants";
 import MenuItem from "./menu-item";
-import { TrophyIcon, CalendarIcon, ShoppingCartIcon } from "lucide-react";
 import { Link } from "react-router";
+import { getIcon } from "../../../../utils/utils";
 
-const getIcon = (iconName: string) => {
-  const iconMap = {
-    trophy: <TrophyIcon className="w-4 h-4 text-[#00e4e8]" />,
-    calendar: <CalendarIcon className="w-4 h-4 text-[#00e4e8]" />,
-    "shopping-cart": <ShoppingCartIcon className="w-4 h-4 text-[#00e4e8]" />,
-  };
 
-  return (
-    iconMap[iconName as keyof typeof iconMap] || (
-      <TrophyIcon className="w-4 h-4 text-[#00e4e8]" />
-    )
-  );
-};
 
 export default function MenuFooter() {
   return (
