@@ -1,15 +1,18 @@
 import { Canvas } from "@react-three/fiber";
-import {  OrbitControls, Preload } from "@react-three/drei";
+import { cn } from "../../utils/utils";
+import { OrbitControls, Preload, Html } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
 import ChangeableModels, { PlayerData } from "../models/ChangeableModels";
+import QRCode from "react-qr-code";
+import { mapCardBorderTexture } from "../../utils/mapTeamTexture";
 
-// const getPlayerTeam = (team: number | undefined) => {
-//   if (team === 0) return "/teams/Cartridge City.png";
-//   if (team === 1) return "/teams/dojoUnited.png";
-//   if (team === 2) return "/teams/Nova United.png";
-//   return "/teams/Drakon core.png";
-// };
+const getPlayerTeam = (team: number | undefined) => {
+  if (team === 0) return "/teams/Cartridge City.png";
+  if (team === 1) return "/teams/dojoUnited.png";
+  if (team === 2) return "/teams/Nova United.png";
+  return "/teams/Drakon core.png";
+};
 
 const Scene = () => {
   const [data, setData] = useState<PlayerData[]>([]);
@@ -86,18 +89,22 @@ const Scene = () => {
 
   // Set up interval to cycle through players
   useEffect(() => {
-    return
     if (data.length === 0) return;
 
     let currentIndex = 0;
     const intervalId = setInterval(() => {
       currentIndex = (currentIndex + 1) % data.length;
       setPlayer(data[currentIndex]);
-    }, 2000 );
+    }, 100);
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
   }, [data]);
+
+  const categoryImages = mapCardBorderTexture(
+    player?.player_category ?? "bronze",
+  )
+
 
   return (
     <Canvas
@@ -115,7 +122,7 @@ const Scene = () => {
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
 
-        {/* <Html position={[0, 0, 0]} fullscreen >
+        <Html position={[0, 0, 0]} fullscreen>
           <div className="flex h-full w-full flex-col items-center justify-between">
             <div className="flex w-full flex-row items-center justify-start gap-4 px-4 pt-4">
               <img
@@ -123,7 +130,7 @@ const Scene = () => {
                 alt=""
                 className="absolute top-0 left-0 h-full w-full object-cover"
               />
-              <div className="absolute -top-4 -left-4 z-100 h-48 w-48 bg-[url('/card/Asset-02.png')] bg-cover bg-center">
+              <div className="absolute bg-black -top-4 -left-4 z-100 h-42 w-42 bg-[url('/card/Asset-02.png')] bg-cover bg-center rounded-full">
                 <img
                   src={getPlayerTeam(player?.team_id)}
                   alt=""
@@ -140,7 +147,7 @@ const Scene = () => {
               </div>
               <div className="absolute top-0 z-10 h-24 w-full bg-cover bg-center font-bold">
                 <img
-                  src="/card/top-2.png"
+                  src={categoryImages.border}
                   alt=""
                   className="absolute left-45 h-full w-3/4 -translate-x-1/5 object-cover"
                 />
@@ -158,7 +165,7 @@ const Scene = () => {
                 </div>
               </div>
 
-              <div className="absolute top-15 text-2xl right-4 z-100 text-white  airstrike-normal">
+              <div className="airstrike-normal absolute top-15 right-4 z-100 text-2xl text-white">
                 {player?.player_category}
               </div>
             </div>
@@ -177,11 +184,11 @@ const Scene = () => {
               <div className="flex w-full flex-row items-center justify-center gap-12">
                 <div className="relative z-100 flex items-center justify-center">
                   <img
-                    src="/card/qr.png"
+                    src={categoryImages.qr}
                     alt=""
-                    className="h-40 w-40 object-contain"
+                    className={cn("h-36 w-36 object-contain", player?.player_category === "gold" ? "scale-120 object-bottom" : "")}
                   />
-                  <div className="absolute overflow-hidden bg-[url('/card/info.png')] bg-contain bg-center bg-no-repeat">
+                  <div className="absolute overflow-hidden bg-contain bg-center bg-no-repeat">
                     <QRCode
                       size={120}
                       value={"/login"}
@@ -190,8 +197,8 @@ const Scene = () => {
                   </div>
                 </div>
 
-                <div className="relative z-100 flex max-h-[180px] flex-1 flex-col items-center justify-center bg-contain bg-center bg-no-repeat py-4 ">
-                  <div className="grid grid-cols-2 gap-x-12 gap-y-1 mt-4">
+                <div className="relative z-100 flex max-h-[180px] flex-1 flex-col items-center justify-center bg-contain bg-center bg-no-repeat py-4">
+                  <div className="mt-4 grid grid-cols-2 gap-x-12 gap-y-1">
                     <div className="leading-tight">
                       <span className="text-overgoal-blue airstrike-normal mr-2 min-w-[3rem] text-3xl font-bold">
                         {player?.shoot}
@@ -244,9 +251,9 @@ const Scene = () => {
               </div>
             </div>
           </div>
-        </Html> */}
+        </Html>
 
-          {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
+        {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
         {player && (
           <ChangeableModels
             scale={player.body_type == 2 ? 4 : 5.4}

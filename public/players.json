@@ -805,7 +805,7 @@
     "visor_type": 1,
     "visor_color": 2,
     "team_id": 0,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Benjamin Young",
     "player_description": "Great vision & Reads game"
   },
@@ -835,7 +835,7 @@
     "visor_type": 2,
     "visor_color": 1,
     "team_id": 0,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Adrian Scott",
     "player_description": "Lightning quick, Agile creator"
   },
@@ -865,7 +865,7 @@
     "visor_type": 1,
     "visor_color": 2,
     "team_id": 0,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Alexander Brown",
     "player_description": "Clinical striker, Highly agile"
   },
@@ -895,7 +895,7 @@
     "visor_type": 0,
     "visor_color": 2,
     "team_id": 0,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Felix Harris",
     "player_description": "Clinical striker / Vocal presence"
   },
@@ -925,7 +925,7 @@
     "visor_type": 0,
     "visor_color": 1,
     "team_id": 0,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Dominic Johnson",
     "player_description": "Deadly in front, Natural leader"
   },
@@ -955,7 +955,7 @@
     "visor_type": 0,
     "visor_color": 1,
     "team_id": 0,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Luca Baker",
     "player_description": "Creative passer / Fleet of foot"
   },
@@ -1885,7 +1885,7 @@
     "visor_type": 0,
     "visor_color": 0,
     "team_id": 1,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Samuel Lopez",
     "player_description": "Natural goalscorer, Very fast"
   },
@@ -1915,7 +1915,7 @@
     "visor_type": 2,
     "visor_color": 1,
     "team_id": 1,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Benjamin Allen",
     "player_description": "Creative passer, Smart decision maker"
   },
@@ -1945,7 +1945,7 @@
     "visor_type": 0,
     "visor_color": 1,
     "team_id": 1,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Santiago Hill",
     "player_description": "Curling free-kicks / Natural leader"
   },
@@ -1975,7 +1975,7 @@
     "visor_type": 2,
     "visor_color": 1,
     "team_id": 1,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Nicolas Lopez",
     "player_description": "Very fast — Deadly set-piece"
   },
@@ -2005,7 +2005,7 @@
     "visor_type": 0,
     "visor_color": 1,
     "team_id": 1,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Daniel Jackson",
     "player_description": "Constant presence & Reads game well"
   },
@@ -2035,7 +2035,7 @@
     "visor_type": 1,
     "visor_color": 2,
     "team_id": 1,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Hugo Sanchez",
     "player_description": "Explosive finisher / Creative passer"
   },
@@ -2965,7 +2965,7 @@
     "visor_type": 1,
     "visor_color": 1,
     "team_id": 2,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Dylan Jones",
     "player_description": "Pinpoint passer & Endless engine"
   },
@@ -2995,7 +2995,7 @@
     "visor_type": 2,
     "visor_color": 2,
     "team_id": 2,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Felix Sanchez",
     "player_description": "Fairly quick, Soft voice"
   },
@@ -3025,7 +3025,7 @@
     "visor_type": 2,
     "visor_color": 0,
     "team_id": 2,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Joel Thomas",
     "player_description": "Dream distributor, Commands respect"
   },
@@ -3055,7 +3055,7 @@
     "visor_type": 2,
     "visor_color": 1,
     "team_id": 2,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Oliver Hill",
     "player_description": "Outruns defenders & Light on feet"
   },
@@ -3085,7 +3085,7 @@
     "visor_type": 0,
     "visor_color": 0,
     "team_id": 2,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Felix Nelson",
     "player_description": "Endless engine & Technical dead-ball"
   },
@@ -3115,7 +3115,7 @@
     "visor_type": 0,
     "visor_color": 1,
     "team_id": 2,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Roman Thompson",
     "player_description": "Strong on the ball, Endless engine"
   },
@@ -4045,7 +4045,7 @@
     "visor_type": 1,
     "visor_color": 0,
     "team_id": 3,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Caleb Williams",
     "player_description": "Nimble dribbler / Outruns defenders"
   },
@@ -4075,7 +4075,7 @@
     "visor_type": 2,
     "visor_color": 1,
     "team_id": 3,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Alexander Lopez",
     "player_description": "Clinical striker / Outruns defenders"
   },
@@ -4105,7 +4105,7 @@
     "visor_type": 0,
     "visor_color": 1,
     "team_id": 3,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Marcus Baker",
     "player_description": "Strong on, Blazing speed"
   },
@@ -4135,7 +4135,7 @@
     "visor_type": 2,
     "visor_color": 0,
     "team_id": 3,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Levi Sanchez",
     "player_description": "Rapid mover / Smooth mover"
   },
@@ -4165,7 +4165,7 @@
     "visor_type": 1,
     "visor_color": 2,
     "team_id": 3,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Hugo Adams",
     "player_description": "Never tires, Body of steel"
   },
@@ -4195,7 +4195,7 @@
     "visor_type": 2,
     "visor_color": 0,
     "team_id": 3,
-    "player_category": "silver",
+    "player_category": "gold",
     "player_name": "Lucas Lopez",
     "player_description": "Outruns defenders / Fleet of foot"
   },

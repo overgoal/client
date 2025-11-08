@@ -51,3 +51,23 @@ const actionMap = {
 export const getActionMap = (key: number) => {
   return actionMap[key as keyof typeof actionMap];
 };
+
+const mapCardBorders = {
+  bronze: {
+    border: "/card/top-2.png",
+    qr: "/card/qr.png",
+  },
+  gold: {
+    border: "/card/top-2_Dorado.png",
+    qr: "/card/qr_Dorado.png",
+  },
+  platinum: {
+    border: "/card/top-2_Platino.png",
+    qr: "/card/qr_Platino.png",
+  },
+};
+
+export const mapCardBorderTexture = (type: "bronze" | "gold" | "platinum") => {
+  const obj = mapCardBorders[type as keyof typeof mapCardBorders];
+  return obj;
+};

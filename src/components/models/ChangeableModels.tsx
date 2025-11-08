@@ -11,6 +11,7 @@ import { GLTF } from "three-stdlib";
 import {
   mapAccesoriesTexture,
   mapTeamTexture,
+  mapCardBorderTexture,
 } from "../../utils/mapTeamTexture";
 
 // Type definition for the new unified structure (all 3 models now have this same structure)
@@ -106,7 +107,7 @@ interface PlayerData {
   visor_type: 0 | 1 | 2;
   visor_color: 0 | 1 | 2;
   team_id: number;
-  player_category: "bronze" | "silver" | "gold" | "platinum";
+  player_category: "bronze" | "gold" | "platinum";
   player_name: string;
   player_description: string;
 }
@@ -211,7 +212,6 @@ export default function ChangeableModels({
     playerData?.skin_color ?? 0,
   );
   const skinTexture = useTexture(skinTextureUrl);
-
   // Load accessories texture
   // const accesoriesTexture = useTexture(
   //   "/models/Male/textures/Accesories_Mat_BaseColor.png",
