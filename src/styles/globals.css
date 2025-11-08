@@ -20,6 +20,7 @@
 :root {
   --border: 0 0% 14.9%;
   --background: red;
+  --card-name-content: "";
 }
 
 /* Tell Tailwind v4 about named colors */
@@ -337,4 +338,25 @@
   top: 52%;
   left: 52%;
   transform: translate(-52%, -52%);
+}
+
+
+.card-name {
+  position: relative;
+  color: black;
+  -webkit-text-stroke: 1px white;
+  text-stroke: 1px white;
+}
+
+.card-name::after {
+  content: var(--card-name-content, "");
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  color: black;
+  /* -webkit-text-stroke: 6px black; */
+  /* text-stroke: 6px black; */
 }

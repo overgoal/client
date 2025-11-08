@@ -42,7 +42,11 @@ export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
     "/models/Male/textures/MainBody_Skin1_BaseColor.png",
   );
   const accesoriesTexture = useTexture(
-    "/models/Male/textures/Accesories_Mat_BaseColor.png",
+    "/models/Male/new-text/Accesories_Mat_1.png",
+  );
+
+  const accesoriesTexture2 = useTexture(
+    "/models/Male/new-text/Accesories_Mat_2.png",
   );
 
   const characterShader = useCharacterShader({ baseTexture: bodyTexture });
@@ -66,8 +70,8 @@ export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
   const accesoriesMaterial = useMemo(() => {
     const material = new THREE.MeshBasicMaterial({
       map: accesoriesTexture,
-      color: new THREE.Color(0x1ff4f10),
-      vertexColors: true,
+      color: new THREE.Color(0xffffff),
+      vertexColors: false,
     });
 
     // Ensure proper color space
@@ -78,6 +82,23 @@ export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
 
     return material;
   }, [accesoriesTexture]);
+
+  const accesoriesMaterial2= useMemo(() => {
+    const material = new THREE.MeshBasicMaterial({
+      map: accesoriesTexture2,
+      color: new THREE.Color(0xfff0000),
+      vertexColors: false,
+    });
+
+    // Ensure proper color space
+    if (accesoriesTexture) {
+      accesoriesTexture.colorSpace = THREE.SRGBColorSpace;
+      // accesoriesTexture.flipY = true;
+    }
+
+    return material;
+  }, [accesoriesTexture]);
+
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -94,18 +115,18 @@ export function MaleBody1(props: JSX.IntrinsicElements["group"]) {
                   material={accesoriesMaterial}
                   skeleton={nodes.Beard.skeleton}
                 />
-                <skinnedMesh
+                {/* <skinnedMesh
                   name="Hair_1"
                   geometry={nodes.Hair_1.geometry}
                   material={accesoriesMaterial}
                   skeleton={nodes.Hair_1.skeleton}
-                />
-                {/* <skinnedMesh
+                /> */}
+                <skinnedMesh
                   name="Hair_2"
                   geometry={nodes.Hair_2.geometry}
-                  material={accesoriesMaterial}
+                  material={accesoriesMaterial2}
                   skeleton={nodes.Hair_2.skeleton}
-                /> */}
+                />
                 <skinnedMesh
                   name="Visor_1"
                   geometry={nodes.Visor_1.geometry}

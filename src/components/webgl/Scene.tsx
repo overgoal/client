@@ -2,17 +2,16 @@ import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
-import { MaleBody1 } from "../../components/models/MaleLast";
-import { ModelBody2 } from "../../components/models/MaleBody2";
-import { ModelBody3 } from "../../components/models/MaleBody3";
 import ChangeableModels, { PlayerData } from "../models/ChangeableModels";
+import { cn } from "../../utils/utils";
+import QRCode from "react-qr-code";
+import { ModelBody2 } from "../models/MaleBody2";
 
 const getPlayerTeam = (team: number | undefined) => {
-  console.log("team", team);
-  if (team === 0) return "/teams/dojoUnited.png";
-  if (team === 1) return "/teams/Cartridge City.png";
-  if (team === 2) return "/teams/VoidBreakers.png";
-  return "/teams/Galactic Forge.png";
+  if (team === 0) return "/teams/Cartridge City.png";
+  if (team === 1) return "/teams/dojoUnited.png";
+  if (team === 2) return "/teams/Nova United.png";
+  return "/teams/Drakon core.png";
 };
 
 const Scene = () => {
@@ -74,7 +73,7 @@ const Scene = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/players (2).json");
+        const res = await fetch("/players.json");
         const data = await res.json();
         setData(data);
         if (data.length > 0) {
@@ -90,13 +89,14 @@ const Scene = () => {
 
   // Set up interval to cycle through players
   useEffect(() => {
+    return
     if (data.length === 0) return;
 
     let currentIndex = 0;
     const intervalId = setInterval(() => {
       currentIndex = (currentIndex + 1) % data.length;
       setPlayer(data[currentIndex]);
-    }, 3000);
+    }, 2000 );
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
@@ -118,81 +118,142 @@ const Scene = () => {
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
 
-        <Html position={[0, 0, 0]} fullscreen>
+        {/* <Html position={[0, 0, 0]} fullscreen >
           <div className="flex h-full w-full flex-col items-center justify-between">
-            <div className="bg-overgoal-purple flex w-full flex-row items-center justify-start gap-4 px-4 pt-4">
+            <div className="flex w-full flex-row items-center justify-start gap-4 px-4 pt-4">
               <img
-                src={getPlayerTeam(player?.team)}
+                src="/card/Asset-08.png"
                 alt=""
-                className="h-24 w-24 object-contain"
+                className="absolute top-0 left-0 h-full w-full object-cover"
               />
-              <h1 className="airstrike-normal text-5xl font-bold text-black">
-                {player?.player_name}
-              </h1>
+              <div className="absolute -top-4 -left-4 z-100 h-48 w-48 bg-[url('/card/Asset-02.png')] bg-cover bg-center">
+                <img
+                  src={getPlayerTeam(player?.team_id)}
+                  alt=""
+                  className={cn(
+                    "relative z-100 scale-40 object-contain object-center",
+                    player?.team_id === 1
+                      ? "top-1/2 left-1/2 h-3/4 w-3/4 -translate-x-1/2 -translate-y-1/2"
+                      : "",
+                    player?.team_id === 3
+                      ? "top-1/2 left-1/2 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2"
+                      : "",
+                  )}
+                />
+              </div>
+              <div className="absolute top-0 z-10 h-24 w-full bg-cover bg-center font-bold">
+                <img
+                  src="/card/top-2.png"
+                  alt=""
+                  className="absolute left-45 h-full w-3/4 -translate-x-1/5 object-cover"
+                />
+                <div className="airstrike-normal relative top-5 left-64 z-100 w-full -translate-x-1/5">
+                  <h1
+                    className="card-name absolute text-[35px]"
+                    style={
+                      {
+                        "--card-name-content": `"${player?.player_name}"`,
+                      } as React.CSSProperties
+                    }
+                  >
+                    {player?.player_name}
+                  </h1>
+                </div>
+              </div>
+
+              <div className="absolute top-15 text-2xl right-4 z-100 text-white  airstrike-normal">
+                {player?.player_category}
+              </div>
             </div>
-            <div className="flex w-full flex-row items-center gap-2">
-              <div className="flex h-full w-full flex-col items-start bg-linear-to-b from-transparent from-5% to-black/90 to-30% p-8">
-                <div className="flex h-full flex-row items-start gap-2">
-                  <span className="text-overgoal-blue airstrike-normal text-3xl font-bold">
-                    {player?.shoot}
-                  </span>{" "}
-                  <span className="text-overgoal-blue airstrike-normal text-3xl">
-                    Shoot
-                  </span>
+            <div className="flex w-full flex-col items-center justify-center gap-2 p-4 px-12">
+              <div className="absolute top-0 left-0 h-full w-full">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <img
+                    key={index}
+                    src="/card/Asset-09.png"
+                    alt=""
+                    className="absolute top-1/2 left-0 h-1/2 w-full object-cover opacity-90"
+                  />
+                ))}
+              </div>
+
+              <div className="flex w-full flex-row items-center justify-center gap-12">
+                <div className="relative z-100 flex items-center justify-center">
+                  <img
+                    src="/card/qr.png"
+                    alt=""
+                    className="h-40 w-40 object-contain"
+                  />
+                  <div className="absolute overflow-hidden bg-[url('/card/info.png')] bg-contain bg-center bg-no-repeat">
+                    <QRCode
+                      size={120}
+                      value={"/login"}
+                      className="overflow-hidden"
+                    />
+                  </div>
                 </div>
 
-                <div className="flex h-full flex-row items-start gap-2">
-                  <span className="text-overgoal-blue airstrike-normal text-3xl font-bold">
-                    {player?.pass}
-                  </span>{" "}
-                  <span className="text-overgoal-blue airstrike-normal text-3xl">
-                    Pass
-                  </span>
-                </div>
-                <div className="flex h-full flex-row items-start gap-2">
-                  <span className="text-overgoal-blue airstrike-normal text-3xl font-bold">
-                    {player?.intelligence}
-                  </span>{" "}
-                  <span className="text-overgoal-blue airstrike-normal text-3xl">
-                    Intelligence
-                  </span>
-                </div>
-                <div className="flex h-full flex-row items-start gap-2">
-                  <span className="text-overgoal-blue airstrike-normal text-3xl font-bold">
-                    {player?.dribble}
-                  </span>{" "}
-                  <span className="text-overgoal-blue airstrike-normal text-3xl">
-                    Dribble
-                  </span>
-                </div>
+                <div className="relative z-100 flex max-h-[180px] flex-1 flex-col items-center justify-center bg-contain bg-center bg-no-repeat py-4 ">
+                  <div className="grid grid-cols-2 gap-x-12 gap-y-1 mt-4">
+                    <div className="leading-tight">
+                      <span className="text-overgoal-blue airstrike-normal mr-2 min-w-[3rem] text-3xl font-bold">
+                        {player?.shoot}
+                      </span>
+                      <span className="text-overgoal-blue airstrike-normal text-3xl">
+                        Shoot
+                      </span>
+                    </div>
 
-                <div className="flex h-full flex-row items-start gap-2">
-                  <span className="text-overgoal-blue airstrike-normal text-3xl font-bold">
-                    {player?.strength}
-                  </span>{" "}
-                  <span className="text-overgoal-blue airstrike-normal text-3xl">
-                    Strength
-                  </span>
+                    <div className="leading-tight">
+                      <span className="text-overgoal-blue airstrike-normal mr-2 min-w-[3rem] text-3xl font-bold">
+                        {player?.pass}
+                      </span>
+                      <span className="text-overgoal-blue airstrike-normal text-3xl">
+                        Pass
+                      </span>
+                    </div>
+
+                    <div className="leading-tight">
+                      <span className="text-overgoal-blue airstrike-normal mr-2 min-w-[3rem] text-3xl font-bold">
+                        {player?.intelligence}
+                      </span>
+                      <span className="text-overgoal-blue airstrike-normal text-3xl">
+                        Intel.
+                      </span>
+                    </div>
+
+                    <div className="leading-tight">
+                      <span className="text-overgoal-blue airstrike-normal mr-2 min-w-[3rem] text-3xl font-bold">
+                        {player?.agility}
+                      </span>
+                      <span className="text-overgoal-blue airstrike-normal text-3xl">
+                        Agility
+                      </span>
+                    </div>
+
+                    <div className="leading-tight">
+                      <span className="text-overgoal-blue airstrike-normal mr-2 min-w-[3rem] text-3xl font-bold">
+                        {player?.strength}
+                      </span>
+                      <span className="text-overgoal-blue airstrike-normal text-3xl">
+                        Streght.
+                      </span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div className="airstrike-normal z-100 flex w-full items-center justify-center text-center text-xl text-white">
+                <div>{player?.player_description}</div>
               </div>
             </div>
           </div>
-        </Html>
+        </Html> */}
 
-        {/* <MaleBody1 scale={4.8} position={[0, -200, -20]} rotation={[0, 0, 0]} /> */}
-        {/* <ModelBody2 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} /> */}
-        {/* <ModelBody3 scale={4} position={[0, -150, 0]} rotation={[0, 0, 0]} /> */}
-        {/* <ChangeableModels
-          scale={4.8}
-          position={[0, -200, -20]}
-          rotation={[0, 0, 0]}
-          autoRandomize={false}
-        /> */}
-
+          {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
         {player && (
           <ChangeableModels
-            scale={4.8}
-            position={[0, -200, -20]}
+            scale={player.body_type == 2 ? 4 : 5.4}
+            position={[0, player.body_type == 2 ? -150 : -200, -40]}
             rotation={[0, 0, 0]}
             playerData={player}
             autoRandomize={false}

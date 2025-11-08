@@ -1,5 +1,6 @@
 /*
-  ChangeableModels - A component that randomly combines parts from 3 different character models
+  ChangeableModels - A component that uses 3 different character models (all with the same structure)
+  and toggles parts (eyebrows, beard, hair, visor) and applies different textures
   to create unique character variations
 */
 
@@ -7,13 +8,21 @@ import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import {
+  mapAccesoriesTexture,
+  mapTeamTexture,
+} from "../../utils/mapTeamTexture";
 
-// Type definitions for the three model variants
-type GLTFResultModel1 = GLTF & {
+// Type definition for the new unified structure (all 3 models now have this same structure)
+type GLTFModel1 = GLTF & {
   nodes: {
+    Eyebrows: THREE.SkinnedMesh;
     Beard: THREE.SkinnedMesh;
     Hair_1: THREE.SkinnedMesh;
+    Hair_2: THREE.SkinnedMesh;
     Visor_1: THREE.SkinnedMesh;
+    Visor_2: THREE.SkinnedMesh;
+    Visor_3: THREE.SkinnedMesh;
     Body_1: THREE.SkinnedMesh;
     mixamorigHips: THREE.Bone;
   };
@@ -23,53 +32,83 @@ type GLTFResultModel1 = GLTF & {
   };
 };
 
-type GLTFResultModel2 = GLTF & {
+type GLTFModel2 = GLTF & {
   nodes: {
+    Eyebrows: THREE.SkinnedMesh;
     Beard: THREE.SkinnedMesh;
     Hair_1: THREE.SkinnedMesh;
     Hair_2: THREE.SkinnedMesh;
+    Visor_1: THREE.SkinnedMesh;
     Visor_2: THREE.SkinnedMesh;
+    Visor_3: THREE.SkinnedMesh;
     Body_2: THREE.SkinnedMesh;
     mixamorigHips: THREE.Bone;
   };
+  materials: {
+    Accesories_Mat: THREE.MeshStandardMaterial;
+    MainBody_Mat: THREE.MeshStandardMaterial;
+  };
 };
 
-type GLTFResultModel3 = GLTF & {
+type GLTFModel3 = GLTF & {
   nodes: {
-    Body_3: THREE.SkinnedMesh;
+    Eyebrows: THREE.SkinnedMesh;
+    Beard: THREE.SkinnedMesh;
+    Hair_1: THREE.SkinnedMesh;
+    Hair_2: THREE.SkinnedMesh;
+    Visor_1: THREE.SkinnedMesh;
+    Visor_2: THREE.SkinnedMesh;
     Visor_3: THREE.SkinnedMesh;
+    Body_3_1: THREE.SkinnedMesh;
     mixamorigHips: THREE.Bone;
+  };
+  materials: {
+    Accesories_Mat: THREE.MeshStandardMaterial;
+    MainBody_Mat: THREE.MeshStandardMaterial;
   };
 };
 
 // Configuration interface for character customization
 interface CharacterConfig {
-  bodyModel: 1 | 2 | 3; // Which body mesh to use
+  bodyModel: 1 | 2 | 3; // Which model to use (all have same structure now)
   skinTexture: 1 | 2 | 3; // Which skin texture to use
-  hasBeard: boolean; // From Model 1
-  hairStyle: "none" | "hair1" | "hair2"; // From Models 1 & 2
-  visorStyle: "visor1" | "visor2" | "visor3"; // From all models
+  hasBeard: boolean;
+  hasEyebrows: boolean; // New in updated models
+  hairStyle: "hair1" | "hair2";
+  visorStyle: "visor1" | "visor2" | "visor3";
   accessoryColor: string; // Hex color for accessories
 }
 
 // Player data interface from JSON
 interface PlayerData {
-  player_id: number;
-  player_name: string;
-  body_type: 0 | 1 | 2; // 0-indexed
-  visor_type: 0 | 1 | 2; // 0-indexed
-  visor_color: 0 | 1 | 2; // 0=color1, 1=color2, 2=color3
-  skin_color: 0 | 1 | 2; // 0-indexed
-  hair_style: 0 | 1 | 2; // 0=none, 1=hair1, 2=hair2
-  beard_style: 0 | 1; // 0=no beard, 1=beard
-  team: number;
-  player_description: string;
-  shoot: number;
-  pass: number;
-  intelligence: number;
-  dribble: number;
+  user_id: number;
+  created_at: number;
+  last_updated_at: number;
+  last_login_at: number;
+  fame: number;
+  charisma: number;
+  stamina: number;
   strength: number;
-  player_type: string;
+  agility: number;
+  intelligence: number;
+  energy: number;
+  speed: number;
+  leadership: number;
+  pass: number;
+  shoot: number;
+  freekick: number;
+  universe_currency: number;
+  body_type: 0 | 1 | 2;
+  skin_color: 0 | 1 | 2;
+  beard_type: 0 | 1;
+  hair_type: 0 | 1;
+  hair_color: 0 | 1 | 2 | 3;
+  visor_type: 0 | 1 | 2;
+  visor_color: 0 | 1 | 2;
+  team_id: number;
+  player_category: "bronze" | "silver" | "gold" | "platinum";
+  player_name: string;
+  player_description: string;
 }
 
 // Random utility functions
@@ -83,7 +122,8 @@ function generateRandomConfig(): CharacterConfig {
     bodyModel: randomChoice([1, 2, 3] as const),
     skinTexture: randomChoice([1, 2, 3] as const),
     hasBeard: Math.random() > 0.5,
-    hairStyle: randomChoice(["none", "hair1", "hair2"] as const),
+    hasEyebrows: Math.random() > 0.3, // Higher chance to have eyebrows
+    hairStyle: randomChoice(["hair1", "hair2"] as const),
     visorStyle: randomChoice(["visor1", "visor2", "visor3"] as const),
     accessoryColor: randomChoice([
       "#ffffff", // White
@@ -107,10 +147,9 @@ function playerDataToCharacterConfig(player: PlayerData): CharacterConfig {
   };
 
   // Map hair style numbers to hair style strings
-  const hairStyleMap: Record<number, "none" | "hair1" | "hair2"> = {
-    0: "none",
-    1: "hair1",
-    2: "hair2",
+  const hairStyleMap: Record<number, "hair1" | "hair2"> = {
+    0: "hair1",
+    1: "hair2",
   };
 
   // Map visor type to visor style
@@ -123,8 +162,9 @@ function playerDataToCharacterConfig(player: PlayerData): CharacterConfig {
   return {
     bodyModel: (player.body_type + 1) as 1 | 2 | 3, // Convert 0-2 to 1-3
     skinTexture: (player.skin_color + 1) as 1 | 2 | 3, // Convert 0-2 to 1-3
-    hasBeard: player.beard_style === 1,
-    hairStyle: hairStyleMap[player.hair_style],
+    hasBeard: player.beard_type === 1,
+    hasEyebrows: true, // Default to true (can be extended in PlayerData interface if needed)
+    hairStyle: hairStyleMap[player.hair_type],
     visorStyle: visorStyleMap[player.visor_type],
     accessoryColor: visorColorMap[player.visor_color],
   };
@@ -154,31 +194,34 @@ export default function ChangeableModels({
     null,
   );
 
-  // Load all three models
+  // Load all three models (all now have the same structure)
   const model1 = useGLTF(
-    "/models/Male/male_last_2.glb",
-  ) as unknown as GLTFResultModel1;
+    "/models/Male/new-text/new_model.glb",
+  ) as unknown as GLTFModel1;
   const model2 = useGLTF(
-    "/models/Male/male_body_2.glb",
-  ) as unknown as GLTFResultModel2;
+    "/models/Male/new-text/new_model_2.glb",
+  ) as unknown as GLTFModel2;
   const model3 = useGLTF(
-    "/models/Male/male_body_3.glb",
-  ) as unknown as GLTFResultModel3;
+    "/models/Male/new-text/new_model_3.glb",
+  ) as unknown as GLTFModel3;
 
   // Load all skin textures
-  const skinTexture1 = useTexture(
-    "/models/Male/textures/MainBody_Skin1_BaseColor.png",
+  const skinTextureUrl = mapTeamTexture(
+    playerData?.team_id ?? 0,
+    playerData?.skin_color ?? 0,
   );
-  const skinTexture2 = useTexture(
-    "/models/Male/textures/MainBody_Skin2_BaseColor.png",
-  );
-  const skinTexture3 = useTexture(
-    "/models/Male/textures/MainBody_Skin3_BaseColor.png",
-  );
+  const skinTexture = useTexture(skinTextureUrl);
 
   // Load accessories texture
+  // const accesoriesTexture = useTexture(
+  //   "/models/Male/textures/Accesories_Mat_BaseColor.png",
+  // );
+
+  const hairTexture = useTexture(
+    mapAccesoriesTexture(playerData?.hair_color ?? 0),
+  );
   const accesoriesTexture = useTexture(
-    "/models/Male/textures/Accesories_Mat_BaseColor.png",
+    mapAccesoriesTexture(playerData?.visor_color ?? 0),
   );
 
   // Load mask texture for model 3
@@ -188,23 +231,15 @@ export default function ChangeableModels({
 
   // Set color space on all textures when they load
   useEffect(() => {
-    if (skinTexture1) {
-      skinTexture1.colorSpace = THREE.SRGBColorSpace;
-      skinTexture1.needsUpdate = true;
-    }
-    if (skinTexture2) {
-      skinTexture2.colorSpace = THREE.SRGBColorSpace;
-      skinTexture2.needsUpdate = true;
-    }
-    if (skinTexture3) {
-      skinTexture3.colorSpace = THREE.SRGBColorSpace;
-      skinTexture3.needsUpdate = true;
+    if (skinTexture) {
+      skinTexture.colorSpace = THREE.SRGBColorSpace;
+      skinTexture.needsUpdate = true;
     }
     if (accesoriesTexture) {
       accesoriesTexture.colorSpace = THREE.SRGBColorSpace;
       accesoriesTexture.needsUpdate = true;
     }
-  }, [skinTexture1, skinTexture2, skinTexture3, accesoriesTexture]);
+  }, [skinTexture, accesoriesTexture]);
 
   // Auto-randomize interval effect
   useEffect(() => {
@@ -231,11 +266,12 @@ export default function ChangeableModels({
     if (playerData) return playerDataToCharacterConfig(playerData);
     if (config) return config;
     if (autoRandomize) return generateRandomConfig();
-    // Default config
+    // Default config (when no playerData, config, or autoRandomize is provided)
     return {
       bodyModel: 1,
       skinTexture: 1,
       hasBeard: true,
+      hasEyebrows: true,
       hairStyle: "hair1",
       visorStyle: "visor1",
       accessoryColor: "#ffffff",
@@ -260,11 +296,11 @@ export default function ChangeableModels({
   const bodyNodeName = useMemo(() => {
     switch (characterConfig.bodyModel) {
       case 1:
-        return "Body_1";
+        return "Body_1_1";
       case 2:
-        return "Body_2";
+        return "Body_3_1";
       case 3:
-        return "Body_3";
+        return "Body_2";
       default:
         return "Body_1";
     }
@@ -274,24 +310,18 @@ export default function ChangeableModels({
   const { actions } = useAnimations(selectedModel.animations, group);
 
   useEffect(() => {
-    if (actions) {
-      actions["Break"]?.play();
+    const action = actions["Clapping"];
+    if (action) {
+      action.reset();
+      action.time = action.getClip().duration * 0.8;
+      action.play();
     }
   }, [actions, selectedModel]);
 
   // Select skin texture based on config
   const selectedSkinTexture = useMemo(() => {
-    switch (characterConfig.skinTexture) {
-      case 1:
-        return skinTexture1;
-      case 2:
-        return skinTexture2;
-      case 3:
-        return skinTexture3;
-      default:
-        return skinTexture1;
-    }
-  }, [characterConfig.skinTexture, skinTexture1, skinTexture2, skinTexture3]);
+    return skinTexture;
+  }, [skinTexture]);
 
   // Create body material with selected skin texture
   const bodyMaterial = useMemo(() => {
@@ -314,62 +344,68 @@ export default function ChangeableModels({
   }, [selectedSkinTexture, characterConfig.bodyModel]);
 
   // Create accessories material
-  const accessoriesMaterial = useMemo(() => {
+  const hairMaterial = useMemo(() => {
+    const material = new THREE.MeshBasicMaterial({
+      map: hairTexture,
+      color: new THREE.Color(0xffffff),
+      vertexColors: false,
+    });
+
+    if (hairTexture) {
+      hairTexture.colorSpace = THREE.SRGBColorSpace;
+    }
+
+    return material;
+  }, [hairTexture, characterConfig.accessoryColor]);
+
+  const accesoriesMaterial = useMemo(() => {
     const material = new THREE.MeshBasicMaterial({
       map: accesoriesTexture,
-      color: new THREE.Color(characterConfig.accessoryColor),
-      vertexColors: true,
+      color: new THREE.Color(0xffffff),
+      vertexColors: false,
     });
 
     if (accesoriesTexture) {
-      accesoriesTexture.colorSpace = THREE.SRGBColorSpace;
+      hairTexture.colorSpace = THREE.SRGBColorSpace;
     }
 
     return material;
   }, [accesoriesTexture, characterConfig.accessoryColor]);
 
-  // Get body mesh from the selected model
+  // Get all mesh nodes from the selected model (all models now have same structure)
   const bodyNode = useMemo(() => {
     const node =
       selectedModel.nodes[bodyNodeName as keyof typeof selectedModel.nodes];
     return node as unknown as THREE.SkinnedMesh;
-  }, [selectedModel, bodyNodeName]);
+  }, [selectedModel.nodes, bodyNodeName]);
+
+  const eyebrowsNode = useMemo(() => {
+    return selectedModel.nodes.Eyebrows;
+  }, [selectedModel.nodes.Eyebrows]);
 
   const beardNode = useMemo(() => {
-    const node =
-      selectedModel.nodes["Beard" as keyof typeof selectedModel.nodes];
-    return node as unknown as THREE.SkinnedMesh;
-  }, [selectedModel.nodes["Beard" as keyof typeof selectedModel.nodes]]);
+    return selectedModel.nodes.Beard;
+  }, [selectedModel.nodes.Beard]);
 
   const hair1Node = useMemo(() => {
-    return selectedModel.nodes[
-      "Hair_1" as keyof typeof selectedModel.nodes
-    ] as unknown as THREE.SkinnedMesh;
-  }, [selectedModel.nodes["Hair_1" as keyof typeof selectedModel.nodes]]);
+    return selectedModel.nodes.Hair_1;
+  }, [selectedModel.nodes.Hair_1]);
 
   const hair2Node = useMemo(() => {
-    return selectedModel.nodes[
-      "Hair_2" as keyof typeof selectedModel.nodes
-    ] as unknown as THREE.SkinnedMesh;
-  }, [selectedModel.nodes["Hair_2" as keyof typeof selectedModel.nodes]]);
+    return selectedModel.nodes.Hair_2;
+  }, [selectedModel.nodes.Hair_2]);
 
   const visor1Node = useMemo(() => {
-    return selectedModel.nodes[
-      "Visor_1" as keyof typeof selectedModel.nodes
-    ] as unknown as THREE.SkinnedMesh;
-  }, [selectedModel.nodes["Visor_1" as keyof typeof selectedModel.nodes]]);
+    return selectedModel.nodes.Visor_1;
+  }, [selectedModel.nodes.Visor_1]);
 
   const visor2Node = useMemo(() => {
-    return selectedModel.nodes[
-      "Visor_2" as keyof typeof selectedModel.nodes
-    ] as unknown as THREE.SkinnedMesh;
-  }, [selectedModel.nodes["Visor_2" as keyof typeof selectedModel.nodes]]);
+    return selectedModel.nodes.Visor_2;
+  }, [selectedModel.nodes.Visor_2]);
 
   const visor3Node = useMemo(() => {
-    return selectedModel.nodes[
-      "Visor_3" as keyof typeof selectedModel.nodes
-    ] as unknown as THREE.SkinnedMesh;
-  }, [selectedModel.nodes["Visor_3" as keyof typeof selectedModel.nodes]]);
+    return selectedModel.nodes.Visor_3;
+  }, [selectedModel.nodes.Visor_3]);
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -386,62 +422,72 @@ export default function ChangeableModels({
 
             {/* Customizable Parts */}
             <group name="Customizables">
-              {/* Beard - Only from Model 1 */}
-              {characterConfig.hasBeard && model1.nodes.Beard && (
+              {/* Eyebrows - New in updated models */}
+              {characterConfig.hasEyebrows && eyebrowsNode && (
+                <skinnedMesh
+                  name="Eyebrows"
+                  geometry={eyebrowsNode.geometry}
+                  material={hairMaterial}
+                  skeleton={eyebrowsNode.skeleton}
+                />
+              )}
+
+              {/* Beard */}
+              {characterConfig.hasBeard && beardNode && (
                 <skinnedMesh
                   name="Beard"
                   geometry={beardNode.geometry}
-                  material={accessoriesMaterial}
+                  material={accesoriesMaterial}
                   skeleton={beardNode.skeleton}
                 />
               )}
 
-              {/* Hair Style 1 - From Model 1 */}
+              {/* Hair Style 1 */}
               {characterConfig.hairStyle === "hair1" && hair1Node && (
                 <skinnedMesh
                   name="Hair_1"
                   geometry={hair1Node.geometry}
-                  material={accessoriesMaterial}
+                  material={hairMaterial}
                   skeleton={hair1Node.skeleton}
                 />
               )}
 
-              {/* Hair Style 2 - Only from Model 2 */}
+              {/* Hair Style 2 */}
               {characterConfig.hairStyle === "hair2" && hair2Node && (
                 <skinnedMesh
                   name="Hair_2"
                   geometry={hair2Node.geometry}
-                  material={accessoriesMaterial}
+                  material={hairMaterial}
                   skeleton={hair2Node.skeleton}
                 />
               )}
 
-              {/* Visor 1 - From Model 1 */}
+              {/* Visor 1 */}
               {characterConfig.visorStyle === "visor1" && visor1Node && (
                 <skinnedMesh
                   name="Visor_1"
                   geometry={visor1Node.geometry}
-                  material={accessoriesMaterial}
+                  material={accesoriesMaterial}
                   skeleton={visor1Node.skeleton}
                 />
               )}
 
-              {/* Visor 2 - From Model 2 */}
+              {/* Visor 2 */}
               {characterConfig.visorStyle === "visor2" && visor2Node && (
                 <skinnedMesh
                   name="Visor_2"
                   geometry={visor2Node.geometry}
-                  material={accessoriesMaterial}
+                  material={accesoriesMaterial}
                   skeleton={visor2Node.skeleton}
                 />
               )}
 
-              {/* Visor 3 - From Model 3 */}
+              {/* Visor 3 */}
               {characterConfig.visorStyle === "visor3" && visor3Node && (
                 <skinnedMesh
                   name="Visor_3"
                   geometry={visor3Node.geometry}
-                  material={accessoriesMaterial}
+                  material={accesoriesMaterial}
                   skeleton={visor3Node.skeleton}
                 />
               )}
@@ -457,9 +503,9 @@ export default function ChangeableModels({
 }
 
 // Preload all models
-useGLTF.preload("/models/Male/male_last_2.glb");
-useGLTF.preload("/models/Male/male_body_2.glb");
-useGLTF.preload("/models/Male/male_body_3.glb");
+useGLTF.preload("/models/Male/new-text/new_model.glb");
+useGLTF.preload("/models/Male/new-text/new_model_2.glb");
+useGLTF.preload("/models/Male/new-text/new_model_3.glb");
 
 // Export utility functions for external use
 export { generateRandomConfig, playerDataToCharacterConfig };

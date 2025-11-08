@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import {  useMemo } from "react";
 
 // import { useNavigate } from "react-router";
 // import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
