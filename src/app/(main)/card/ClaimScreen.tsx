@@ -1,13 +1,11 @@
-import { useEffect } from "react";
 import { useParams } from "react-router";
+import CardScreen from "./CardScreen";
 
 const ClaimScreen = () => {
   const { id } = useParams();
-  useEffect(() => {
-    console.log(id, "id");
-  }, [id]);
 
-  return <div>{id}</div>;
+
+  return <CardScreen playerLinkId={Number(id)} />;
 };
 
 export default ClaimScreen;

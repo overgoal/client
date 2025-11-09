@@ -38,7 +38,6 @@ import {
   claim,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
-import CardScreen from "./(main)/card/CardScreen";
 import ClaimScreen from "./(main)/card/ClaimScreen";
 
 function App() {
@@ -63,7 +62,7 @@ function App() {
         <Route path={tournamentAll} element={<TournamentsScreen />} />
         <Route path={tournamentCurrent} element={<TournamentScreen />} />
         <Route path={profile} element={<ProfileScreen />} />
-        <Route path={"/card"} element={<CardScreen />} />
+        {/* <Route path={"/card"} element={<ClaimScreen />} /> */}
         <Route path={claim} element={<ClaimScreen />} />
       </Routes>
     </BrowserRouter>

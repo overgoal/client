@@ -1,17 +1,7 @@
-import {  useMemo } from "react";
+import { useMemo } from "react";
+import CardScene from "../../../components/webgl/components/CardScene";
 
-// import { useNavigate } from "react-router";
-// import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
-// import useAppStore from "../../../zustand/store";
-import Scene from "../../../components/webgl/Scene";
-
-export default function CardScreen() {
-  // const navigate = useNavigate();
-  // const { handleDisconnect } = useStarknetConnect();
-  // const resetStore = useAppStore((state) => state.resetStore);
-
-  
-
+export default function CardScreen({ playerLinkId }: { playerLinkId: number }) {
   // Memoize static styles to prevent re-creation
   const containerStyles = useMemo(
     () => ({
@@ -20,28 +10,24 @@ export default function CardScreen() {
     [],
   );
 
-  // const handleDisconnectAction = () => {
-  //   handleDisconnect();
-  //   navigate("/login");
-  //   resetStore();
-  // };
-
   return (
-    <div className="w-[536px] h-[760px]  relative  overflow-hidden " style={containerStyles}>
+    <div
+      className="relative h-dvh w-full overflow-hidden"
+      style={containerStyles}
+    >
       {/* Background Image Layer */}
       <img
         src={"/backgrounds/bg-card.png"}
         alt="background"
-        className="absolute  inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 z-0 h-full w-full object-cover"
         width={1000}
         height={1000}
       />
 
       {/* 3D Scene Layer - positioned behind UI */}
-      <div className="absolute inset-0 z-20 pointer-events-auto">
-        <Scene />
+      <div className="pointer-events-auto absolute inset-0">
+        <CardScene playerLinkId={playerLinkId} />
       </div>
-
     </div>
   );
 }

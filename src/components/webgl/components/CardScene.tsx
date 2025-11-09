@@ -1,8 +1,9 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import Lights from "./components/lights";
-import ChangeableModels, { PlayerData } from "../models/ChangeableModels";
+import Lights from "./lights";
+import ChangeableModels, { PlayerData } from "../../models/ChangeableModels";
+import CardViewer from "../../models/CardViewer";
 
 const getRandomizedRotation = (bodyType: number): number => {
   if (bodyType === 0) {
@@ -11,7 +12,7 @@ const getRandomizedRotation = (bodyType: number): number => {
   return 0.5;
 };
 
-const Scene = () => {
+const CardScene = ({ playerLinkId }: { playerLinkId: number }) => {
   const [player, setPlayer] = useState<PlayerData | null>(null);
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -72,9 +73,12 @@ const Scene = () => {
       try {
         const res = await fetch("/players.json");
         const data = await res.json();
-        if (data.length > 0) {
-          setPlayer(data[0]); // Set initial player
-        }
+
+        const player = data.find(
+          (player: PlayerData) => player.linkID === playerLinkId,
+        );
+        setPlayer(player);
+        console.log(player, "player");
       } catch (error) {
         console.error("Failed to fetch player data:", error);
       }
@@ -84,36 +88,38 @@ const Scene = () => {
   }, []);
 
   return (
-    <Canvas
-      camera={cameraSettings}
-      gl={glSettings}
-      dpr={dpr}
-      className="pointer-events-auto h-full w-full"
-      style={{
-        touchAction: "none", // Prevent default touch behaviors
-        background: "transparent", // Make canvas background transparent
-      }}
-    >
-      {/* <Perf position="top-left" /> */}
-      <Suspense fallback={null}>
-        <OrbitControls {...orbitControlsSettings} />
-        <Lights />
+      <Canvas
+        camera={cameraSettings}
+        gl={glSettings}
+        dpr={dpr}
+        className="pointer-events-auto h-full w-full"
+        style={{
+          touchAction: "none", // Prevent default touch behaviors
+          background: "transparent", // Make canvas background transparent
+        }}
+      >
+        {/* <Perf position="top-left" /> */}
+        <Suspense fallback={null}>
+          <OrbitControls {...orbitControlsSettings} />
+          <Lights />
 
-        {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
-        {player && (
-          <ChangeableModels
-            scale={player.body_type == 2 ? 6 : 6}
-            position={[0, player.body_type == 2 ? -250 : -250, -40]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-            playerData={player}
-            autoRandomize={false}
-          />
-        )}
-        <Preload all />
-      </Suspense>
-    </Canvas>
+          {player && <CardViewer player={player} />}
+
+          {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
+          {player && (
+            <ChangeableModels
+              scale={player.body_type == 2 ? 6 : 6}
+              position={[0, player.body_type == 2 ? -250 : -250, -40]}
+              rotation={[0, getRandomizedRotation(player.body_type), 0]}
+              playerData={player}
+              autoRandomize={false}
+            />
+          )}
+          <Preload all />
+        </Suspense>
+      </Canvas>
   );
 };
 
-Scene.displayName = "Scene";
-export default Scene;
+CardScene.displayName = "CardScene";
+export default CardScene;

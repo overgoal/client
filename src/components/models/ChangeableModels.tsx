@@ -124,7 +124,7 @@ interface PlayerData {
   player_category: "bronze" | "gold" | "platinum";
   player_name: string;
   player_description: string;
-  linkID: string;
+  linkID: number;
 }
 
 // Random utility functions
@@ -357,13 +357,13 @@ export default function ChangeableModels({
         );
       }
     } else {
-      let rotation = Math.random() < 0.5 ? 1 : -0.9;
+      let rotation = Math.random() < 0.5 ? 1 : 1;
       if (playerData?.visor_type === 0) {
         rotation = 1;
       }
       group.current?.rotation.set(0, rotation, 0);
       group.current?.position.set(
-        0,
+        -10,
         group.current?.position.y,
         group.current?.position.z,
       );
