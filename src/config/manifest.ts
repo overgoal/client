@@ -1,4 +1,4 @@
-import localhost from "../../../universe/manifest_dev.json"; // local development manifest
+import localhost from "./manifest_sepolia.json"; // local development manifest
 import sepolia from "./manifest_sepolia.json"; // sepolia manifest
 import mainnet from "./manifest_sepolia.json"; // change for the right mainnet manifest
 import slot from "./manifest_sepolia.json"; // change for the right slot manifest

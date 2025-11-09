@@ -1,11 +1,9 @@
 // import { Button } from "../../../../components/ui/button";
 import { useStarknetConnect } from "../../../../dojo/hooks/useStarknetConnect";
-import { usePlayer } from "../../../../dojo/hooks/usePlayer";
 // import { useAccount } from "@starknet-react/core";
 import { Loader2, Wallet } from "lucide-react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import useAppStore from "../../../../zustand/store";
+// import { useNavigate } from "react-router";
 import { Button } from "../../../../components/ui/button";
 import { useCreatePlayer } from "../../../../dojo/hooks/useCreatePlayer";
 // import { useCreatePlayer } from "../../../../dojo/hooks/useCreatePlayer";
@@ -24,7 +22,7 @@ export function LoginPlayer() {
 
   //Hook to access the connector
   // const { connector } = useAccount();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isConnected = status === "connected";
   const isLoading = isConnecting || status === "connecting" || isInitializing;
 

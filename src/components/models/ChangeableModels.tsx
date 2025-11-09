@@ -322,7 +322,7 @@ export default function ChangeableModels({
   }, [characterConfig.bodyModel]);
 
   // Setup animations
-  const { actions, mixer, clips } = useAnimations(
+  const { actions, mixer } = useAnimations(
     selectedModel.animations,
     group,
   );
