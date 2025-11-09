@@ -23,3 +23,7 @@ export const preMatch = "/pre-match/:matchId";
 export const preMatchNonMatch = "/pre-match-non-match";
 export const match = "/match/:matchId";
 export const matchResult = "/match-result/:matchId";
+
+//Card
+
+export const claim = "/claim/:id";

@@ -6,13 +6,28 @@
 
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useGLTF, useAnimations, useTexture } from "@react-three/drei";
+import {
+  useGLTF,
+  useAnimations,
+  useTexture,
+  Outlines,
+} from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import {
   mapAccesoriesTexture,
   mapTeamTexture,
+  getActionMap,
 } from "../../utils/mapTeamTexture";
 
+const getAnim = (bodyType: number): number => {
+  if (bodyType === 2) {
+    return Math.random() < 0.5 ? 8 : 0;
+  }
+  if (bodyType === 1) {
+    return Math.random() < 0.5 ? 11 : 0;
+  }
+  return 0;
+};
 // Type definition for the new unified structure (all 3 models now have this same structure)
 type GLTFModel1 = GLTF & {
   nodes: {
@@ -102,13 +117,14 @@ interface PlayerData {
   skin_color: 0 | 1 | 2;
   beard_type: 0 | 1;
   hair_type: 0 | 1;
-  hair_color: 0 | 1 | 2 | 3;
+  hair_color: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   visor_type: 0 | 1 | 2;
   visor_color: 0 | 1 | 2;
   team_id: number;
-  player_category: "bronze" | "silver" | "gold" | "platinum";
+  player_category: "bronze" | "gold" | "platinum";
   player_name: string;
   player_description: string;
+  linkID: number;
 }
 
 // Random utility functions
@@ -211,7 +227,6 @@ export default function ChangeableModels({
     playerData?.skin_color ?? 0,
   );
   const skinTexture = useTexture(skinTextureUrl);
-
   // Load accessories texture
   // const accesoriesTexture = useTexture(
   //   "/models/Male/textures/Accesories_Mat_BaseColor.png",
@@ -307,16 +322,80 @@ export default function ChangeableModels({
   }, [characterConfig.bodyModel]);
 
   // Setup animations
-  const { actions } = useAnimations(selectedModel.animations, group);
+  const { actions, mixer } = useAnimations(selectedModel.animations, group);
+
+  //8
+  //2
 
   useEffect(() => {
-    const action = actions["Clapping"];
-    if (action) {
-      action.reset();
-      action.time = action.getClip().duration * 0.8;
-      action.play();
+    let key = getAnim(playerData?.body_type ?? 1);
+    let actionConfig = getActionMap(key);
+    const actionName = actionConfig?.name ?? "Idle";
+    const action = actions[actionName];
+
+    if (playerData?.body_type === 2 && key === 0) {
+      group.current?.rotation.set(0, 0.65, 0);
+      group.current?.position.set(
+        -20,
+        group.current?.position.y,
+        group.current?.position.z,
+      );
+    } else if (playerData?.body_type === 1) {
+      if (key === 0) {
+        group.current?.rotation.set(0, 0.45, 0);
+        group.current?.position.set(
+          0,
+          group.current?.position.y,
+          group.current?.position.z,
+        );
+      } else {
+        group.current?.rotation.set(0, 0, 0);
+        group.current?.position.set(
+          0,
+          group.current?.position.y,
+          group.current?.position.z,
+        );
+      }
+    } else {
+      let rotation = Math.random() < 0.5 ? 1 : 1;
+      if (playerData?.visor_type === 0) {
+        rotation = 1;
+      }
+      group.current?.rotation.set(0, rotation, 0);
+      group.current?.position.set(
+        -10,
+        group.current?.position.y,
+        group.current?.position.z,
+      );
     }
-  }, [actions, selectedModel]);
+
+    if (playerData?.body_type === 2 && key === 8) {
+      group.current?.rotation.set(0, -0.1, 0);
+    }
+
+    if (action) {
+      // Step 1: Stop all other actions
+      mixer.stopAllAction();
+
+      // Step 2: Reset the action to clear any previous state
+      action.reset();
+
+      console.log(action.getClip()?.duration, "duration");
+
+      // Step 3: Set the time to the desired starting position
+      const startTime = actionConfig?.startTime ?? 0;
+      action.time = startTime;
+
+      // Step 4: Enable the action and set it to play
+      action.play();
+
+      // Step 5: Pause immediately to freeze at this position
+      action.paused = true;
+
+      // Step 6: CRITICAL - Force mixer to update to apply the pose
+      mixer.update(0);
+    }
+  }, [actions, selectedModel, playerData, playerData?.body_type, mixer]);
 
   // Select skin texture based on config
   const selectedSkinTexture = useMemo(() => {
@@ -357,6 +436,11 @@ export default function ChangeableModels({
 
     return material;
   }, [hairTexture, characterConfig.accessoryColor]);
+
+  // const acceColor =
+  //   playerData?.visor_color === 0
+  //     ? new THREE.Color(0xffffff)
+  //     : new THREE.Color(0xfff000);
 
   const accesoriesMaterial = useMemo(() => {
     const material = new THREE.MeshBasicMaterial({
@@ -418,7 +502,9 @@ export default function ChangeableModels({
               geometry={bodyNode.geometry}
               material={bodyMaterial}
               skeleton={bodyNode.skeleton}
-            />
+            >
+              <Outlines thickness={3} color="black" angle={0} />
+            </skinnedMesh>
 
             {/* Customizable Parts */}
             <group name="Customizables">
@@ -429,7 +515,9 @@ export default function ChangeableModels({
                   geometry={eyebrowsNode.geometry}
                   material={hairMaterial}
                   skeleton={eyebrowsNode.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
 
               {/* Beard */}
@@ -437,9 +525,11 @@ export default function ChangeableModels({
                 <skinnedMesh
                   name="Beard"
                   geometry={beardNode.geometry}
-                  material={accesoriesMaterial}
+                  material={hairMaterial}
                   skeleton={beardNode.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
 
               {/* Hair Style 1 */}
@@ -449,7 +539,9 @@ export default function ChangeableModels({
                   geometry={hair1Node.geometry}
                   material={hairMaterial}
                   skeleton={hair1Node.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
 
               {/* Hair Style 2 */}
@@ -459,7 +551,9 @@ export default function ChangeableModels({
                   geometry={hair2Node.geometry}
                   material={hairMaterial}
                   skeleton={hair2Node.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
 
               {/* Visor 1 */}
@@ -469,7 +563,9 @@ export default function ChangeableModels({
                   geometry={visor1Node.geometry}
                   material={accesoriesMaterial}
                   skeleton={visor1Node.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
 
               {/* Visor 2 */}
@@ -479,7 +575,9 @@ export default function ChangeableModels({
                   geometry={visor2Node.geometry}
                   material={accesoriesMaterial}
                   skeleton={visor2Node.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
 
               {/* Visor 3 */}
@@ -489,9 +587,13 @@ export default function ChangeableModels({
                   geometry={visor3Node.geometry}
                   material={accesoriesMaterial}
                   skeleton={visor3Node.skeleton}
-                />
+                >
+                  <Outlines thickness={3} color="black" angle={0} />
+                </skinnedMesh>
               )}
             </group>
+
+            {/* Unified Outline for entire character */}
           </group>
 
           {/* Skeleton - Use the skeleton from the selected body model */}
