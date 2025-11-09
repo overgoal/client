@@ -3,7 +3,7 @@ import {  useMemo } from "react";
 // import { useNavigate } from "react-router";
 // import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
 // import useAppStore from "../../../zustand/store";
-import Scene from "../../components/webgl/Scene";
+import Scene from "../../../components/webgl/Scene";
 
 export default function CardScreen() {
   // const navigate = useNavigate();

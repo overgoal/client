@@ -16,6 +16,9 @@ const accesoriesTextures = {
   1: "/models/Male/new-text/Accesories_Mat_2.png",
   2: "/models/Male/new-text/Accesories_Mat_3.png",
   3: "/models/Male/new-text/Accesories_Mat_4.png",
+  4: "/models/Male/new-text/Accesories_Mat_5.png",
+  5: "/models/Male/new-text/Accesories_Mat_6.png",
+  6: "/models/Male/new-text/Accesories_Mat_7.png",
 };
 
 export const mapAccesoriesTexture = (team: number) => {
@@ -48,7 +51,7 @@ const actionMap: Record<number, AnimationConfig> = {
   },
   4: {
     name: "Dance_2",
-    startTime: 0.4,
+    startTime: 20,
   },
   5: {
     name: "Epic",
@@ -72,7 +75,7 @@ const actionMap: Record<number, AnimationConfig> = {
   },
   10: {
     name: "Yelling",
-    startTime: 30,
+    startTime: 32,
   },
 };
 

@@ -106,7 +106,7 @@ const Scene = () => {
     let currentIndex = 0;
     const intervalId = setInterval(() => {
       currentIndex = (currentIndex + 1) % data.length;
-      if(data[currentIndex].body_type !== 1) {
+      if(data[currentIndex].body_type !== 2) {
         return;
       }
       setPlayer(data[currentIndex]);
@@ -207,7 +207,7 @@ const Scene = () => {
                   <div className="absolute overflow-hidden bg-contain bg-center bg-no-repeat">
                     <QRCode
                       size={120}
-                      value={`https://play.overgoal.gg/claim/?id=${player?.linkID}`}
+                      value={`https://play.overgoal.gg/claim/${player?.linkID}`}
                       className="overflow-hidden"
                     />
                   </div>

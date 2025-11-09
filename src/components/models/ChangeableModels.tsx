@@ -23,8 +23,8 @@ const getAnim = (bodyType: number): number => {
   if (bodyType === 2) {
     return Math.random() < 0.5 ? 8 : 0;
   }
-  if(bodyType === 1) {
-    return Math.random() < 0.5 ? 1: 6;
+  if (bodyType === 1) {
+    return Math.random() < 0.5 ? 11 : 0;
   }
   return 0;
 };
@@ -117,7 +117,7 @@ interface PlayerData {
   skin_color: 0 | 1 | 2;
   beard_type: 0 | 1;
   hair_type: 0 | 1;
-  hair_color: 0 | 1 | 2 | 3;
+  hair_color: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   visor_type: 0 | 1 | 2;
   visor_color: 0 | 1 | 2;
   team_id: number;
@@ -322,10 +322,7 @@ export default function ChangeableModels({
   }, [characterConfig.bodyModel]);
 
   // Setup animations
-  const { actions, mixer } = useAnimations(
-    selectedModel.animations,
-    group,
-  );
+  const { actions, mixer } = useAnimations(selectedModel.animations, group);
 
   //8
   //2
@@ -335,7 +332,6 @@ export default function ChangeableModels({
     let actionConfig = getActionMap(key);
     const actionName = actionConfig?.name ?? "Idle";
     const action = actions[actionName];
-    
 
     if (playerData?.body_type === 2 && key === 0) {
       group.current?.rotation.set(0, 0.65, 0);
@@ -344,8 +340,28 @@ export default function ChangeableModels({
         group.current?.position.y,
         group.current?.position.z,
       );
+    } else if (playerData?.body_type === 1) {
+      if (key === 0) {
+        group.current?.rotation.set(0, 0.45, 0);
+        group.current?.position.set(
+          0,
+          group.current?.position.y,
+          group.current?.position.z,
+        );
+      } else {
+        group.current?.rotation.set(0, 0, 0);
+        group.current?.position.set(
+          0,
+          group.current?.position.y,
+          group.current?.position.z,
+        );
+      }
     } else {
-      group.current?.rotation.set(0, 0, 0);
+      let rotation = Math.random() < 0.5 ? 1 : -0.9;
+      if (playerData?.visor_type === 0) {
+        rotation = 1;
+      }
+      group.current?.rotation.set(0, rotation, 0);
       group.current?.position.set(
         0,
         group.current?.position.y,
@@ -364,7 +380,7 @@ export default function ChangeableModels({
       // Step 2: Reset the action to clear any previous state
       action.reset();
 
-    console.log(action.getClip()?.duration, "duration");
+      console.log(action.getClip()?.duration, "duration");
 
       // Step 3: Set the time to the desired starting position
       const startTime = actionConfig?.startTime ?? 0;
@@ -420,6 +436,11 @@ export default function ChangeableModels({
 
     return material;
   }, [hairTexture, characterConfig.accessoryColor]);
+
+  // const acceColor =
+  //   playerData?.visor_color === 0
+  //     ? new THREE.Color(0xffffff)
+  //     : new THREE.Color(0xfff000);
 
   const accesoriesMaterial = useMemo(() => {
     const material = new THREE.MeshBasicMaterial({
@@ -504,7 +525,7 @@ export default function ChangeableModels({
                 <skinnedMesh
                   name="Beard"
                   geometry={beardNode.geometry}
-                  material={accesoriesMaterial}
+                  material={hairMaterial}
                   skeleton={beardNode.skeleton}
                 >
                   <Outlines thickness={3} color="black" angle={0} />

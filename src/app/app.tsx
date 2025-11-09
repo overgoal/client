@@ -35,9 +35,11 @@ import {
   characterCreation,
   preMatchNonMatch,
   home,
+  claim,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
-import CardScreen from "./(main)/CardScreen";
+import CardScreen from "./(main)/card/CardScreen";
+import ClaimScreen from "./(main)/card/ClaimScreen";
 
 function App() {
   return (
@@ -62,6 +64,7 @@ function App() {
         <Route path={tournamentCurrent} element={<TournamentScreen />} />
         <Route path={profile} element={<ProfileScreen />} />
         <Route path={"/card"} element={<CardScreen />} />
+        <Route path={claim} element={<ClaimScreen />} />
       </Routes>
     </BrowserRouter>
   );
