@@ -36,11 +36,11 @@ const actionMap: Record<number, AnimationConfig> = {
   },
   1: {
     name: "Break_Idle",
-    startTime: 0,
+    startTime:2,
   },
   2: {
     name: "Clapping",
-    startTime: 2,
+    startTime: 1,
   },
   3: {
     name: "Dance_1",
@@ -60,11 +60,11 @@ const actionMap: Record<number, AnimationConfig> = {
   },
   7: {
     name: "Kick",
-    startTime: 0.25,
+    startTime: 20,
   },
   8: {
     name: "Salute",
-    startTime:24.5,
+    startTime: 24.5,
   },
   9: {
     name: "T_Pose",
@@ -72,7 +72,7 @@ const actionMap: Record<number, AnimationConfig> = {
   },
   10: {
     name: "Yelling",
-    startTime: 0.15,
+    startTime: 30,
   },
 };
 

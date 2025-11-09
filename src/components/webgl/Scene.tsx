@@ -106,10 +106,9 @@ const Scene = () => {
     let currentIndex = 0;
     const intervalId = setInterval(() => {
       currentIndex = (currentIndex + 1) % data.length;
-      if(data[currentIndex].body_type !== 2) {
+      if(data[currentIndex].body_type !== 1) {
         return;
       }
-      console.log(data[currentIndex].body_type, "body type");
       setPlayer(data[currentIndex]);
     }, 1000);
 
@@ -120,6 +119,7 @@ const Scene = () => {
   const categoryImages = mapCardBorderTexture(
     player?.player_category ?? "bronze",
   )
+
 
 
   return (
@@ -207,7 +207,7 @@ const Scene = () => {
                   <div className="absolute overflow-hidden bg-contain bg-center bg-no-repeat">
                     <QRCode
                       size={120}
-                      value={"/login"}
+                      value={`https://play.overgoal.gg/claim/?id=${player?.linkID}`}
                       className="overflow-hidden"
                     />
                   </div>
@@ -272,8 +272,8 @@ const Scene = () => {
         {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
         {player && (
           <ChangeableModels
-            scale={player.body_type == 2 ? 6 : 8}
-            position={[0, player.body_type == 2 ? -250 : -200, -40]}
+            scale={player.body_type == 2 ? 6 : 7}
+            position={[0, player.body_type == 2 ? -250 : -300, -40]}
             rotation={[0, getRandomizedRotation(player.body_type), 0]}
             playerData={player}
             autoRandomize={false}
@@ -287,7 +287,4 @@ const Scene = () => {
 
 Scene.displayName = "Scene";
 export default Scene;
-function useControls(arg0: { rotationX: { value: number; min: number; max: number; }; rotationY: { value: number; }; }): { rotationX: any; rotationY: any; rotationZ: any; } {
-  throw new Error("Function not implemented.");
-}
 

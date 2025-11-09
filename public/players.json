@@ -27,7 +27,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Oliver Thompson",
-    "player_description": "Constant presence & Decent speed"
+    "player_description": "Constant presence & Decent speed",
+    "linkID": ""
   },
   {
     "user_id": 2,
@@ -57,7 +58,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Caleb Baker",
-    "player_description": "Dream distributor, Smart decision maker"
+    "player_description": "Dream distributor, Smart decision maker",
+    "linkID": ""
   },
   {
     "user_id": 3,
@@ -87,7 +89,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Dominic Sanchez",
-    "player_description": "Body of steel, Runs all game"
+    "player_description": "Body of steel, Runs all game",
+    "linkID": ""
   },
   {
     "user_id": 4,
@@ -117,7 +120,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Samuel Hall",
-    "player_description": "Master of passes, Excellent awareness"
+    "player_description": "Master of passes, Excellent awareness",
+    "linkID": ""
   },
   {
     "user_id": 5,
@@ -147,7 +151,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Leo Ramirez",
-    "player_description": "Explosive pace, Commands respect"
+    "player_description": "Explosive pace, Commands respect",
+    "linkID": ""
   },
   {
     "user_id": 6,
@@ -177,7 +182,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Felix Williams",
-    "player_description": "Muscular presence — Vocal presence"
+    "player_description": "Muscular presence — Vocal presence",
+    "linkID": ""
   },
   {
     "user_id": 7,
@@ -207,7 +213,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Joel Anderson",
-    "player_description": "Lightning quick & Commands respect"
+    "player_description": "Lightning quick & Commands respect",
+    "linkID": ""
   },
   {
     "user_id": 8,
@@ -237,7 +244,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Xavier Lee",
-    "player_description": "Very fast — Quick feet"
+    "player_description": "Very fast — Quick feet",
+    "linkID": ""
   },
   {
     "user_id": 9,
@@ -267,7 +275,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Christian Adams",
-    "player_description": "Rapid mover, Physical battler"
+    "player_description": "Rapid mover, Physical battler",
+    "linkID": ""
   },
   {
     "user_id": 10,
@@ -297,7 +306,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Caleb Cruz",
-    "player_description": "High endurance, Vocal presence"
+    "player_description": "High endurance, Vocal presence",
+    "linkID": ""
   },
   {
     "user_id": 11,
@@ -327,7 +337,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Leo Nelson",
-    "player_description": "Never tires & Good pace"
+    "player_description": "Never tires & Good pace",
+    "linkID": ""
   },
   {
     "user_id": 12,
@@ -357,7 +368,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Joel Adams",
-    "player_description": "Captain material / Lacks technique"
+    "player_description": "Captain material / Lacks technique",
+    "linkID": ""
   },
   {
     "user_id": 13,
@@ -387,7 +399,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Ethan Allen",
-    "player_description": "Agile creator — Body of steel"
+    "player_description": "Agile creator — Body of steel",
+    "linkID": ""
   },
   {
     "user_id": 14,
@@ -417,7 +430,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Lucas White",
-    "player_description": "Expert on free-kicks, Natural goalscorer"
+    "player_description": "Expert on free-kicks, Natural goalscorer",
+    "linkID": ""
   },
   {
     "user_id": 15,
@@ -447,7 +461,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Noah Scott",
-    "player_description": "Technical dead-ball / Constant presence"
+    "player_description": "Technical dead-ball / Constant presence",
+    "linkID": ""
   },
   {
     "user_id": 16,
@@ -477,7 +492,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Luca Adams",
-    "player_description": "Fleet of foot — Technical dead-ball"
+    "player_description": "Fleet of foot — Technical dead-ball",
+    "linkID": ""
   },
   {
     "user_id": 17,
@@ -507,7 +523,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Jack Taylor",
-    "player_description": "Reliable from & Powerful finisher"
+    "player_description": "Reliable from & Powerful finisher",
+    "linkID": ""
   },
   {
     "user_id": 18,
@@ -537,7 +554,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Ethan Ramirez",
-    "player_description": "Natural leader — Natural goalscorer"
+    "player_description": "Natural leader — Natural goalscorer",
+    "linkID": ""
   },
   {
     "user_id": 19,
@@ -567,7 +585,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Owen Martinez",
-    "player_description": "Reliable from, Fearless shooter"
+    "player_description": "Reliable from, Fearless shooter",
+    "linkID": ""
   },
   {
     "user_id": 20,
@@ -597,7 +616,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Jack Lewis",
-    "player_description": "Explosive pace / Highly agile"
+    "player_description": "Explosive pace / Highly agile",
+    "linkID": ""
   },
   {
     "user_id": 21,
@@ -627,7 +647,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Christian Lewis",
-    "player_description": "Leads by example & Pinpoint passer"
+    "player_description": "Leads by example & Pinpoint passer",
+    "linkID": ""
   },
   {
     "user_id": 22,
@@ -657,7 +678,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Oliver Johnson",
-    "player_description": "Reliable from, Outruns defenders"
+    "player_description": "Reliable from, Outruns defenders",
+    "linkID": ""
   },
   {
     "user_id": 23,
@@ -687,7 +709,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Daniel Cruz",
-    "player_description": "Technical dead-ball, Team motivator"
+    "player_description": "Technical dead-ball, Team motivator",
+    "linkID": ""
   },
   {
     "user_id": 24,
@@ -717,7 +740,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Owen Walker",
-    "player_description": "Powerful frame / Carries load"
+    "player_description": "Powerful frame / Carries load",
+    "linkID": ""
   },
   {
     "user_id": 25,
@@ -747,7 +771,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Sebastian Anderson",
-    "player_description": "Clinical striker — Smart decision maker"
+    "player_description": "Clinical striker — Smart decision maker",
+    "linkID": ""
   },
   {
     "user_id": 26,
@@ -777,7 +802,8 @@
     "team_id": 0,
     "player_category": "bronze",
     "player_name": "Hugo Lewis",
-    "player_description": "Very fast — Free-kick specialist"
+    "player_description": "Very fast — Free-kick specialist",
+    "linkID": ""
   },
   {
     "user_id": 27,
@@ -807,7 +833,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Benjamin Young",
-    "player_description": "Great vision & Reads game"
+    "player_description": "Great vision & Reads game",
+    "linkID": ""
   },
   {
     "user_id": 28,
@@ -837,7 +864,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Adrian Scott",
-    "player_description": "Lightning quick, Agile creator"
+    "player_description": "Lightning quick, Agile creator",
+    "linkID": ""
   },
   {
     "user_id": 29,
@@ -867,7 +895,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Alexander Brown",
-    "player_description": "Clinical striker, Highly agile"
+    "player_description": "Clinical striker, Highly agile",
+    "linkID": ""
   },
   {
     "user_id": 30,
@@ -897,7 +926,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Lucho Schirri",
-    "player_description": "Clinical striker / Vocal presence"
+    "player_description": "Clinical striker / Vocal presence",
+    "linkID": ""
   },
   {
     "user_id": 31,
@@ -927,7 +957,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Dominic Johnson",
-    "player_description": "Deadly in front, Natural leader"
+    "player_description": "Deadly in front, Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 32,
@@ -957,7 +988,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Luca Baker",
-    "player_description": "Creative passer / Fleet of foot"
+    "player_description": "Creative passer / Fleet of foot",
+    "linkID": ""
   },
   {
     "user_id": 33,
@@ -987,7 +1019,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Marcus Martinez",
-    "player_description": "Lightning quick & Excellent awareness"
+    "player_description": "Lightning quick & Excellent awareness",
+    "linkID": ""
   },
   {
     "user_id": 34,
@@ -1017,7 +1050,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Elias Ramirez",
-    "player_description": "Expert on & Runs all"
+    "player_description": "Expert on & Runs all",
+    "linkID": ""
   },
   {
     "user_id": 35,
@@ -1047,7 +1081,8 @@
     "team_id": 0,
     "player_category": "gold",
     "player_name": "Santiago Torres",
-    "player_description": "Curling free-kicks, Reasonable awareness"
+    "player_description": "Curling free-kicks, Reasonable awareness",
+    "linkID": ""
   },
   {
     "user_id": 36,
@@ -1077,7 +1112,8 @@
     "team_id": 0,
     "player_category": "platinum",
     "player_name": "Noah Lewis",
-    "player_description": "Creative passer, Hard to dispossess"
+    "player_description": "Creative passer, Hard to dispossess",
+    "linkID": ""
   },
   {
     "user_id": 37,
@@ -1107,7 +1143,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Alexander Adams",
-    "player_description": "Fearless shooter, Fleet of foot"
+    "player_description": "Fearless shooter, Fleet of foot",
+    "linkID": ""
   },
   {
     "user_id": 38,
@@ -1137,7 +1174,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Julian Moore",
-    "player_description": "Outruns defenders & Fleet of foot"
+    "player_description": "Outruns defenders & Fleet of foot",
+    "linkID": ""
   },
   {
     "user_id": 39,
@@ -1167,7 +1205,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Hugo Hall",
-    "player_description": "Deadly in front, Rapid mover"
+    "player_description": "Deadly in front, Rapid mover",
+    "linkID": ""
   },
   {
     "user_id": 40,
@@ -1197,7 +1236,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Aaron Wilson",
-    "player_description": "Endless engine / Natural goalscorer"
+    "player_description": "Endless engine / Natural goalscorer",
+    "linkID": ""
   },
   {
     "user_id": 41,
@@ -1227,7 +1267,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Dylan Lee",
-    "player_description": "Explosive pace & Natural leader"
+    "player_description": "Explosive pace & Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 42,
@@ -1257,7 +1298,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Marcus Brown",
-    "player_description": "Sharp vision / Outruns defenders"
+    "player_description": "Sharp vision / Outruns defenders",
+    "linkID": ""
   },
   {
     "user_id": 43,
@@ -1287,7 +1329,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Levi Lewis",
-    "player_description": "Runs all game — Dangerous sometimes"
+    "player_description": "Runs all game — Dangerous sometimes",
+    "linkID": ""
   },
   {
     "user_id": 44,
@@ -1317,7 +1360,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Samuel Taylor",
-    "player_description": "Pinpoint passer & Free-kick specialist"
+    "player_description": "Pinpoint passer & Free-kick specialist",
+    "linkID": ""
   },
   {
     "user_id": 45,
@@ -1347,7 +1391,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Joel Lewis",
-    "player_description": "Creative passer, Reliable from"
+    "player_description": "Creative passer, Reliable from",
+    "linkID": ""
   },
   {
     "user_id": 46,
@@ -1377,7 +1422,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Matias Hall",
-    "player_description": "Muscular presence & Brilliant thinker"
+    "player_description": "Muscular presence & Brilliant thinker",
+    "linkID": ""
   },
   {
     "user_id": 47,
@@ -1407,7 +1453,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Julian Jones",
-    "player_description": "Rapid mover, Deadly set-piece"
+    "player_description": "Rapid mover, Deadly set-piece",
+    "linkID": ""
   },
   {
     "user_id": 48,
@@ -1437,7 +1484,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Marcus Harris",
-    "player_description": "Fleet of foot & Natural leader"
+    "player_description": "Fleet of foot & Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 49,
@@ -1467,7 +1515,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Luca Hall",
-    "player_description": "Runs all game / Creative passer"
+    "player_description": "Runs all game / Creative passer",
+    "linkID": ""
   },
   {
     "user_id": 50,
@@ -1497,7 +1546,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Felix Green",
-    "player_description": "Mobile player — Reliable shot"
+    "player_description": "Mobile player — Reliable shot",
+    "linkID": ""
   },
   {
     "user_id": 51,
@@ -1527,7 +1577,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Hugo Lopez",
-    "player_description": "Vocal presence / Clinical striker"
+    "player_description": "Vocal presence / Clinical striker",
+    "linkID": ""
   },
   {
     "user_id": 52,
@@ -1557,7 +1608,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Xavier Lopez",
-    "player_description": "Free-kick specialist, Agile creator"
+    "player_description": "Free-kick specialist, Agile creator",
+    "linkID": ""
   },
   {
     "user_id": 53,
@@ -1587,7 +1639,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Liam Taylor",
-    "player_description": "Hard to & Great vision"
+    "player_description": "Hard to & Great vision",
+    "linkID": ""
   },
   {
     "user_id": 54,
@@ -1617,7 +1670,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Owen Scott",
-    "player_description": "Pinpoint passer — Rapid mover"
+    "player_description": "Pinpoint passer — Rapid mover",
+    "linkID": ""
   },
   {
     "user_id": 55,
@@ -1647,7 +1701,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Emiliano Cruz",
-    "player_description": "Pinpoint passer — Brilliant thinker"
+    "player_description": "Pinpoint passer — Brilliant thinker",
+    "linkID": ""
   },
   {
     "user_id": 56,
@@ -1677,7 +1732,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Luca Taylor",
-    "player_description": "Rapid mover / Agile creator"
+    "player_description": "Rapid mover / Agile creator",
+    "linkID": ""
   },
   {
     "user_id": 57,
@@ -1707,7 +1763,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Mason Scott",
-    "player_description": "Great vision & Runs all"
+    "player_description": "Great vision & Runs all",
+    "linkID": ""
   },
   {
     "user_id": 58,
@@ -1737,7 +1794,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Thiago Johnson",
-    "player_description": "Pinpoint passer & Very fast"
+    "player_description": "Pinpoint passer & Very fast",
+    "linkID": ""
   },
   {
     "user_id": 59,
@@ -1767,7 +1825,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Daniel Clark",
-    "player_description": "Pinpoint passer — Muscular presence"
+    "player_description": "Pinpoint passer — Muscular presence",
+    "linkID": ""
   },
   {
     "user_id": 60,
@@ -1797,7 +1856,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Samuel Martin",
-    "player_description": "Natural leader & Decent speed"
+    "player_description": "Natural leader & Decent speed",
+    "linkID": ""
   },
   {
     "user_id": 61,
@@ -1827,7 +1887,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Noah Hill",
-    "player_description": "Physical battler / Vocal presence"
+    "player_description": "Physical battler / Vocal presence",
+    "linkID": ""
   },
   {
     "user_id": 62,
@@ -1857,7 +1918,8 @@
     "team_id": 1,
     "player_category": "bronze",
     "player_name": "Samuel Jones",
-    "player_description": "Blazing speed, Dangerous sometimes"
+    "player_description": "Blazing speed, Dangerous sometimes",
+    "linkID": ""
   },
   {
     "user_id": 63,
@@ -1887,7 +1949,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Samuel Lopez",
-    "player_description": "Natural goalscorer, Very fast"
+    "player_description": "Natural goalscorer, Very fast",
+    "linkID": ""
   },
   {
     "user_id": 64,
@@ -1917,7 +1980,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Benji Bert",
-    "player_description": "Creative passer, Smart decision maker"
+    "player_description": "Creative passer, Smart decision maker",
+    "linkID": ""
   },
   {
     "user_id": 65,
@@ -1947,7 +2011,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Santiago Hill",
-    "player_description": "Curling free-kicks / Natural leader"
+    "player_description": "Curling free-kicks / Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 66,
@@ -1977,7 +2042,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Nicolas Lopez",
-    "player_description": "Very fast — Deadly set-piece"
+    "player_description": "Very fast — Deadly set-piece",
+    "linkID": ""
   },
   {
     "user_id": 67,
@@ -2007,7 +2073,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Daniel Sand",
-    "player_description": "Constant presence & Reads game well"
+    "player_description": "Constant presence & Reads game well",
+    "linkID": ""
   },
   {
     "user_id": 68,
@@ -2037,7 +2104,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Hugo Sanchez",
-    "player_description": "Explosive finisher / Creative passer"
+    "player_description": "Explosive finisher / Creative passer",
+    "linkID": ""
   },
   {
     "user_id": 69,
@@ -2067,7 +2135,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Noah Lopez",
-    "player_description": "Nimble dribbler — Dream distributor"
+    "player_description": "Nimble dribbler — Dream distributor",
+    "linkID": ""
   },
   {
     "user_id": 70,
@@ -2097,7 +2166,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Jack Cruz",
-    "player_description": "Sharp vision, Brilliant thinker"
+    "player_description": "Sharp vision, Brilliant thinker",
+    "linkID": ""
   },
   {
     "user_id": 71,
@@ -2127,7 +2197,8 @@
     "team_id": 1,
     "player_category": "gold",
     "player_name": "Emiliano Moore",
-    "player_description": "Lightning quick & Powerful finisher"
+    "player_description": "Lightning quick & Powerful finisher",
+    "linkID": ""
   },
   {
     "user_id": 72,
@@ -2157,7 +2228,8 @@
     "team_id": 1,
     "player_category": "platinum",
     "player_name": "Aaron Torres",
-    "player_description": "Sharp vision / Excellent awareness"
+    "player_description": "Sharp vision / Excellent awareness",
+    "linkID": ""
   },
   {
     "user_id": 73,
@@ -2187,7 +2259,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Aaron Sanchez",
-    "player_description": "Deadly in front & Agile creator"
+    "player_description": "Deadly in front & Agile creator",
+    "linkID": ""
   },
   {
     "user_id": 74,
@@ -2217,7 +2290,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Matias Lee",
-    "player_description": "Deadly set-piece & Fearless shooter"
+    "player_description": "Deadly set-piece & Fearless shooter",
+    "linkID": ""
   },
   {
     "user_id": 75,
@@ -2247,7 +2321,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Mateo Jackson",
-    "player_description": "Agile creator — High football IQ"
+    "player_description": "Agile creator — High football IQ",
+    "linkID": ""
   },
   {
     "user_id": 76,
@@ -2277,7 +2352,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Nathan Lee",
-    "player_description": "Team motivator, Strong on"
+    "player_description": "Team motivator, Strong on",
+    "linkID": ""
   },
   {
     "user_id": 77,
@@ -2307,7 +2383,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Hugo Martin",
-    "player_description": "Powerful frame / Tireless worker"
+    "player_description": "Powerful frame / Tireless worker",
+    "linkID": ""
   },
   {
     "user_id": 78,
@@ -2337,7 +2414,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Sebastian Walker",
-    "player_description": "Great vision of game, Tactical enough"
+    "player_description": "Great vision of game, Tactical enough",
+    "linkID": ""
   },
   {
     "user_id": 79,
@@ -2367,7 +2445,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Ethan Young",
-    "player_description": "Master of passes & Natural goalscorer"
+    "player_description": "Master of passes & Natural goalscorer",
+    "linkID": ""
   },
   {
     "user_id": 80,
@@ -2397,7 +2476,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Emiliano Thomas",
-    "player_description": "Dream distributor, Brilliant thinker"
+    "player_description": "Dream distributor, Brilliant thinker",
+    "linkID": ""
   },
   {
     "user_id": 81,
@@ -2427,7 +2507,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Christian Cruz",
-    "player_description": "Decently agile / Solid build"
+    "player_description": "Decently agile / Solid build",
+    "linkID": ""
   },
   {
     "user_id": 82,
@@ -2457,7 +2538,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Alexander Allen",
-    "player_description": "Captain material & Muscular presence"
+    "player_description": "Captain material & Muscular presence",
+    "linkID": ""
   },
   {
     "user_id": 83,
@@ -2487,7 +2569,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Joel Wilson",
-    "player_description": "Powerful finisher — Curling free-kicks"
+    "player_description": "Powerful finisher — Curling free-kicks",
+    "linkID": ""
   },
   {
     "user_id": 84,
@@ -2517,7 +2600,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Emiliano Baker",
-    "player_description": "Free-kick specialist, Body of steel"
+    "player_description": "Free-kick specialist, Body of steel",
+    "linkID": ""
   },
   {
     "user_id": 85,
@@ -2547,7 +2631,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Joel Cruz",
-    "player_description": "Never tires & Great vision"
+    "player_description": "Never tires & Great vision",
+    "linkID": ""
   },
   {
     "user_id": 86,
@@ -2577,7 +2662,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Alexander Wilson",
-    "player_description": "Deadly set-piece — High endurance"
+    "player_description": "Deadly set-piece — High endurance",
+    "linkID": ""
   },
   {
     "user_id": 87,
@@ -2607,7 +2693,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Gabriel Adams",
-    "player_description": "Great vision & Natural goalscorer"
+    "player_description": "Great vision & Natural goalscorer",
+    "linkID": ""
   },
   {
     "user_id": 88,
@@ -2637,7 +2724,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Benjamin Green",
-    "player_description": "Dream distributor, Reliable from"
+    "player_description": "Dream distributor, Reliable from",
+    "linkID": ""
   },
   {
     "user_id": 89,
@@ -2667,7 +2755,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Isaac Lopez",
-    "player_description": "Expert on & Great vision"
+    "player_description": "Expert on & Great vision",
+    "linkID": ""
   },
   {
     "user_id": 90,
@@ -2697,7 +2786,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Christian Allen",
-    "player_description": "Explosive pace — Nimble dribbler"
+    "player_description": "Explosive pace — Nimble dribbler",
+    "linkID": ""
   },
   {
     "user_id": 91,
@@ -2727,7 +2817,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Daniel White",
-    "player_description": "Rapid mover — Muscular presence"
+    "player_description": "Rapid mover — Muscular presence",
+    "linkID": ""
   },
   {
     "user_id": 92,
@@ -2757,7 +2848,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Ethan Cruz",
-    "player_description": "Natural goalscorer, Endless engine"
+    "player_description": "Natural goalscorer, Endless engine",
+    "linkID": ""
   },
   {
     "user_id": 93,
@@ -2787,7 +2879,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Santiago Perez",
-    "player_description": "Free-kick specialist, Good eye"
+    "player_description": "Free-kick specialist, Good eye",
+    "linkID": ""
   },
   {
     "user_id": 94,
@@ -2817,7 +2910,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Luca Wilson",
-    "player_description": "Rapid mover — Body of steel"
+    "player_description": "Rapid mover — Body of steel",
+    "linkID": ""
   },
   {
     "user_id": 95,
@@ -2847,7 +2941,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Aaron Lewis",
-    "player_description": "Lightning quick — Smart decision maker"
+    "player_description": "Lightning quick — Smart decision maker",
+    "linkID": ""
   },
   {
     "user_id": 96,
@@ -2877,7 +2972,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Joel Hernandez",
-    "player_description": "Creative passer, Strong on"
+    "player_description": "Creative passer, Strong on",
+    "linkID": ""
   },
   {
     "user_id": 97,
@@ -2907,7 +3003,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Leo Williams",
-    "player_description": "Commands respect / Powerful frame"
+    "player_description": "Commands respect / Powerful frame",
+    "linkID": ""
   },
   {
     "user_id": 98,
@@ -2937,7 +3034,8 @@
     "team_id": 2,
     "player_category": "bronze",
     "player_name": "Joel Torres",
-    "player_description": "Outruns defenders — Nimble dribbler"
+    "player_description": "Outruns defenders — Nimble dribbler",
+    "linkID": ""
   },
   {
     "user_id": 99,
@@ -2967,7 +3065,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Dylan Jones",
-    "player_description": "Pinpoint passer & Endless engine"
+    "player_description": "Pinpoint passer & Endless engine",
+    "linkID": ""
   },
   {
     "user_id": 100,
@@ -2997,7 +3096,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Felix Sanchez",
-    "player_description": "Fairly quick, Soft voice"
+    "player_description": "Fairly quick, Soft voice",
+    "linkID": ""
   },
   {
     "user_id": 101,
@@ -3027,7 +3127,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Joel Thomas",
-    "player_description": "Dream distributor, Commands respect"
+    "player_description": "Dream distributor, Commands respect",
+    "linkID": ""
   },
   {
     "user_id": 102,
@@ -3057,7 +3158,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Oliver Hill",
-    "player_description": "Outruns defenders & Light on feet"
+    "player_description": "Outruns defenders & Light on feet",
+    "linkID": ""
   },
   {
     "user_id": 103,
@@ -3087,7 +3189,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Felix Nelson",
-    "player_description": "Endless engine & Technical dead-ball"
+    "player_description": "Endless engine & Technical dead-ball",
+    "linkID": ""
   },
   {
     "user_id": 104,
@@ -3117,7 +3220,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Roman Thompson",
-    "player_description": "Strong on the ball, Endless engine"
+    "player_description": "Strong on the ball, Endless engine",
+    "linkID": ""
   },
   {
     "user_id": 105,
@@ -3147,7 +3251,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Liam Sanchez",
-    "player_description": "Dependable voice, Can threaten"
+    "player_description": "Dependable voice, Can threaten",
+    "linkID": ""
   },
   {
     "user_id": 106,
@@ -3177,7 +3282,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Marcus Lopez",
-    "player_description": "Rapid mover — Ok agility"
+    "player_description": "Rapid mover — Ok agility",
+    "linkID": ""
   },
   {
     "user_id": 107,
@@ -3207,7 +3313,8 @@
     "team_id": 2,
     "player_category": "gold",
     "player_name": "Joel Ramirez",
-    "player_description": "Great vision, Commands respect"
+    "player_description": "Great vision, Commands respect",
+    "linkID": ""
   },
   {
     "user_id": 108,
@@ -3237,7 +3344,8 @@
     "team_id": 2,
     "player_category": "platinum",
     "player_name": "Christian Garcia",
-    "player_description": "Highly agile / Natural leader"
+    "player_description": "Highly agile / Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 109,
@@ -3267,7 +3375,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Matias Ramirez",
-    "player_description": "Pinpoint passer — Runs all game"
+    "player_description": "Pinpoint passer — Runs all game",
+    "linkID": ""
   },
   {
     "user_id": 110,
@@ -3297,7 +3406,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Gabriel Lopez",
-    "player_description": "Powerful finisher & Smooth mover"
+    "player_description": "Powerful finisher & Smooth mover",
+    "linkID": ""
   },
   {
     "user_id": 111,
@@ -3327,7 +3437,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Gabriel Clark",
-    "player_description": "Clinical striker — Tactical genius"
+    "player_description": "Clinical striker — Tactical genius",
+    "linkID": ""
   },
   {
     "user_id": 112,
@@ -3357,7 +3468,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Ethan Lopez",
-    "player_description": "Great vision of game, Natural leader"
+    "player_description": "Great vision of game, Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 113,
@@ -3387,7 +3499,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Daniel Miller",
-    "player_description": "Very fast & Quick feet"
+    "player_description": "Very fast & Quick feet",
+    "linkID": ""
   },
   {
     "user_id": 114,
@@ -3417,7 +3530,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Gabriel Martin",
-    "player_description": "Tactical genius — Team motivator"
+    "player_description": "Tactical genius — Team motivator",
+    "linkID": ""
   },
   {
     "user_id": 115,
@@ -3447,7 +3561,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Oliver Lewis",
-    "player_description": "Explosive pace, Great vision"
+    "player_description": "Explosive pace, Great vision",
+    "linkID": ""
   },
   {
     "user_id": 116,
@@ -3477,7 +3592,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Nicolas Gonzalez",
-    "player_description": "Smooth mover / Dream distributor"
+    "player_description": "Smooth mover / Dream distributor",
+    "linkID": ""
   },
   {
     "user_id": 117,
@@ -3507,7 +3623,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Mason Young",
-    "player_description": "Deadly in front, Expert on free-kicks"
+    "player_description": "Deadly in front, Expert on free-kicks",
+    "linkID": ""
   },
   {
     "user_id": 118,
@@ -3537,7 +3654,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Mason Harris",
-    "player_description": "Team motivator, Smart passing"
+    "player_description": "Team motivator, Smart passing",
+    "linkID": ""
   },
   {
     "user_id": 119,
@@ -3567,7 +3685,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Xavier Hill",
-    "player_description": "Technical dead-ball / Fearless shooter"
+    "player_description": "Technical dead-ball / Fearless shooter",
+    "linkID": ""
   },
   {
     "user_id": 120,
@@ -3597,7 +3716,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Leo Baker",
-    "player_description": "Natural leader — Free-kick specialist"
+    "player_description": "Natural leader — Free-kick specialist",
+    "linkID": ""
   },
   {
     "user_id": 121,
@@ -3627,7 +3747,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Oliver Taylor",
-    "player_description": "Vocal presence, Quick enough"
+    "player_description": "Vocal presence, Quick enough",
+    "linkID": ""
   },
   {
     "user_id": 122,
@@ -3657,7 +3778,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Nicolas Walker",
-    "player_description": "Outruns defenders, Natural leader"
+    "player_description": "Outruns defenders, Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 123,
@@ -3687,7 +3809,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Luca Hernandez",
-    "player_description": "Natural leader / Muscular presence"
+    "player_description": "Natural leader / Muscular presence",
+    "linkID": ""
   },
   {
     "user_id": 124,
@@ -3717,7 +3840,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Luca Perez",
-    "player_description": "Tireless worker — Powerful frame"
+    "player_description": "Tireless worker — Powerful frame",
+    "linkID": ""
   },
   {
     "user_id": 125,
@@ -3747,7 +3871,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Dylan Clark",
-    "player_description": "Creative passer — Reads game well"
+    "player_description": "Creative passer — Reads game well",
+    "linkID": ""
   },
   {
     "user_id": 126,
@@ -3777,7 +3902,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Lucas Scott",
-    "player_description": "Never tires / Powerful frame"
+    "player_description": "Never tires / Powerful frame",
+    "linkID": ""
   },
   {
     "user_id": 127,
@@ -3807,7 +3933,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Alexander Ramirez",
-    "player_description": "Rapid mover, Technical dead-ball"
+    "player_description": "Rapid mover, Technical dead-ball",
+    "linkID": ""
   },
   {
     "user_id": 128,
@@ -3837,7 +3964,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Christian White",
-    "player_description": "Master of & High football"
+    "player_description": "Master of & High football",
+    "linkID": ""
   },
   {
     "user_id": 129,
@@ -3867,7 +3995,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Daniel Garcia",
-    "player_description": "Creative passer — Excellent awareness"
+    "player_description": "Creative passer — Excellent awareness",
+    "linkID": ""
   },
   {
     "user_id": 130,
@@ -3897,7 +4026,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Christian Lopez",
-    "player_description": "Technical dead-ball & Natural leader"
+    "player_description": "Technical dead-ball & Natural leader",
+    "linkID": ""
   },
   {
     "user_id": 131,
@@ -3927,7 +4057,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Thiago Ramirez",
-    "player_description": "Dream distributor & Outruns defenders"
+    "player_description": "Dream distributor & Outruns defenders",
+    "linkID": ""
   },
   {
     "user_id": 132,
@@ -3957,7 +4088,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Santiago Hernandez",
-    "player_description": "Endless engine — Sharp vision"
+    "player_description": "Endless engine — Sharp vision",
+    "linkID": ""
   },
   {
     "user_id": 133,
@@ -3987,7 +4119,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Daniel Adams",
-    "player_description": "Sharp vision & High football IQ"
+    "player_description": "Sharp vision & High football IQ",
+    "linkID": ""
   },
   {
     "user_id": 134,
@@ -4017,7 +4150,8 @@
     "team_id": 3,
     "player_category": "bronze",
     "player_name": "Hugo Smith",
-    "player_description": "Natural leader — Tireless worker"
+    "player_description": "Natural leader — Tireless worker",
+    "linkID": ""
   },
   {
     "user_id": 135,
@@ -4047,7 +4181,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Caleb Williams",
-    "player_description": "Nimble dribbler / Outruns defenders"
+    "player_description": "Nimble dribbler / Outruns defenders",
+    "linkID": ""
   },
   {
     "user_id": 136,
@@ -4077,7 +4212,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Alexander Lopez",
-    "player_description": "Clinical striker / Outruns defenders"
+    "player_description": "Clinical striker / Outruns defenders",
+    "linkID": ""
   },
   {
     "user_id": 137,
@@ -4107,7 +4243,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Marcus Baker",
-    "player_description": "Strong on, Blazing speed"
+    "player_description": "Strong on, Blazing speed",
+    "linkID": ""
   },
   {
     "user_id": 138,
@@ -4137,7 +4274,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Levi Sanchez",
-    "player_description": "Rapid mover / Smooth mover"
+    "player_description": "Rapid mover / Smooth mover",
+    "linkID": ""
   },
   {
     "user_id": 139,
@@ -4167,7 +4305,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Hugo Adams",
-    "player_description": "Never tires, Body of steel"
+    "player_description": "Never tires, Body of steel",
+    "linkID": ""
   },
   {
     "user_id": 140,
@@ -4197,7 +4336,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Lucas Lopez",
-    "player_description": "Outruns defenders / Fleet of foot"
+    "player_description": "Outruns defenders / Fleet of foot",
+    "linkID": ""
   },
   {
     "user_id": 141,
@@ -4227,7 +4367,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Elias Jones",
-    "player_description": "Pinpoint passer / Powerful frame"
+    "player_description": "Pinpoint passer / Powerful frame",
+    "linkID": ""
   },
   {
     "user_id": 142,
@@ -4257,7 +4398,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Hugo Moore",
-    "player_description": "Leads by example, Natural goalscorer"
+    "player_description": "Leads by example, Natural goalscorer",
+    "linkID": ""
   },
   {
     "user_id": 143,
@@ -4287,7 +4429,8 @@
     "team_id": 3,
     "player_category": "gold",
     "player_name": "Joel Green",
-    "player_description": "Outruns defenders & Curling free-kicks"
+    "player_description": "Outruns defenders & Curling free-kicks",
+    "linkID": ""
   },
   {
     "user_id": 144,
@@ -4317,6 +4460,7 @@
     "team_id": 3,
     "player_category": "platinum",
     "player_name": "Santiago Hall",
-    "player_description": "Powerful finisher & Very fast"
+    "player_description": "Powerful finisher & Very fast",
+    "linkID": ""
   }
 ]

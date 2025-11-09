@@ -23,6 +23,9 @@ const getAnim = (bodyType: number): number => {
   if (bodyType === 2) {
     return Math.random() < 0.5 ? 8 : 0;
   }
+  if(bodyType === 1) {
+    return Math.random() < 0.5 ? 1: 6;
+  }
   return 0;
 };
 // Type definition for the new unified structure (all 3 models now have this same structure)
@@ -121,6 +124,7 @@ interface PlayerData {
   player_category: "bronze" | "gold" | "platinum";
   player_name: string;
   player_description: string;
+  linkID: string;
 }
 
 // Random utility functions
@@ -327,10 +331,11 @@ export default function ChangeableModels({
   //2
 
   useEffect(() => {
-    let key = getAnim(playerData?.body_type ?? 0);
+    let key = getAnim(playerData?.body_type ?? 1);
     let actionConfig = getActionMap(key);
     const actionName = actionConfig?.name ?? "Idle";
     const action = actions[actionName];
+    
 
     if (playerData?.body_type === 2 && key === 0) {
       group.current?.rotation.set(0, 0.65, 0);
@@ -358,6 +363,8 @@ export default function ChangeableModels({
 
       // Step 2: Reset the action to clear any previous state
       action.reset();
+
+    console.log(action.getClip()?.duration, "duration");
 
       // Step 3: Set the time to the desired starting position
       const startTime = actionConfig?.startTime ?? 0;
