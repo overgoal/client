@@ -7,11 +7,12 @@ async function takeScreenshots() {
   // Set viewport size to ensure consistent dimensions
   await page.setViewportSize({ width: 536, height: 760 })
   
-  await page.goto('http://localhost:3002/card')
+  await page.goto('https://localhost:3002/card')
   
   // Wait for page to load completely
   await page.waitForLoadState('networkidle')
   
+  let index = 0;
   setInterval(async () => {
     try {
       // Get page dimensions to validate clip bounds
@@ -34,7 +35,7 @@ async function takeScreenshots() {
       }
       
       await page.screenshot({
-        path: `browser-${Date.now()}.png`,
+        path: `card-body-2-${index++}.png`,
         clip: clipConfig
       })
       
@@ -42,7 +43,7 @@ async function takeScreenshots() {
     } catch (error) {
       console.error('Screenshot failed:', error)
     }
-  }, 500)
+  }, 1000)
 }
 
 // Handle cleanup on process termination

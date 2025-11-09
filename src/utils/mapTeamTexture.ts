@@ -24,31 +24,59 @@ export const mapAccesoriesTexture = (team: number) => {
   return texture;
 };
 
-const actionMap = {
-  0: "Bow_and_Arrow",
+interface AnimationConfig {
+  name: string;
+  startTime: number; // in seconds
+}
 
-  1: "Break_Idle",
-
-  2: "Clapping",
-
-  3: "Dance_1",
-
-  4: "Dance_2",
-
-  5: "Epic",
-
-  6: "Idle",
-
-  7: "Kick",
-
-  8: "Salute",
-
-  9: "T_Pose",
-
-  10: "Yelling",
+const actionMap: Record<number, AnimationConfig> = {
+  0: {
+    name: "Bow_and_Arrow",
+    startTime: 29,
+  },
+  1: {
+    name: "Break_Idle",
+    startTime: 0,
+  },
+  2: {
+    name: "Clapping",
+    startTime: 2,
+  },
+  3: {
+    name: "Dance_1",
+    startTime: 0.2,
+  },
+  4: {
+    name: "Dance_2",
+    startTime: 0.4,
+  },
+  5: {
+    name: "Epic",
+    startTime: 0,
+  },
+  6: {
+    name: "Idle",
+    startTime: 0,
+  },
+  7: {
+    name: "Kick",
+    startTime: 0.25,
+  },
+  8: {
+    name: "Salute",
+    startTime:24.5,
+  },
+  9: {
+    name: "T_Pose",
+    startTime: 0,
+  },
+  10: {
+    name: "Yelling",
+    startTime: 0.15,
+  },
 };
 
-export const getActionMap = (key: number) => {
+export const getActionMap = (key: number): AnimationConfig | undefined => {
   return actionMap[key as keyof typeof actionMap];
 };
 
@@ -58,11 +86,11 @@ const mapCardBorders = {
     qr: "/card/qr.png",
   },
   gold: {
-    border: "/card/top-2_Dorado.png",
+    border: "/card/top-2_Dorado.webp",
     qr: "/card/qr_Dorado.png",
   },
   platinum: {
-    border: "/card/top-2_Platino.png",
+    border: "/card/top-2_Platino.webp",
     qr: "/card/qr_Platino.png",
   },
 };

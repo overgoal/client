@@ -14,6 +14,17 @@ const getPlayerTeam = (team: number | undefined) => {
   return "/teams/Drakon core.png";
 };
 
+const getRandomizedRotation = (bodyType: number): number => {
+  if (bodyType === 0) {
+    return Math.random() < 0.5 ? 1.5 : .8;
+  }
+  return 0.5;
+};
+
+const getCategoryImage = (category: string): string => {
+  return `/card/logo_${category}.webp`;
+};
+
 const Scene = () => {
   const [data, setData] = useState<PlayerData[]>([]);
   const [player, setPlayer] = useState<PlayerData | null>(null);
@@ -25,7 +36,8 @@ const Scene = () => {
   // Memoize camera settings
   const cameraSettings = useMemo(
     () => ({
-      position: [0, 0, 5] as [number, number, number],
+      position: [0, 0.5, 5] as [number, number, number],
+      rotation: [0, Math.PI / 2, 0] as [number, number, number],
       fov: 75,
       near: 0.1,
       far: 1000,
@@ -69,6 +81,7 @@ const Scene = () => {
     [],
   );
 
+
   // Fetch player data on mount
   useEffect(() => {
     const fetchData = async () => {
@@ -90,12 +103,15 @@ const Scene = () => {
   // Set up interval to cycle through players
   useEffect(() => {
     if (data.length === 0) return;
-
     let currentIndex = 0;
     const intervalId = setInterval(() => {
       currentIndex = (currentIndex + 1) % data.length;
+      if(data[currentIndex].body_type !== 2) {
+        return;
+      }
+      console.log(data[currentIndex].body_type, "body type");
       setPlayer(data[currentIndex]);
-    }, 100);
+    }, 1000);
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
@@ -122,7 +138,7 @@ const Scene = () => {
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
 
-        <Html position={[0, 0, 0]} fullscreen>
+        <Html position={[0, 0, 0]} fullscreen className="pointer-events-none ">
           <div className="flex h-full w-full flex-col items-center justify-between">
             <div className="flex w-full flex-row items-center justify-start gap-4 px-4 pt-4">
               <img
@@ -149,7 +165,7 @@ const Scene = () => {
                 <img
                   src={categoryImages.border}
                   alt=""
-                  className="absolute left-45 h-full w-3/4 -translate-x-1/5 object-cover"
+                  className="absolute left-50 h-full w-3/4 -translate-x-1/5 object-cover"
                 />
                 <div className="airstrike-normal relative top-5 left-64 z-100 w-full -translate-x-1/5">
                   <h1
@@ -165,8 +181,8 @@ const Scene = () => {
                 </div>
               </div>
 
-              <div className="airstrike-normal absolute top-15 right-4 z-100 text-2xl text-white">
-                {player?.player_category}
+              <div className="airstrike-normal absolute top-15 right-2 z-100 text-2xl text-white">
+                <img src={getCategoryImage(player?.player_category ?? "bronze")} alt="" className="h-15 w-15 object-contain" />
               </div>
             </div>
             <div className="flex w-full flex-col items-center justify-center gap-2 p-4 px-12">
@@ -186,7 +202,7 @@ const Scene = () => {
                   <img
                     src={categoryImages.qr}
                     alt=""
-                    className={cn("h-36 w-36 object-contain", player?.player_category === "gold" ? "scale-120 object-bottom" : "")}
+                    className={cn("h-36 w-36 object-contain", player?.player_category === "gold" ? "scale-130  translate-y-2 object-bottom" : "")}
                   />
                   <div className="absolute overflow-hidden bg-contain bg-center bg-no-repeat">
                     <QRCode
@@ -256,9 +272,9 @@ const Scene = () => {
         {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
         {player && (
           <ChangeableModels
-            scale={player.body_type == 2 ? 4 : 5.4}
-            position={[0, player.body_type == 2 ? -150 : -200, -40]}
-            rotation={[0, 0, 0]}
+            scale={player.body_type == 2 ? 6 : 8}
+            position={[0, player.body_type == 2 ? -250 : -200, -40]}
+            rotation={[0, getRandomizedRotation(player.body_type), 0]}
             playerData={player}
             autoRandomize={false}
           />
@@ -271,3 +287,7 @@ const Scene = () => {
 
 Scene.displayName = "Scene";
 export default Scene;
+function useControls(arg0: { rotationX: { value: number; min: number; max: number; }; rotationY: { value: number; }; }): { rotationX: any; rotationY: any; rotationZ: any; } {
+  throw new Error("Function not implemented.");
+}
+
