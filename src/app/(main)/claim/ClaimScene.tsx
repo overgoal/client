@@ -1,11 +1,11 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload } from "@react-three/drei";
+import { Html, OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import Lights from "./components/lights";
-import  { PlayerData } from "../models/ChangeableModels";
-import ChangeableModel1 from "../models/ChangeableModel1";
-import ChangeableModel2 from "../models/ChangeableModel2";
-import ChangeableModel3 from "../models/ChangeableModel3";
+import Lights from "../../../components/webgl/components/lights";
+import { PlayerData } from "../../../components/models/ChangeableModels";
+import ChangeableModel1 from "../../../components/models/ChangeableModel1";
+import ChangeableModel2 from "../../../components/models/ChangeableModel2";
+import ChangeableModel3 from "../../../components/models/ChangeableModel3";
 
 const getRandomizedRotation = (bodyType: number): number => {
   if (bodyType === 0) {
@@ -14,7 +14,7 @@ const getRandomizedRotation = (bodyType: number): number => {
   return 0.5;
 };
 
-const Scene = () => {
+const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
   const [player, setPlayer] = useState<PlayerData | null>(null);
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -75,9 +75,13 @@ const Scene = () => {
       try {
         const res = await fetch("/players.json");
         const data = await res.json();
-        if (data.length > 0) {
-          setPlayer(data[0]); // Set initial player
-        }
+
+        const player = data.find(
+          (player: PlayerData) =>
+            player.linkID.toString() === playerLinkId.toString(),
+        );
+        setPlayer(player);
+        console.log(player, "player");
       } catch (error) {
         console.error("Failed to fetch player data:", error);
       }
@@ -102,40 +106,68 @@ const Scene = () => {
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
 
-        {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
-        {player && player.body_type === 0 && (
+        <Html fullscreen className="pointer-events-none p-1">
+          <div className="airstrike-normal mt-6 w-full text-center">
+            <img
+              src="/card/Asset-08.png"
+              alt=""
+              className="absolute top-0 left-0 z-0 h-full w-full object-cover"
+            />
+            <h1
+              className="card-name z-0 text-[42px]"
+              style={
+                {
+                  "--card-name-content": `"${player?.player_name}"`,
+                } as React.CSSProperties
+              }
+            >
+              {player?.player_name}
+            </h1>
+          </div>
+        </Html>
+
+        {player?.body_type === 0 && (
           <ChangeableModel1
-            defaultAnimtion="Break Idle"
+            defaultAnimtion="Dance 2"
             playerData={player}
             scale={5}
             position={[0, -200, 0]}
             rotation={[0, getRandomizedRotation(player.body_type), 0]}
           />
         )}
-        {player && player.body_type === 1 && (
+        {player?.body_type === 1 && (
           <ChangeableModel2
-            defaultAnimtion="Break_Idle"
+            defaultAnimtion="Dancing_2"
             playerData={player}
             scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {player && player.body_type === 2 && (
-          <ChangeableModel3
-            playerData={player}
-            defaultAnimtion="Break_Idle"
-            scale={4.6}
             position={[0, -200, 0]}
             rotation={[0, getRandomizedRotation(player.body_type), 0]}
           />
         )}
 
+        {player?.body_type === 2 && (
+          <ChangeableModel3
+            defaultAnimtion="Bow_and_Arrow"
+            playerData={player}
+            scale={4.6}
+            position={[0, -200, 0]}
+            rotation={[0, getRandomizedRotation(player.body_type), 0]}
+          />
+        )}
+        {/* {player && (
+          <ChangeableModels
+            scale={player.body_type == 2 ? 6 : 5}
+            position={[0, -200, 0]}
+            rotation={[0, getRandomizedRotation(player.body_type), 0]}
+            playerData={player}
+            autoRandomize={false}
+          />
+        )} */}
         <Preload all />
       </Suspense>
     </Canvas>
   );
 };
 
-Scene.displayName = "Scene";
-export default Scene;
+ClaimScene.displayName = "ClaimScene";
+export default ClaimScene;
