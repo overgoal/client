@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload } from "@react-three/drei";
+import { OrbitControls, Preload, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
 import  { PlayerData } from "../models/ChangeableModels";
@@ -7,14 +7,69 @@ import ChangeableModel1 from "../models/ChangeableModel1";
 import ChangeableModel2 from "../models/ChangeableModel2";
 import ChangeableModel3 from "../models/ChangeableModel3";
 
-const getRandomizedRotation = (bodyType: number): number => {
-  if (bodyType === 0) {
-    return Math.random() < 0.5 ? 1.5 : 0.8;
-  }
-  return 0.5;
-};
 
-const Scene = () => {
+interface SceneContentProps {
+  player: PlayerData | null;
+  orbitControlsSettings: any;
+  onLoadComplete?: () => void;
+}
+
+function SceneContent({ player, orbitControlsSettings, onLoadComplete }: SceneContentProps) {
+  const { progress } = useProgress();
+
+  useEffect(() => {
+    if (progress === 100 && onLoadComplete) {
+      // Add a small delay to ensure everything is fully rendered
+      const timer = setTimeout(() => {
+        onLoadComplete();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onLoadComplete]);
+
+  return (
+    <>
+      <OrbitControls {...orbitControlsSettings} />
+      <Lights />
+
+      {player && player.body_type === 0 && (
+        <ChangeableModel1
+          defaultAnimtion="Break Idle"
+          playerData={player}
+          scale={5}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+      {player && player.body_type === 1 && (
+        <ChangeableModel2
+          defaultAnimtion="Break_Idle"
+          playerData={player}
+          scale={5}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+      {player && player.body_type === 2 && (
+        <ChangeableModel3
+          playerData={player}
+          defaultAnimtion="Break_Idle"
+          scale={4.6}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+
+      <Preload all />
+    </>
+  );
+}
+
+interface SceneProps {
+  onLoadComplete?: () => void;
+}
+
+const Scene = ({ onLoadComplete }: SceneProps) => {
   const [player, setPlayer] = useState<PlayerData | null>(null);
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -99,39 +154,11 @@ const Scene = () => {
     >
       {/* <Perf position="top-left" /> */}
       <Suspense fallback={null}>
-        <OrbitControls {...orbitControlsSettings} />
-        <Lights />
-
-        {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
-        {player && player.body_type === 0 && (
-          <ChangeableModel1
-            defaultAnimtion="Break Idle"
-            playerData={player}
-            scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {player && player.body_type === 1 && (
-          <ChangeableModel2
-            defaultAnimtion="Break_Idle"
-            playerData={player}
-            scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {player && player.body_type === 2 && (
-          <ChangeableModel3
-            playerData={player}
-            defaultAnimtion="Break_Idle"
-            scale={4.6}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-
-        <Preload all />
+        <SceneContent
+          player={player}
+          orbitControlsSettings={orbitControlsSettings}
+          onLoadComplete={onLoadComplete}
+        />
       </Suspense>
     </Canvas>
   );
