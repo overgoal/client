@@ -21,7 +21,6 @@ import {
   PlayerData,
   CharacterConfig,
   playerDataToCharacterConfig,
-  getAnim,
   BaseModelProps,
 } from "./shared-types";
 
