@@ -107,11 +107,11 @@ const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
         <Lights />
 
         <Html fullscreen className="pointer-events-none p-1">
-          <div className="airstrike-normal   mt-6 w-full text-center">
+          <div className="airstrike-normal mt-6 w-full text-center">
             <img
               src="/card/Asset-08.png"
               alt=""
-              className="absolute top-0 z-0 left-0 h-full w-full object-cover"
+              className="absolute top-0 left-0 z-0 h-full w-full object-cover"
             />
             <h1
               className="card-name z-0 text-[42px]"
