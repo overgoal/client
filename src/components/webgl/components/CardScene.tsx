@@ -12,7 +12,7 @@ const getRandomizedRotation = (bodyType: number): number => {
   return 0.5;
 };
 
-const CardScene = ({ playerLinkId }: { playerLinkId: number }) => {
+const CardScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
   const [player, setPlayer] = useState<PlayerData | null>(null);
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -75,7 +75,7 @@ const CardScene = ({ playerLinkId }: { playerLinkId: number }) => {
         const data = await res.json();
 
         const player = data.find(
-          (player: PlayerData) => player.linkID === playerLinkId,
+          (player: PlayerData) => player.linkID.toString() === playerLinkId.toString(),
         );
         setPlayer(player);
         console.log(player, "player");

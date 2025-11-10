@@ -5,7 +5,7 @@ const ClaimScreen = () => {
   const { id } = useParams();
 
 
-  return <CardScreen playerLinkId={Number(id)} />;
+  return <CardScreen playerLinkId={id || ""} />;
 };
 
 export default ClaimScreen;
