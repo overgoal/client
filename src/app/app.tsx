@@ -34,7 +34,7 @@ import {
   matchResult,
   characterCreation,
   preMatchNonMatch,
-  home,
+  login,
   claim,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
@@ -45,7 +45,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Unauthenticated routes */}
-        <Route path={home} element={<LoginScreen />} />
+        <Route path={login} element={<LoginScreen />} />
 
         {/* Authenticated routes */}
         <Route path={characterCreation} element={<CharacterCreationScreen />} />

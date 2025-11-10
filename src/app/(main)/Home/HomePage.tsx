@@ -49,7 +49,7 @@ export default function HomePage() {
       </div>
 
       {/* UI Overlay Layer - positioned on top */}
-      <div className="relative min-h-dvh h-screen  z-20 ">
+      <div className="relative min-h-dvh  z-30 ">
         <div className=" h-dvh  ">
           <HomeMenu />
         </div>

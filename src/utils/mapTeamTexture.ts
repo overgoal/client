@@ -39,7 +39,7 @@ const actionMap: Record<number, AnimationConfig> = {
   },
   1: {
     name: "Break_Idle",
-    startTime:2,
+    startTime: 2,
   },
   2: {
     name: "Clapping",
@@ -79,8 +79,29 @@ const actionMap: Record<number, AnimationConfig> = {
   },
 };
 
+const actionMapLooping: Record<string, number> = {
+  Bow_and_Arrow: 26,
+  Break_Idle: 2,
+  Clapping: 1,
+  Dance_1: 41,
+  Dance_2: 20,
+  Epic: 0,
+  Idle: 0,
+  Kick: 20,
+  Salute: 24.5,
+  T_Pose: 0,
+  Yelling: 32,
+  "Break Idle": 1,
+  Dancing_2: 31.7,
+  "Dance 2": 33.5,
+};
+
 export const getActionMap = (key: number): AnimationConfig | undefined => {
   return actionMap[key as keyof typeof actionMap];
+};
+
+export const getActionMapLooping = (key: string): number => {
+  return actionMapLooping[key as keyof typeof actionMapLooping];
 };
 
 const mapCardBorders = {

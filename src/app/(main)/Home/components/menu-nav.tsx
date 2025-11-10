@@ -5,7 +5,7 @@ import { HomeMenuItem } from "../../../../components/ui/lifestyle-container";
 
 export default function MenuNav() {
   return (
-    <div className="w-full max-h-1/4 h-full  flex flex-col items-start justify-start mt-2">
+    <div className="w-full max-h-1/4 h-full  flex flex-col items-start justify-start mt-2 ">
       <div className="flex flex-col gap-4 p-2 w-full ">
         <div className="w-full flex flex-row gap-2 items-center justify-start p-2">
           <div className="max-w-[75px] max-h-[75px] w-full h-full">

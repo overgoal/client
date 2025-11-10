@@ -26,7 +26,7 @@ const getAnim = (bodyType: number): number => {
   if (bodyType === 1) {
     return Math.random() < 0.5 ? 11 : 0;
   }
-  return 0;
+  return 3;
 };
 // Type definition for the new unified structure (all 3 models now have this same structure)
 type GLTFModel1 = GLTF & {
@@ -374,27 +374,32 @@ export default function ChangeableModels({
     }
 
     if (action) {
-      // Step 1: Stop all other actions
-      mixer.stopAllAction();
-
-      // Step 2: Reset the action to clear any previous state
-      action.reset();
-
-      console.log(action.getClip()?.duration, "duration");
-
-      // Step 3: Set the time to the desired starting position
-      const startTime = actionConfig?.startTime ?? 0;
-      action.time = startTime;
-
-      // Step 4: Enable the action and set it to play
+      action.time = actionConfig?.startTime ?? 0;
       action.play();
-
-      // Step 5: Pause immediately to freeze at this position
-      action.paused = true;
-
-      // Step 6: CRITICAL - Force mixer to update to apply the pose
-      mixer.update(0);
     }
+
+    // if (action) {
+    //   // Step 1: Stop all other actions
+    //   mixer.stopAllAction();
+
+    //   // Step 2: Reset the action to clear any previous state
+    //   action.reset();
+
+    //   console.log(action.getClip()?.duration, "duration");
+
+    //   // Step 3: Set the time to the desired starting position
+    //   const startTime = actionConfig?.startTime ?? 0;
+    //   action.time = startTime;
+
+    //   // Step 4: Enable the action and set it to play
+    //   action.play();
+
+    //   // Step 5: Pause immediately to freeze at this position
+    //   action.paused = true;
+
+    //   // Step 6: CRITICAL - Force mixer to update to apply the pose
+    //   mixer.update(0);
+    // }
   }, [actions, selectedModel, playerData, playerData?.body_type, mixer]);
 
   // Select skin texture based on config
