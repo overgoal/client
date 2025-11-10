@@ -125,7 +125,7 @@ const Scene = () => {
           <ChangeableModel3
             playerData={player}
             defaultAnimtion="Break_Idle"
-            scale={5}
+            scale={4.6}
             position={[0, -200, 0]}
             rotation={[0, getRandomizedRotation(player.body_type), 0]}
           />

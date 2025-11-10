@@ -87,7 +87,6 @@ export default function ChangeableModel1({
   const { actions, mixer } = useAnimations(model.animations, group);
 
   useEffect(() => {
-    // if (!props.playAnimation) return;
     const key = getAnim(playerData.body_type);
     const actionName = props.defaultAnimtion ?? "Dance 2";
     const actionTime = getActionMapLooping(actionName) ?? 0;

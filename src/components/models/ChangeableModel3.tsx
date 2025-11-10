@@ -92,9 +92,12 @@ export default function ChangeableModel3({
 
     // Body type 0 specific positioning
 
-    group.current?.rotation.set(0, 1, 0);
+    const rotation = actionName === "Bow_and_Arrow" ? 1 : 0;
+    const positionX = actionName === "Bow_and_Arrow" ? -10 : 0;
+
+    group.current?.rotation.set(0, rotation, 0);
     group.current?.position.set(
-      -10,
+      positionX,
       group.current?.position.y,
       group.current?.position.z,
     );

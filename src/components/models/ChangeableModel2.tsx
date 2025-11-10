@@ -13,6 +13,7 @@ import {
 } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import {
+  getActionMapLooping,
   mapAccesoriesTexture,
   mapTeamTexture,
 } from "../../utils/mapTeamTexture";
@@ -86,9 +87,9 @@ export default function ChangeableModel2({
   const { actions, mixer } = useAnimations(model.animations, group);
 
   useEffect(() => {
-    const key = getAnim(playerData.body_type);
-    const action = actions["Dancing_2"];
-    console.log(action?.getClip()?.duration, "action");
+    const actionName = props.defaultAnimtion ?? "Dancing_2";
+    const actionTime = getActionMapLooping(actionName) ?? 0;
+    const action = actions[actionName];
 
     // Body type 2 specific positioning (this is body_type 1, which uses model 2)
     group.current?.rotation.set(0, 0, 0);
@@ -103,7 +104,7 @@ export default function ChangeableModel2({
     // Configure for infinite looping
     action.clampWhenFinished = true;
     action.setLoop(THREE.LoopRepeat, Infinity);
-    action.time = 31.7;
+    action.time = actionTime;
 
     // Set consistent start time
 
@@ -112,7 +113,7 @@ export default function ChangeableModel2({
 
     const onLoop = (e: any) => {
       if (e.action === action) {
-        action.time = 31.7;
+        action.time = actionTime;
       }
     };
     mixer.addEventListener("loop", onLoop);
