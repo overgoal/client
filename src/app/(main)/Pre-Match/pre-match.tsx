@@ -2,7 +2,7 @@ import { BackButton } from "../../../components/ui/back-button";
 import { Button } from "../../../components/ui/button";
 import { Link } from "react-router";
 import { cn } from "../../../utils/utils";
-import preMatchBackground from "/backgrounds/glitch-bg.jpg";
+import preMatchBackground from "/backgrounds/glitch-bg.webp";
 import PreMatchTeam from "./components/pre-match-team";
 import SemiSquareContainer from "../Home/components/semi-square/semi-square-container";
 import CyberContainer from "../Home/components/cyber-container";

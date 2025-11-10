@@ -36,8 +36,8 @@ function SceneContent({ player, orbitControlsSettings, onLoadComplete }: SceneCo
         <ChangeableModel1
           defaultAnimtion="Break Idle"
           playerData={player}
-          scale={5}
-          position={[0, -200, 0]}
+          scale={3.5}
+          position={[0, -150, 0]}
           rotation={[0, 0, 0]}
         />
       )}
@@ -45,8 +45,8 @@ function SceneContent({ player, orbitControlsSettings, onLoadComplete }: SceneCo
         <ChangeableModel2
           defaultAnimtion="Break_Idle"
           playerData={player}
-          scale={5}
-          position={[0, -200, 0]}
+          scale={3.8}
+          position={[0, -150, 0]}
           rotation={[0, 0, 0]}
         />
       )}
@@ -54,8 +54,8 @@ function SceneContent({ player, orbitControlsSettings, onLoadComplete }: SceneCo
         <ChangeableModel3
           playerData={player}
           defaultAnimtion="Break_Idle"
-          scale={4.6}
-          position={[0, -200, 0]}
+          scale={3.5}
+          position={[0, -150, 0]}
           rotation={[0, 0, 0]}
         />
       )}
@@ -131,7 +131,7 @@ const Scene = ({ onLoadComplete }: SceneProps) => {
         const res = await fetch("/players.json");
         const data = await res.json();
         if (data.length > 0) {
-          setPlayer(data[0]); // Set initial player
+          setPlayer(data[3]); // Set initial player
         }
       } catch (error) {
         console.error("Failed to fetch player data:", error);

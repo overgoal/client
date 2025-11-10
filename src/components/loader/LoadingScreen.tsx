@@ -1,6 +1,6 @@
 import { Loader2 } from "lucide-react";
 
-import background from "/backgrounds/glitch-bg.jpg";
+import background from "/backgrounds/glitch-bg.webp";
 import { GlitchText } from "../ui/glitch-text";
 
 interface LoadingScreenProps {
@@ -12,7 +12,7 @@ export default function LoadingScreen({ isLoading = true, progress = 0 }: Loadin
   if (!isLoading) return null;
 
   return (
-    <div className="bg-u absolute z-100 flex h-lvh w-screen flex-col items-center justify-center gap-4 transition-opacity duration-500">
+    <div className="bg-u absolute z-100! flex h-lvh w-screen flex-col items-center justify-center gap-4 transition-opacity duration-500">
       <img
         src={background}
         alt="background"
