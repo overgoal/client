@@ -2,10 +2,22 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
-import  { PlayerData } from "../models/ChangeableModels";
+import { PlayerData } from "../models/ChangeableModels";
 import ChangeableModel1 from "../models/ChangeableModel1";
 import ChangeableModel2 from "../models/ChangeableModel2";
 import ChangeableModel3 from "../models/ChangeableModel3";
+import { BlendFunction, GlitchMode } from "postprocessing";
+
+import {
+  Bloom,
+  ChromaticAberration,
+  DepthOfField,
+  EffectComposer,
+  Glitch,
+  Noise,
+  Vignette,
+} from "@react-three/postprocessing";
+import { Vector2 } from "three";
 
 const getRandomizedRotation = (bodyType: number): number => {
   if (bodyType === 0) {
@@ -101,6 +113,17 @@ const Scene = () => {
       <Suspense fallback={null}>
         <OrbitControls {...orbitControlsSettings} />
         <Lights />
+
+        <EffectComposer>
+          <Glitch
+            delay={new Vector2(4, 4.5)} // min and max glitch delay
+            duration={new Vector2(0.6, 1.0)} // min and max glitch duration
+            strength={new Vector2(0.03, 0.03)} // min and max glitch strength
+            mode={GlitchMode.SPORADIC}
+            active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+            ratio={0.85}
+          />
+        </EffectComposer>
 
         {/* <ModelBody2  scale={4.8}  position={[0, -200, 0]} rotation={[0, 0, 0]} /> */}
         {player && player.body_type === 0 && (
