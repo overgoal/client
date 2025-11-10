@@ -103,7 +103,7 @@ const Scene = () => {
         {player && (
           <ChangeableModels
             scale={player.body_type == 2 ? 6 : 6}
-            position={[0, player.body_type == 2 ? -250 : -250, -40]}
+            position={[0, player.body_type == 2 ? -250 : -200, -40]}
             rotation={[0, getRandomizedRotation(player.body_type), 0]}
             playerData={player}
             autoRandomize={false}

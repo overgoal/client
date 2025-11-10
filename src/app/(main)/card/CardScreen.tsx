@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import CardScene from "../../../components/webgl/components/CardScene";
 
-export default function CardScreen({ playerLinkId }: { playerLinkId: number }) {
+export default function CardScreen({ playerLinkId }: { playerLinkId: number | string }) {
   // Memoize static styles to prevent re-creation
   const containerStyles = useMemo(
     () => ({
