@@ -1,7 +1,7 @@
 import { BackButton } from "../../../components/ui/back-button";
 import PrematchOptions from "./components/pre-match-option";
 
-import preMatchBackground from "/backgrounds/glitch-bg.jpg";
+import preMatchBackground from "/backgrounds/glitch-bg.webp";
 
 const PreNonMatchScreen = () => {
   return (
@@ -18,7 +18,7 @@ const PreNonMatchScreen = () => {
           <div className="w-full max-w-2xl mx-auto px-4 text-white text-center text-sm leading-[120%] orbitron-medium">
             <div className="relative w-[300px] mx-auto">
               <img
-                src="/backgrounds/container.png"
+                src="/backgrounds/container.webp"
                 alt="container"
                 className="-rotate-90 object-cover absolute -top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3  scale-70  "
               />

@@ -1,20 +1,110 @@
-import { Canvas } from "@react-three/fiber";
-import { Html, OrbitControls, Preload } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
+import { GlitchText } from "../../../components/ui/glitch-text";
+import { Canvas } from "@react-three/fiber";
 
-const getRandomizedRotation = (bodyType: number): number => {
-  if (bodyType === 0) {
-    return Math.random() < 0.5 ? 1.5 : 0.8;
+const getCategoyContainer = (category: string) => {
+  switch (category) {
+    case "bronze":
+      return "/claim/claim-container-gold.webp";
+    case "gold":
+      return "/claim/claim-container-gold.webp";
+    case "platinum":
+      return "/claim/claim-container-platinum.webp";
   }
-  return 0.5;
 };
 
-const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
+interface ClaimSceneContentProps {
+  player: PlayerData | null;
+  orbitControlsSettings: any;
+  onLoadComplete?: () => void;
+}
+
+function ClaimSceneContent({
+  player,
+  orbitControlsSettings,
+  onLoadComplete,
+}: ClaimSceneContentProps) {
+  const { progress } = useProgress();
+
+  useEffect(() => {
+    if (progress === 100 && onLoadComplete) {
+      const timer = setTimeout(() => {
+        onLoadComplete();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onLoadComplete]);
+
+  return (
+    <>
+      <OrbitControls {...orbitControlsSettings} />
+      <Lights />
+
+      <Html fullscreen className="pointer-events-none p-1">
+        <div className="airstrike-normal mt-22 w-full text-center">
+          <img
+            src={getCategoyContainer(player?.player_category || "bronze")}
+            alt=""
+            className="absolute top-15 left-0 z-90 h-25 w-full"
+          />
+          <img
+            src="/claim/claim-container-gradient.webp"
+            alt=""
+            className="absolute top-15 left-0 z-20 h-24 w-full"
+          />
+          <GlitchText
+            text={player?.player_name || ""}
+            className="z-100 text-3xl"
+          />
+        </div>
+      </Html>
+
+      {player?.body_type === 0 && (
+        <ChangeableModel1
+          defaultAnimtion="Dance 2"
+          playerData={player}
+          scale={5}
+          position={[0, -210, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+      {player?.body_type === 1 && (
+        <ChangeableModel2
+          defaultAnimtion="Dancing_2"
+          playerData={player}
+          scale={5}
+          position={[0, -220, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+
+      {player?.body_type === 2 && (
+        <ChangeableModel3
+          defaultAnimtion="Bow_and_Arrow"
+          playerData={player}
+          scale={4.6}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+
+      <Preload all />
+    </>
+  );
+}
+
+interface ClaimSceneProps {
+  playerLinkId: number | string;
+  onLoadComplete?: () => void;
+}
+
+const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
   const [player, setPlayer] = useState<PlayerData | null>(null);
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -24,7 +114,7 @@ const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
   // Memoize camera settings
   const cameraSettings = useMemo(
     () => ({
-      position: [0, 0.5, 5] as [number, number, number],
+      position: [0, 0.5, 360] as [number, number, number],
       rotation: [0, Math.PI / 2, 0] as [number, number, number],
       fov: 75,
       near: 0.1,
@@ -88,7 +178,7 @@ const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
     };
 
     fetchData();
-  }, []);
+  }, [playerLinkId]);
 
   return (
     <Canvas
@@ -103,67 +193,11 @@ const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
     >
       {/* <Perf position="top-left" /> */}
       <Suspense fallback={null}>
-        <OrbitControls {...orbitControlsSettings} />
-        <Lights />
-
-        <Html fullscreen className="pointer-events-none p-1">
-          <div className="airstrike-normal mt-6 w-full text-center">
-            <img
-              src="/card/Asset-08.png"
-              alt=""
-              className="absolute top-0 left-0 z-0 h-full w-full object-cover"
-            />
-            <h1
-              className="card-name z-0 text-[42px]"
-              style={
-                {
-                  "--card-name-content": `"${player?.player_name}"`,
-                } as React.CSSProperties
-              }
-            >
-              {player?.player_name}
-            </h1>
-          </div>
-        </Html>
-
-        {player?.body_type === 0 && (
-          <ChangeableModel1
-            defaultAnimtion="Dance 2"
-            playerData={player}
-            scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {player?.body_type === 1 && (
-          <ChangeableModel2
-            defaultAnimtion="Dancing_2"
-            playerData={player}
-            scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-
-        {player?.body_type === 2 && (
-          <ChangeableModel3
-            defaultAnimtion="Bow_and_Arrow"
-            playerData={player}
-            scale={4.6}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {/* {player && (
-          <ChangeableModels
-            scale={player.body_type == 2 ? 6 : 5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-            playerData={player}
-            autoRandomize={false}
-          />
-        )} */}
-        <Preload all />
+        <ClaimSceneContent
+          player={player}
+          orbitControlsSettings={orbitControlsSettings}
+          onLoadComplete={onLoadComplete}
+        />
       </Suspense>
     </Canvas>
   );
