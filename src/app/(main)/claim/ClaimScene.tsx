@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Html, OrbitControls, Preload } from "@react-three/drei";
+import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
@@ -7,14 +7,90 @@ import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
 
-const getRandomizedRotation = (bodyType: number): number => {
-  if (bodyType === 0) {
-    return Math.random() < 0.5 ? 1.5 : 0.8;
-  }
-  return 0.5;
-};
 
-const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
+interface ClaimSceneContentProps {
+  player: PlayerData | null;
+  orbitControlsSettings: any;
+  onLoadComplete?: () => void;
+}
+
+function ClaimSceneContent({ player, orbitControlsSettings, onLoadComplete }: ClaimSceneContentProps) {
+  const { progress } = useProgress();
+
+  useEffect(() => {
+    if (progress === 100 && onLoadComplete) {
+      const timer = setTimeout(() => {
+        onLoadComplete();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onLoadComplete]);
+
+  return (
+    <>
+      <OrbitControls {...orbitControlsSettings} />
+      <Lights />
+
+      <Html fullscreen className="pointer-events-none p-1">
+        <div className="airstrike-normal mt-6 w-full text-center">
+          <img
+            src="/card/Asset-08.png"
+            alt=""
+            className="absolute top-0 left-0 z-0 h-full w-full object-cover"
+          />
+          <h1
+            className="card-name z-0 text-[42px]"
+            style={
+              {
+                "--card-name-content": `"${player?.player_name}"`,
+              } as React.CSSProperties
+            }
+          >
+            {player?.player_name}
+          </h1>
+        </div>
+      </Html>
+
+      {player?.body_type === 0 && (
+        <ChangeableModel1
+          defaultAnimtion="Dance 2"
+          playerData={player}
+          scale={5}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+      {player?.body_type === 1 && (
+        <ChangeableModel2
+          defaultAnimtion="Dancing_2"
+          playerData={player}
+          scale={5}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+
+      {player?.body_type === 2 && (
+        <ChangeableModel3
+          defaultAnimtion="Bow_and_Arrow"
+          playerData={player}
+          scale={4.6}
+          position={[0, -200, 0]}
+          rotation={[0, 0, 0]}
+        />
+      )}
+
+      <Preload all />
+    </>
+  );
+}
+
+interface ClaimSceneProps {
+  playerLinkId: number | string;
+  onLoadComplete?: () => void;
+}
+
+const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
   const [player, setPlayer] = useState<PlayerData | null>(null);
   const isMobile = useMemo(
     () => typeof window !== "undefined" && window.innerWidth < 768,
@@ -88,7 +164,7 @@ const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
     };
 
     fetchData();
-  }, []);
+  }, [playerLinkId]);
 
   return (
     <Canvas
@@ -103,67 +179,11 @@ const ClaimScene = ({ playerLinkId }: { playerLinkId: number | string }) => {
     >
       {/* <Perf position="top-left" /> */}
       <Suspense fallback={null}>
-        <OrbitControls {...orbitControlsSettings} />
-        <Lights />
-
-        <Html fullscreen className="pointer-events-none p-1">
-          <div className="airstrike-normal mt-6 w-full text-center">
-            <img
-              src="/card/Asset-08.png"
-              alt=""
-              className="absolute top-0 left-0 z-0 h-full w-full object-cover"
-            />
-            <h1
-              className="card-name z-0 text-[42px]"
-              style={
-                {
-                  "--card-name-content": `"${player?.player_name}"`,
-                } as React.CSSProperties
-              }
-            >
-              {player?.player_name}
-            </h1>
-          </div>
-        </Html>
-
-        {player?.body_type === 0 && (
-          <ChangeableModel1
-            defaultAnimtion="Dance 2"
-            playerData={player}
-            scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {player?.body_type === 1 && (
-          <ChangeableModel2
-            defaultAnimtion="Dancing_2"
-            playerData={player}
-            scale={5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-
-        {player?.body_type === 2 && (
-          <ChangeableModel3
-            defaultAnimtion="Bow_and_Arrow"
-            playerData={player}
-            scale={4.6}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-          />
-        )}
-        {/* {player && (
-          <ChangeableModels
-            scale={player.body_type == 2 ? 6 : 5}
-            position={[0, -200, 0]}
-            rotation={[0, getRandomizedRotation(player.body_type), 0]}
-            playerData={player}
-            autoRandomize={false}
-          />
-        )} */}
-        <Preload all />
+        <ClaimSceneContent 
+          player={player} 
+          orbitControlsSettings={orbitControlsSettings}
+          onLoadComplete={onLoadComplete}
+        />
       </Suspense>
     </Canvas>
   );

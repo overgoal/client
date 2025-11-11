@@ -30,7 +30,7 @@ export default function PreMatchTeam({
       >
         <div className="w-full h-full flex items-center justify-center max-w-[60px] max-h-[60px]">
           <img
-            src={"/teams/dojoUnited.png"}
+            src={"/teams/dojoUnited.webp"}
             alt="team"
             className="w-full h-full object-cover"
           />

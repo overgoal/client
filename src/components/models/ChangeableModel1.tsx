@@ -204,7 +204,7 @@ export default function ChangeableModel1({
               material={bodyMaterial}
               skeleton={bodyNode.skeleton}
             >
-              <Outlines thickness={3} color="black" angle={0} />
+              <Outlines thickness={1.5} color="black" angle={0} />
             </skinnedMesh>
 
             {/* Customizable Parts */}
@@ -217,7 +217,6 @@ export default function ChangeableModel1({
                   material={hairMaterial}
                   skeleton={eyebrowsNode.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
                 </skinnedMesh>
               )}
 
@@ -229,7 +228,7 @@ export default function ChangeableModel1({
                   material={hairMaterial}
                   skeleton={beardNode.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
+                  <Outlines thickness={1.5} color="black" angle={0} />
                 </skinnedMesh>
               )}
 
@@ -241,7 +240,7 @@ export default function ChangeableModel1({
                   material={hairMaterial}
                   skeleton={hair1Node.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
+                  <Outlines thickness={1.5} color="black" angle={0} />
                 </skinnedMesh>
               )}
 
@@ -253,7 +252,7 @@ export default function ChangeableModel1({
                   material={hairMaterial}
                   skeleton={hair2Node.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
+                  <Outlines thickness={1.5} color="black" angle={0} />
                 </skinnedMesh>
               )}
 
@@ -265,7 +264,7 @@ export default function ChangeableModel1({
                   material={accesoriesMaterial}
                   skeleton={visor1Node.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
+                  <Outlines thickness={1.5} color="black" angle={0} />
                 </skinnedMesh>
               )}
 
@@ -277,7 +276,7 @@ export default function ChangeableModel1({
                   material={accesoriesMaterial}
                   skeleton={visor2Node.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
+                  <Outlines thickness={1.5} color="black" angle={0} />
                 </skinnedMesh>
               )}
 
@@ -289,7 +288,7 @@ export default function ChangeableModel1({
                   material={accesoriesMaterial}
                   skeleton={visor3Node.skeleton}
                 >
-                  <Outlines thickness={3} color="black" angle={0} />
+                  <Outlines thickness={1.5} color="black" angle={0} />
                 </skinnedMesh>
               )}
             </group>

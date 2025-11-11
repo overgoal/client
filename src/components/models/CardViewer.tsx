@@ -5,10 +5,10 @@ import { mapCardBorderTexture } from "../../utils/mapTeamTexture";
 import { Html } from "@react-three/drei";
 
 const getPlayerTeam = (team: number | undefined) => {
-  if (team === 0) return "/teams/Cartridge City.png";
-  if (team === 1) return "/teams/dojoUnited.png";
-  if (team === 2) return "/teams/Nova United.png";
-  return "/teams/Drakon core.png";
+  if (team === 0) return "/teams/Cartridge City.webp";
+  if (team === 1) return "/teams/dojoUnited.webp";
+  if (team === 2) return "/teams/Nova United.webp";
+  return "/teams/Drakon core.webp";
 };
 
 const getCategoryImage = (category: string): string => {

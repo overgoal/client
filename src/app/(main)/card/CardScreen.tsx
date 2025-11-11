@@ -17,7 +17,7 @@ export default function CardScreen({ playerLinkId }: { playerLinkId: number | st
     >
       {/* Background Image Layer */}
       <img
-        src={"/backgrounds/bg-card.png"}
+        src={"/backgrounds/bg-card.webp"}
         alt="background"
         className="absolute inset-0 z-0 h-full w-full object-cover"
         width={1000}
