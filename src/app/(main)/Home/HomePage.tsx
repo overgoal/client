@@ -28,7 +28,7 @@ export default function HomePage() {
 
   // Track when all assets are loaded
   useEffect(() => {
-    if (assetsLoaded.background && assetsLoaded.scene) {
+    if ( assetsLoaded.scene) {
       setLoadingProgress(100);
       // Add a small delay before hiding the loader for smooth transition
       const timer = setTimeout(() => {
@@ -42,9 +42,9 @@ export default function HomePage() {
     }
   }, [assetsLoaded]);
 
-  const handleBackgroundLoad = () => {
-    setAssetsLoaded(prev => ({ ...prev, background: true }));
-  };
+  // const handleBackgroundLoad = () => {
+  //   setAssetsLoaded(prev => ({ ...prev, background: true }));
+  // };
 
   const handleSceneLoadComplete = () => {
     setAssetsLoaded(prev => ({ ...prev, scene: true }));
@@ -70,14 +70,14 @@ export default function HomePage() {
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
 
       {/* Background Image Layer */}
-      <img
+      {/* <img
         src={background}
         alt="background"
         className="absolute inset-0 w-full h-full object-cover z-0"
         width={1000}
         height={1000}
         onLoad={handleBackgroundLoad}
-      />
+      /> */}
 
       {/* 3D Scene Layer - positioned behind UI */}
       <div className="absolute inset-0 z-20 pointer-events-auto">

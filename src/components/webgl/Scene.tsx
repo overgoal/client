@@ -1,12 +1,17 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Preload, useProgress } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import {
+  OrbitControls,
+  Preload,
+  useProgress,
+  useTexture,
+} from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
 import { PlayerData } from "../models/ChangeableModels";
 import ChangeableModel1 from "../models/ChangeableModel1";
 import ChangeableModel2 from "../models/ChangeableModel2";
 import ChangeableModel3 from "../models/ChangeableModel3";
-
+import BackgroundPlane from "./background";
 
 interface SceneContentProps {
   player: PlayerData | null;
@@ -14,7 +19,11 @@ interface SceneContentProps {
   onLoadComplete?: () => void;
 }
 
-function SceneContent({ player, orbitControlsSettings, onLoadComplete }: SceneContentProps) {
+function SceneContent({
+  player,
+  orbitControlsSettings,
+  onLoadComplete,
+}: SceneContentProps) {
   const { progress } = useProgress();
 
   useEffect(() => {
@@ -31,6 +40,8 @@ function SceneContent({ player, orbitControlsSettings, onLoadComplete }: SceneCo
     <>
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
+      <BackgroundPlane />
+      
 
       {player && player.body_type === 0 && (
         <ChangeableModel1
