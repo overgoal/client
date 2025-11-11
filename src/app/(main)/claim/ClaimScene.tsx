@@ -1,12 +1,12 @@
-import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
 import { GlitchText } from "../../../components/ui/glitch-text";
+import { Canvas } from "@react-three/fiber";
 
 const getCategoyContainer = (category: string) => {
   switch (category) {

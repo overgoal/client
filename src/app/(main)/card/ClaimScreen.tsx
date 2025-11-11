@@ -4,7 +4,6 @@ import ClaimScene from "../claim/ClaimScene";
 import LoginButton from "../../../components/common/LoginButton";
 import LoadingScreen from "../../../components/loader/LoadingScreen";
 
-
 const ClaimScreen = () => {
   const { id } = useParams();
 
@@ -40,6 +39,9 @@ const ClaimScreen = () => {
 
   return (
     <div className="relative h-dvh w-full overflow-hidden">
+      {/* Loading Screen Overlay */}
+      <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
+
       {/* Loading Screen Overlay */}
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
 
