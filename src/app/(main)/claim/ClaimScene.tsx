@@ -1,12 +1,23 @@
-import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
+import { GlitchText } from "../../../components/ui/glitch-text";
+import { Canvas } from "@react-three/fiber";
 
+const getCategoyContainer = (category: string) => {
+  switch (category) {
+    case "bronze":
+      return "/claim/claim-container-gold.webp";
+    case "gold":
+      return "/claim/claim-container-gold.webp";
+    case "platinum":
+      return "/claim/claim-container-platinum.webp";
+  }
+};
 
 interface ClaimSceneContentProps {
   player: PlayerData | null;
@@ -14,7 +25,11 @@ interface ClaimSceneContentProps {
   onLoadComplete?: () => void;
 }
 
-function ClaimSceneContent({ player, orbitControlsSettings, onLoadComplete }: ClaimSceneContentProps) {
+function ClaimSceneContent({
+  player,
+  orbitControlsSettings,
+  onLoadComplete,
+}: ClaimSceneContentProps) {
   const { progress } = useProgress();
 
   useEffect(() => {
@@ -32,22 +47,21 @@ function ClaimSceneContent({ player, orbitControlsSettings, onLoadComplete }: Cl
       <Lights />
 
       <Html fullscreen className="pointer-events-none p-1">
-        <div className="airstrike-normal mt-6 w-full text-center">
+        <div className="airstrike-normal mt-22 w-full text-center">
           <img
-            src="/card/Asset-08.png"
+            src={getCategoyContainer(player?.player_category || "bronze")}
             alt=""
-            className="absolute top-0 left-0 z-0 h-full w-full object-cover"
+            className="absolute top-15 left-0 z-90 h-25 w-full"
           />
-          <h1
-            className="card-name z-0 text-[42px]"
-            style={
-              {
-                "--card-name-content": `"${player?.player_name}"`,
-              } as React.CSSProperties
-            }
-          >
-            {player?.player_name}
-          </h1>
+          <img
+            src="/claim/claim-container-gradient.webp"
+            alt=""
+            className="absolute top-15 left-0 z-20 h-24 w-full"
+          />
+          <GlitchText
+            text={player?.player_name || ""}
+            className="z-100 text-3xl"
+          />
         </div>
       </Html>
 
@@ -56,7 +70,7 @@ function ClaimSceneContent({ player, orbitControlsSettings, onLoadComplete }: Cl
           defaultAnimtion="Dance 2"
           playerData={player}
           scale={5}
-          position={[0, -200, 0]}
+          position={[0, -210, 0]}
           rotation={[0, 0, 0]}
         />
       )}
@@ -65,7 +79,7 @@ function ClaimSceneContent({ player, orbitControlsSettings, onLoadComplete }: Cl
           defaultAnimtion="Dancing_2"
           playerData={player}
           scale={5}
-          position={[0, -200, 0]}
+          position={[0, -220, 0]}
           rotation={[0, 0, 0]}
         />
       )}
@@ -100,7 +114,7 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
   // Memoize camera settings
   const cameraSettings = useMemo(
     () => ({
-      position: [0, 0.5, 5] as [number, number, number],
+      position: [0, 0.5, 360] as [number, number, number],
       rotation: [0, Math.PI / 2, 0] as [number, number, number],
       fov: 75,
       near: 0.1,
@@ -179,8 +193,8 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     >
       {/* <Perf position="top-left" /> */}
       <Suspense fallback={null}>
-        <ClaimSceneContent 
-          player={player} 
+        <ClaimSceneContent
+          player={player}
           orbitControlsSettings={orbitControlsSettings}
           onLoadComplete={onLoadComplete}
         />
