@@ -17,6 +17,7 @@ import SeasonClubScreen from "./(main)/Season-Club/SeasonClubScreen";
 import TournamentsScreen from "./(main)/Tournaments/TournamentsScreen";
 import TournamentScreen from "./(main)/Tournament/TournamentScreen";
 import ProfileScreen from "./(main)/Profile/ProfileScreen";
+import SettingsScreen from "./(main)/settings/settingScreent";
 
 // Import all routes
 import {
@@ -36,6 +37,7 @@ import {
   preMatchNonMatch,
   login,
   claim,
+  settings,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 import ClaimScreen from "./(main)/card/ClaimScreen";
@@ -64,6 +66,7 @@ function App() {
         <Route path={profile} element={<ProfileScreen />} />
         {/* <Route path={"/card"} element={<ClaimScreen />} /> */}
         <Route path={claim} element={<ClaimScreen />} />
+        <Route path={settings} element={<SettingsScreen />} />
       </Routes>
     </BrowserRouter>
   );

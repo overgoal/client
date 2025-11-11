@@ -1,73 +1,73 @@
 export const iconMap = {
   // Player Icons
-  male01: '/icons/Male01.png',
-  female: '/icons/Female.png',
-  female01: '/icons/Female01.png',
+  male01: '/icons/Male01.webp',
+  female: '/icons/Female.webp',
+  female01: '/icons/Female01.webp',
 
   // Actions
-  accept: '/icons/Accept.png',
-  reject: '/icons/Reject.png',
-  edit: '/icons/Edit.png',
-  info: '/icons/Info.png',
-  blocked: '/icons/Blocked.png',
-  new: '/icons/New.png',
+  accept: '/icons/Accept.webp',
+  reject: '/icons/Reject.webp',
+  edit: '/icons/Edit.webp',
+  info: '/icons/Info.webp',
+  blocked: '/icons/Blocked.webp',
+  new: '/icons/New.webp',
 
   // Game Elements
-  ball: '/icons/Ball.png',
-  defense: '/icons/Defense.png',
-  balanced: '/icons/Balanced.png',
+  ball: '/icons/Ball.webp',
+  defense: '/icons/Defense.webp',
+  balanced: '/icons/Balanced.webp',
 
   // Career & Management
-  career: '/icons/Career.png',
-  contract: '/icons/Contract.png',
-  transfer: '/icons/Transfer.png',
-  retire: '/icons/Retire.png',
-  players: '/icons/Players.png',
+  career: '/icons/Career.webp',
+  contract: '/icons/Contract.webp',
+  transfer: '/icons/Transfer.webp',
+  retire: '/icons/Retire.webp',
+  players: '/icons/Players.webp',
 
   // Coaches
-  coach01: '/icons/Coach01.png',
-  coach02: '/icons/Coach02.png',
-  coach03: '/icons/Coach03.png',
+  coach01: '/icons/Coach01.webp',
+  coach02: '/icons/Coach02.webp',
+  coach03: '/icons/Coach03.webp',
 
   // Training & Skills
-  trainSkills: '/icons/Train-skills.png',
-  rest: '/icons/Rest.png',
-  teamwork: '/icons/Teamwork.png',
-  personalLife: '/icons/Personal-life.png',
+  trainSkills: '/icons/Train-skills.webp',
+  rest: '/icons/Rest.webp',
+  teamwork: '/icons/Teamwork.webp',
+  personalLife: '/icons/Personal-life.webp',
 
   // Currency & Rewards
-  coins: '/icons/Coins.png',
-  currency01: '/icons/Currency01.png',
-  currency02: '/icons/Currency02.png',
-  currentPrize: '/icons/Current-prize.png',
+  coins: '/icons/Coins.webp',
+  currency01: '/icons/Currency01.webp',
+  currency02: '/icons/Currency02.webp',
+  currentPrize: '/icons/Current-prize.webp',
 
   // Fame & Fans
-  fame: '/icons/Fame.png',
-  fansFame: '/icons/Fans-fame.png',
+  fame: '/icons/Fame.webp',
+  fansFame: '/icons/Fans-fame.webp',
 
   // Trophies
-  trophy03: '/icons/Trophy03.png',
-  trophy04: '/icons/Trophy04.png',
-  trophy05: '/icons/Trophy05.png',
+  trophy03: '/icons/Trophy03.webp',
+  trophy04: '/icons/Trophy04.webp',
+  trophy05: '/icons/Trophy05.webp',
 
   // Items
-  item03: '/icons/Item03.png',
-  item04: '/icons/Item04.png',
+  item03: '/icons/Item03.webp',
+  item04: '/icons/Item04.webp',
 
   // Levels/Difficulty
-  low: '/icons/Low.png',
-  medium: '/icons/Medium.png',
+  low: '/icons/Low.webp',
+  medium: '/icons/Medium.webp',
 
   // Misc
-  calendar: '/icons/Calendar.png',
+  calendar: '/icons/Calendar.webp',
   background: '/icons/background.webp',
 
-  market: '/icons/Market.png',
-  inventory: '/icons/Inventory.png',
-  LifeStyle: '/icons/Lifestyle.png',
-  Calendar: '/icons/Calendar.png',
-  Tournament: '/icons/Tournament.png',
-  Career: '/icons/Career.png',
+  market: '/icons/Market.webp',
+  inventory: '/icons/Inventory.webp',
+  LifeStyle: '/icons/Lifestyle.webp',
+  Calendar: '/icons/Calendar.webp',
+  Tournament: '/icons/Tournament.webp',
+  Career: '/icons/Career.webp',
 } as const
 
 export type IconKey = keyof typeof iconMap
