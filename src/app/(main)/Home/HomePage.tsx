@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { usePlayer } from "../../../dojo/hooks/usePlayer";
 // import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
 // import useAppStore from "../../../zustand/store";
-import background from "/homepage/background.png";
 import HomeMenu from "./components/menu";
 import Scene from "../../../components/webgl/Scene";
 import LoadingScreen from "../../../components/loader/LoadingScreen";
