@@ -7,22 +7,23 @@ import PreMatchTeam from "./components/pre-match-team";
 import SemiSquareContainer from "../Home/components/semi-square/semi-square-container";
 import CyberContainer from "../Home/components/cyber-container";
 import { GlitchText } from "../../../components/ui/glitch-text";
+import { StaminaBar } from "../../../components/ui/stamina-bar";
 
 export default function PreMatchScreen() {
   return (
-    <div className="w-full min-h-dvh h-full  p-4 bg-overgoal-dark-blue">
+    <div className="bg-overgoal-dark-blue h-full min-h-dvh w-full p-4">
       <img
         src={preMatchBackground}
         alt="pre-match-background"
-        className="absolute inset-0 w-full min-h-dvh h-screen object-cover z-0"
+        className="absolute inset-0 z-0 h-screen min-h-dvh w-full object-cover"
       />
-      <div className="w-full flex flex-col items-center justify-between z-100! relative">
-        <BackButton className="w-12 h-12 mr-auto" to="/" />
+      <div className="relative z-100! flex w-full flex-col items-center justify-between">
+        <BackButton className="mr-auto h-12 w-12" to="/" />
 
-        <div className="w-full py-8 flex flex-col items-center justify-center gap-4 z-100! h-full">
+        <div className="z-100! flex h-full w-full flex-col items-center justify-center gap-4 py-8">
           <GlitchText className="text-2xl" text="Get ready to play" />
 
-          <div className="flex flex-row w-full items-center h-full gap-1  justify-center relative ">
+          <div className="relative flex h-full w-full flex-row items-center justify-center gap-1">
             <PreMatchTeam
               teamName="Dojo United"
               teamImage="https://via.placeholder.com/150"
@@ -30,7 +31,7 @@ export default function PreMatchScreen() {
               isMyTeam={true}
             />
 
-            <span className="uppercase text-white text-2xl font-bold  font-orbitron">
+            <span className="font-orbitron text-2xl font-bold text-white uppercase">
               vs
             </span>
 
@@ -42,25 +43,23 @@ export default function PreMatchScreen() {
             />
           </div>
 
-          <div className="w-full flex flex-row items-center justify-between gap-4  text-center text-white p-4 border-1 bg-[#002601] border-overgoal-positive">
-            <div className=" relative   ">
-              <div className="absolute w-32 h-32 top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/2">
-                <img
-                  src="/logo.png"
-                  alt="stamina"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="w-full h-10  flex items-center justify-end">
-              <CyberContainer className="!w-1/2 !h-[65%]"> </CyberContainer>
+          <div className="border-overgoal-positive flex w-full flex-row items-center justify-between gap-4 border-1 bg-[#002601] p-2 text-center text-white">
+            <img
+              src="/logo.png"
+              alt="stamina"
+              className="h-16 w-16 object-cover"
+            />
+            <div className="flex h-10 w-full items-center justify-end">
+              <CyberContainer className="!h-[65%] !w-full">
+                <StaminaBar value={10} className="h-full w-full" />
+              </CyberContainer>
             </div>
             <div className="flex flex-row gap-2">
               <SemiSquareContainer
                 bgColor="#002601"
                 noShadow={true}
                 borderColor="var(--color-overgoal-positive)"
-                className="w-10 h-10"
+                className="h-10 w-10"
               >
                 <div className="hidden">a</div>
               </SemiSquareContainer>
@@ -68,7 +67,7 @@ export default function PreMatchScreen() {
                 bgColor="#002601"
                 borderColor="var(--color-overgoal-positive)"
                 noShadow={true}
-                className="w-10 h-10"
+                className="h-10 w-10"
               >
                 <div className="hidden">a</div>
               </SemiSquareContainer>
@@ -76,7 +75,7 @@ export default function PreMatchScreen() {
                 bgColor="#002601"
                 borderColor="var(--color-overgoal-positive)"
                 noShadow={true}
-                className="w-10 h-10"
+                className="h-10 w-10"
               >
                 <div className="hidden">a</div>
               </SemiSquareContainer>
@@ -85,14 +84,14 @@ export default function PreMatchScreen() {
 
           <div
             className={cn(
-              "max-w-[236px] max-h-[73px] w-full h-full z-100  mt-3",
+              "z-100 mt-3 h-full max-h-[73px] w-full max-w-[236px]",
               "flex items-center justify-center",
-              "bg-[url('/homepage/play_button.svg')] bg-no-repeat bg-contain bg-center",
+              "bg-[url('/homepage/play_button.svg')] bg-contain bg-center bg-no-repeat",
             )}
           >
             <Link to="/pre-match/1">
-              <Button className="w-full h-full " asChild={true}>
-                <p className="text-white !text-5xl  uppercase airstrike-normal">
+              <Button className="h-full w-full" asChild={true}>
+                <p className="airstrike-normal !text-5xl text-white uppercase">
                   Play
                 </p>
               </Button>
