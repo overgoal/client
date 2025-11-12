@@ -36,7 +36,7 @@ export default function RivalMarquee() {
         ease: "none",
         repeat: -1,
         modifiers: {
-          x: (x) => {
+          x: (x: string) => {
             const n = -parseFloat(x);
             return (n % width) + "px";
           },
@@ -47,10 +47,10 @@ export default function RivalMarquee() {
 
   const MarqueeItem = () => (
     <div className="marquee-item linear-gradient-to-b flex shrink-0 items-center gap-2 from-transparent to-black px-4 py-2">
-      <div className="flex h-6 w-6 items-center justify-center rounded-full">
+      <div className="flex h-4 w-4 items-center justify-center rounded-full">
         <img src="/homepage/dev.webp" alt="dev-connect" />
       </div>
-      <span className="font-orbitron text-lg font-medium whitespace-nowrap text-white md:text-xl">
+      <span className="font-orbitron text-base font-medium whitespace-nowrap text-white md:text-xl">
         Dev Connect
       </span>
     </div>

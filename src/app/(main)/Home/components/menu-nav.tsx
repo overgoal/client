@@ -41,7 +41,7 @@ export default function MenuNav() {
             </div>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full bg-[url('/homepage/marquee-container.png')] bg-contain bg-center">
           <RivalMarquee />
         </div>
         {/* <LifestylesButton icon="LifeStyle" title="Lifestyle" href="/lifestyle" /> */}
