@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cartridge Session Debug</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #00ff00; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #00ff00; }
+        button { padding: 10px 20px; background: #00ff00; color: #000; border: none; cursor: pointer; margin: 5px; }
+        button:hover { background: #00cc00; }
+        pre { background: #000; padding: 10px; overflow-x: auto; }
+        .error { color: #ff0000; }
+        .success { color: #00ff00; }
+        .warning { color: #ffff00; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Cartridge Session Debugger</h1>
+    
+    <div class="section">
+        <h2>Current Configuration:</h2>
+        <pre id="config"></pre>
+    </div>
+
+    <div class="section">
+        <h2>Test Steps:</h2>
+        <button onclick="step1()">1. Load Manifest</button>
+        <button onclick="step2()">2. Check Contract Address</button>
+        <button onclick="step3()">3. Test RPC Connection</button>
+        <button onclick="step4()">4. Show Domain Info</button>
+        <div id="output" style="margin-top: 20px;"></div>
+    </div>
+
+    <script type="module">
+        import { manifest } from './src/config/manifest.ts';
+        
+        window.manifestData = manifest;
+        
+        // Display config
+        document.getElementById('config').textContent = JSON.stringify({
+            deployType: import.meta.env.VITE_PUBLIC_DEPLOY_TYPE,
+            rpcUrl: import.meta.env.VITE_PUBLIC_NODE_URL,
+            toriiUrl: import.meta.env.VITE_PUBLIC_TORII,
+        }, null, 2);
+
+        window.step1 = () => {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>Manifest Data:</h3>';
+            output.innerHTML += `<pre>${JSON.stringify({
+                worldAddress: manifest.world.address,
+                worldName: manifest.world.name,
+                worldSeed: manifest.world.seed,
+                gameContract: manifest.contracts.find(c => c.tag.includes('game'))?.address,
+                totalContracts: manifest.contracts.length
+            }, null, 2)}</pre>`;
+        };
+
+        window.step2 = () => {
+            const output = document.getElementById('output');
+            const gameContract = manifest.contracts.find(c => c.tag.includes('game'));
+            output.innerHTML = '<h3>Game Contract:</h3>';
+            output.innerHTML += `<pre>${JSON.stringify(gameContract, null, 2)}</pre>`;
+            
+            // Check if address is valid
+            if (gameContract && gameContract.address && gameContract.address.startsWith('0x')) {
+                output.innerHTML += '<div class="success">✅ Contract address looks valid</div>';
+            } else {
+                output.innerHTML += '<div class="error">❌ Contract address invalid!</div>';
+            }
+        };
+
+        window.step3 = async () => {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>Testing RPC Connection:</h3>';
+            
+            const rpcUrl = import.meta.env.VITE_PUBLIC_NODE_URL || 'http://127.0.0.1:5050';
+            
+            try {
+                output.innerHTML += '<div>Connecting to: ' + rpcUrl + '</div>';
+                const response = await fetch(rpcUrl);
+                const data = await response.json();
+                output.innerHTML += '<div class="success">✅ Katana is responding</div>';
+                output.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                output.innerHTML += '<div class="error">❌ Katana connection failed: ' + error.message + '</div>';
+            }
+        };
+
+        window.step4 = () => {
+            const output = document.getElementById('output');
+            output.innerHTML = '<h3>Domain Configuration:</h3>';
+            
+            const deployType = import.meta.env.VITE_PUBLIC_DEPLOY_TYPE;
+            const chainId = deployType === 'localhost' ? 'KATANA' : deployType === 'sepolia' ? 'SN_SEPOLIA' : 'SN_MAIN';
+            
+            output.innerHTML += `<pre>${JSON.stringify({
+                domainName: manifest.world.name,
+                chainId: chainId,
+                namespace: 'universe',
+                worldAddress: manifest.world.address,
+                seed: manifest.world.seed,
+            }, null, 2)}</pre>`;
+            
+            output.innerHTML += '<div class="warning">⚠️  These values MUST match what Cartridge expects!</div>';
+            output.innerHTML += '<div>Expected by Cartridge:</div>';
+            output.innerHTML += '<ul>';
+            output.innerHTML += `<li>World at ${manifest.world.address} must exist on Katana</li>`;
+            output.innerHTML += `<li>ChainId must be ${chainId}</li>`;
+            output.innerHTML += `<li>Contract ${manifest.contracts.find(c => c.tag.includes('game'))?.address} must be deployed</li>`;
+            output.innerHTML += '</ul>';
+        };
+    </script>
+</body>
+</html>
+
+

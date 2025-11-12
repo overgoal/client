@@ -11,7 +11,7 @@ console.log("VITE_PUBLIC_DEPLOY_TYPE", VITE_PUBLIC_DEPLOY_TYPE);
 const getRpcUrl = () => {
   switch (VITE_PUBLIC_DEPLOY_TYPE) {
     case "localhost":
-      return "http://localhost:5050"; // Katana localhost default port
+      return "http://127.0.0.1:5050"; // Katana localhost default port
     case "mainnet":
       return "https://api.cartridge.gg/x/starknet/mainnet";
     case "sepolia":
@@ -49,17 +49,25 @@ const policies = {
         { name: "add_currency", entrypoint: "add_currency" },
         { name: "spend_currency", entrypoint: "spend_currency" },
         { name: "record_login", entrypoint: "record_login" },
+        { name: "create_or_get_user", entrypoint: "create_or_get_user" },
       ],
     },
   },
 };
 
+// Cartridge Controller configuration
+// For localhost: NO namespace/slot (direct connection to Katana)
+// For Sepolia/Mainnet: namespace/slot required for Cartridge hosted service
 const options: ControllerOptions = {
   chains: [{ rpcUrl: getRpcUrl() }],
   defaultChainId: getDefaultChainId(),
   policies,
-  namespace: "full_starter_react",
-  slot: "full-starter-react",
+  // Only use namespace/slot for hosted deployments (Sepolia/Mainnet)
+  // Localhost connects directly to Katana without Cartridge proxy
+  ...(VITE_PUBLIC_DEPLOY_TYPE !== "localhost" && {
+    namespace: "universe",
+    slot: "universe",
+  }),
 };
 
 const cartridgeConnector = new ControllerConnector(

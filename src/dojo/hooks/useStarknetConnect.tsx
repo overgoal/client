@@ -40,13 +40,7 @@ export function useStarknetConnect() {
     }
   }, [disconnect]);
 
-  console.log("🎮 Starknet Connect Status:", {
-    status,
-    address: address ? `${address.slice(0, 6)}...${address.slice(-4)}` : null,
-    isConnecting,
-    hasTriedConnect,
-    availableConnectors: connectors.length,
-  });
+  // Removed excessive logging - check UI debug panel instead
 
   return {
     status,

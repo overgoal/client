@@ -18,7 +18,7 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_createPlayer_calldata(player_id),
-        "full_starter_react",
+        "universe",
       );
     } catch (error) {
       console.error(error);
@@ -68,7 +68,7 @@ export function setupWorld(provider: DojoProvider) {
           intelligence,
           leadership,
         ),
-        "full_starter_react",
+        "universe",
       );
     } catch (error) {
       console.error(error);
@@ -96,7 +96,7 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_addCurrency_calldata(player_id, amount),
-        "full_starter_react",
+        "universe",
       );
     } catch (error) {
       console.error(error);
@@ -124,7 +124,7 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_spendCurrency_calldata(player_id, amount),
-        "full_starter_react",
+        "universe",
       );
     } catch (error) {
       console.error(error);
@@ -148,7 +148,35 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_recordLogin_calldata(player_id),
-        "full_starter_react",
+        "universe",
+      );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const build_game_createOrGetUser_calldata = (
+    user_address: string,
+    username: string
+  ): DojoCall => {
+    return {
+      contractName: "game",
+      entrypoint: "create_or_get_user",
+      calldata: [user_address, username],
+    };
+  };
+
+  const game_createOrGetUser = async (
+    snAccount: Account | AccountInterface,
+    user_address: string,
+    username: string
+  ) => {
+    try {
+      return await provider.execute(
+        snAccount as any,
+        build_game_createOrGetUser_calldata(user_address, username),
+        "universe",
       );
     } catch (error) {
       console.error(error);
@@ -168,6 +196,8 @@ export function setupWorld(provider: DojoProvider) {
       buildSpendCurrencyCalldata: build_game_spendCurrency_calldata,
       recordLogin: game_recordLogin,
       buildRecordLoginCalldata: build_game_recordLogin_calldata,
+      createOrGetUser: game_createOrGetUser,
+      buildCreateOrGetUserCalldata: build_game_createOrGetUser_calldata,
     },
   };
 }
