@@ -7,6 +7,7 @@ import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { Canvas } from "@react-three/fiber";
+import { cn } from "../../../utils/utils";
 
 const getCategoyContainer = (category: string) => {
   switch (category) {
@@ -16,6 +17,19 @@ const getCategoyContainer = (category: string) => {
       return "/claim/claim-container-gold.webp";
     case "platinum":
       return "/claim/claim-container-platinum.webp";
+  }
+};
+
+const getPlayerTeamImage = (team: number) => {
+  switch (team) {
+    case 0:
+      return "/teams/Cartridge City.webp";
+    case 1:
+      return "/teams/dojoUnited.webp";
+    case 2:
+      return "/teams/Nova United.webp";
+    case 3:
+      return "/teams/Drakon core.webp";
   }
 };
 
@@ -47,20 +61,28 @@ function ClaimSceneContent({
       <Lights />
 
       <Html fullscreen className="pointer-events-none p-1">
-        <div className="airstrike-normal mt-22 w-full text-center">
+        <div className="airstrike-normal mt-18 w-full text-center">
           <img
             src={getCategoyContainer(player?.player_category || "bronze")}
             alt=""
-            className="absolute top-15 left-0 z-90 h-25 w-full"
+            className="absolute top-10 left-0 z-90 h-25 w-full"
           />
           <img
             src="/claim/claim-container-gradient.webp"
             alt=""
-            className="absolute top-15 left-0 z-20 h-24 w-full"
+            className="absolute top-10 left-0 z-20 h-24 w-full"
           />
           <GlitchText
             text={player?.player_name || ""}
             className="z-100 text-3xl"
+          />
+          <img
+            src={getPlayerTeamImage(player?.team_id || 0)}
+            alt=""
+            className={cn(
+              "absolute top-30  left-1/2 -translate-x-1/2 z-100 h-20 w-20",
+              player?.team_id === 3 || player?.team_id === 1 ? "h-18 w-16" : "",
+            )}
           />
         </div>
       </Html>

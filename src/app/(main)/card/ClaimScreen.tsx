@@ -42,9 +42,6 @@ const ClaimScreen = () => {
       {/* Loading Screen Overlay */}
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
 
-      {/* Loading Screen Overlay */}
-      <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
-
       <img
         src="/claim/claims-bg.webp"
         alt="background"
@@ -52,8 +49,8 @@ const ClaimScreen = () => {
         onLoad={handleBackgroundLoad}
       />
       <div className="absolute inset-0 top-[90%] left-1/2 z-90 flex h-1/4 w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-        <div className="h-24 w-full bg-[url('/common/button-container.webp')] bg-contain bg-no-repeat bg-center flex items-center justify-center">
-          <LoginButton className="airstrike-normal flex  font-bold text-white hover:scale-105 hover:bg-transparent">
+        <div className="flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat">
+          <LoginButton className="airstrike-normal flex font-bold text-white hover:scale-105 hover:bg-transparent">
             <span className="airstrike-normal text-5xl">Claim</span>
           </LoginButton>
         </div>

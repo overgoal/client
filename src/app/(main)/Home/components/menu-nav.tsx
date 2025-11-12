@@ -10,12 +10,14 @@ export default function MenuNav() {
     <div className="mt-2 flex h-full max-h-1/4 w-full flex-col items-start justify-start">
       <div className="flex w-full flex-col gap-4 p-2">
         <div className="flex w-full flex-row items-center justify-start gap-2 p-2">
-          <div className="h-full max-h-[75px] w-full max-w-[75px]">
-            <img
-              src="/homepage/profile_container.svg"
-              alt="profile_container"
-              className="h-full w-full object-contain"
-            />
+          <div className="h-[75px] w-[75px] flex-shrink-0">
+            <div className="relative h-full w-full bg-[url('/homepage/profile_container.svg')] bg-contain bg-center bg-no-repeat">
+              <img
+                src="/logo.png"
+                alt="profile_container"
+                className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 object-contain"
+              />
+            </div>
           </div>
 
           <div className="flex h-full w-full items-center justify-between gap-3">
