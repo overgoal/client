@@ -23,7 +23,7 @@ void main() {
   vec2 uv = vUv;
   
   // Inputs
-  float AMT = uGlitchIntensity * 0.01; // 0 - 1 glitch amount
+  float AMT = uGlitchIntensity * 0.04; // 0 - 1 glitch amount
   float SPEED = 0.5; // 0 - 1 spee
   
   float time = floor(uTime * SPEED * 60.0);

@@ -25,5 +25,7 @@ export const match = "/match/:matchId";
 export const matchResult = "/match-result/:matchId";
 
 //Card
-
 export const claim = "/claim/:id";
+
+//Settings
+export const settings = "/settings";

@@ -31,7 +31,7 @@ const BackButton = React.forwardRef<HTMLButtonElement, BackButtonProps>(
     return (
       <Comp
         className={cn(
-          "bg-[url('/homepage/button_settings.svg')] bg-contain bg-center w-1/5 h-1/2 bg-no-repeat flex items-center justify-center",
+          "bg-[url('/homepage/button_settings.svg')] bg-contain bg-center w-1/5 bg-no-repeat flex items-center justify-center",
           className,
         )}
         ref={ref}
