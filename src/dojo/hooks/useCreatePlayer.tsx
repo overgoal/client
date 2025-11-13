@@ -7,6 +7,8 @@ import { useStarknetConnect } from "./useStarknetConnect";
 import { usePlayer } from "./usePlayer";
 import useAppStore from "../../zustand/store";
 import { cairoShortStringToFelt } from "@dojoengine/torii-wasm";
+import { lookupAddresses } from '@cartridge/controller';
+
 
 // Types
 interface InitializeState {
@@ -54,7 +56,7 @@ export const useCreatePlayer = () => {
    * Checks if the player exists and initializes as needed
    */
   const initializePlayer =
-    useCallback(async (playerId: string): Promise<InitializeResponse> => {
+    useCallback(async (): Promise<InitializeResponse> => {
       // Prevent multiple executions
       if (isInitializing) {
         return {
@@ -157,14 +159,14 @@ export const useCreatePlayer = () => {
 
           console.log("🔄 Account:", account);
           console.log("🔄 Account address:", account.address);
-          const username = cairoShortStringToFelt(playerId); // Converts to felt252
-
+          const username = await lookupAddresses([account.address]);
+            
           console.log("🔄 Username:", username);
 
           const spawnTx = await client.game.createOrGetUser(
             account as Account,
             account.address,
-            username,
+            cairoShortStringToFelt(username.get(account.address) || ""),
           );
 
           console.log("📥 Spawn transaction response:", spawnTx);

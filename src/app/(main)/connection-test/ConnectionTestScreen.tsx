@@ -84,7 +84,7 @@ export default function ConnectionTestScreen() {
         </div>
 
         <div>
-          <Button onClick={() => initializePlayer("player1")}>
+          <Button onClick={() => initializePlayer()}>
             {" "}
             Create Player
           </Button>

@@ -1,15 +1,13 @@
 import { Button } from "../ui/button";
 import { useStarknetConnect } from "../../dojo/hooks/useStarknetConnect";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useCreatePlayer } from "../../dojo/hooks/useCreatePlayer";
 import { useAccount } from "@starknet-react/core";
-import { useNavigate } from "react-router";
 
 interface LoginButtonProps {
   className?: string;
   onLoginSuccess?: () => void;
   onLoginError?: (error: Error) => void;
-  playerId: string;
   autoInitializePlayer?: boolean;
   variant?: "default" | "outline" | "ghost";
   size?: "default" | "sm" | "lg" | "icon";
@@ -20,21 +18,17 @@ function LoginButton({
   className = "",
   onLoginSuccess,
   onLoginError,
-  playerId,
   autoInitializePlayer = true,
   variant = "default",
   size = "default",
   children,
 }: LoginButtonProps) {
-  const  navigate  = useNavigate();
-  const { status, isConnecting, handleConnect } =
-    useStarknetConnect();
+  const { status, isConnecting, handleConnect } = useStarknetConnect();
   const { account } = useAccount();
   const { initializePlayer, isInitializing, txStatus } = useCreatePlayer();
 
   // Use ref to track initialization attempt to prevent infinite loops
   const hasAttemptedInit = useRef(false);
-  const currentPlayerId = useRef(playerId);
 
   const isConnected = status === "connected";
   const hasAccount = !!account;
@@ -42,11 +36,10 @@ function LoginButton({
 
   // Reset initialization flag when playerId changes or connection is lost
   useEffect(() => {
-    if (currentPlayerId.current !== playerId || !isConnected) {
+    if (!isConnected) {
       hasAttemptedInit.current = false;
-      currentPlayerId.current = playerId;
     }
-  }, [playerId, isConnected]);
+  }, [isConnected]);
 
   // 🎮 Auto-initialize player after connecting controller
   useEffect(() => {
@@ -65,7 +58,7 @@ function LoginButton({
 
       const timeoutId = setTimeout(async () => {
         try {
-          const result = await initializePlayer(playerId);
+          const result = await initializePlayer();
           console.log("🎮 Auto-initialization result:", result);
 
           if (result.success) {
@@ -93,9 +86,11 @@ function LoginButton({
 
   // Show different button states based on current status
   const getButtonContent = () => {
-    if (isConnecting) return <span className="airstrike-normal text-5xl">Connecting...</span>
-    if (isConnected && !hasAccount) return 
-    if (isInitializing) return <span className="airstrike-normal text-5xl">Claiming..</span>
+    if (isConnecting)
+      return <span className="airstrike-normal text-5xl">Connecting...</span>;
+    if (isConnected && !hasAccount) return;
+    if (isInitializing)
+      return <span className="airstrike-normal text-5xl">Claiming..</span>;
     if (txStatus === "SUCCESS") return "Claimed!";
     return children || "Claim";
   };
@@ -111,15 +106,15 @@ function LoginButton({
   });
 
   return (
-      <Button
-        onClick={handleConnect}
-        disabled={isLoading || (isConnected && !hasAccount)}
-        variant={variant}
-        size={size}
-        className={className}
-      >
-        {getButtonContent()}
-      </Button>
+    <Button
+      onClick={handleConnect}
+      disabled={isLoading || (isConnected && !hasAccount)}
+      variant={variant}
+      size={size}
+      className={className}
+    >
+      {getButtonContent()}
+    </Button>
   );
 }
 

@@ -50,10 +50,7 @@ const ClaimScreen = () => {
       />
       <div className="absolute inset-0 top-[90%] left-1/2 z-90 flex h-1/4 w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center">
         <div className="flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat">
-          <LoginButton
-            className="airstrike-normal flex font-bold text-white hover:scale-105 hover:bg-transparent"
-            playerId={id || ""}
-          >
+          <LoginButton className="airstrike-normal flex font-bold text-white hover:scale-105 hover:bg-transparent">
             <span className="airstrike-normal text-5xl">Claim</span>
           </LoginButton>
         </div>
