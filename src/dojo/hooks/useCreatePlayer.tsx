@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useAccount } from "@starknet-react/core";
-import { Account, shortString } from "starknet";
+import { Account } from "starknet";
 import { useDojoSDK } from "@dojoengine/sdk/react";
 import { useStarknetConnect } from "./useStarknetConnect";
 import { usePlayer } from "./usePlayer";
