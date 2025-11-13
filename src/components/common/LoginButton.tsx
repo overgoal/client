@@ -3,6 +3,7 @@ import { useStarknetConnect } from "../../dojo/hooks/useStarknetConnect";
 import { useEffect, useRef } from "react";
 import { useCreatePlayer } from "../../dojo/hooks/useCreatePlayer";
 import { useAccount } from "@starknet-react/core";
+import { useNavigate } from "react-router";
 
 interface LoginButtonProps {
   className?: string;
@@ -16,7 +17,6 @@ interface LoginButtonProps {
 
 function LoginButton({
   className = "",
-  onLoginSuccess,
   onLoginError,
   autoInitializePlayer = true,
   variant = "default",
@@ -26,7 +26,7 @@ function LoginButton({
   const { status, isConnecting, handleConnect } = useStarknetConnect();
   const { account } = useAccount();
   const { initializePlayer, isInitializing, txStatus } = useCreatePlayer();
-
+  const navigate = useNavigate();
   // Use ref to track initialization attempt to prevent infinite loops
   const hasAttemptedInit = useRef(false);
 
@@ -62,8 +62,7 @@ function LoginButton({
           console.log("🎮 Auto-initialization result:", result);
 
           if (result.success) {
-            onLoginSuccess?.();
-            // navigate("/");
+            navigate("/season-countdown");
           } else {
             // Reset flag on failure so user can try again
             hasAttemptedInit.current = false;
