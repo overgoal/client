@@ -35,7 +35,7 @@ export function LoginPlayer() {
         "🎮 Controller connected but no player found, auto-initializing...",
       );
       setTimeout(() => {
-        initializePlayer().then((result) => {
+        initializePlayer("player1").then((result) => {
           console.log("🎮 Auto-initialization result:", result);
           // navigate("/");
         });
