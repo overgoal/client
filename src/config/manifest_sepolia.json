@@ -2,7 +2,7 @@
   "world": {
     "class_hash": "0x57994b6a75fad550ca18b41ee82e2110e158c59028c4478109a67965a0e5b1e",
     "address": "0x73f377bcb4cee2e458351fee0d6ccb0eec3f4031de4fb990b45b03572ba84cd",
-    "seed": "universe1",
+    "seed": "universe2",
     "name": "Universe",
     "entrypoints": [
       "uuid",

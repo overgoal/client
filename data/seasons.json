@@ -1,0 +1,23 @@
+[
+    {
+      "id": "0x1",
+      "name": "Season 1 - Kickoff Legends",
+      "start_date": 1764547200,
+      "end_date": 1765756800,
+      "prize_pool": "0"
+    },
+    {
+      "id": "0x2",
+      "name": "Season 2 - Midfield Masters",
+      "start_date": 1765756800,
+      "end_date": 1768608000,
+      "prize_pool": "0"
+    },
+    {
+      "id": "0x3",
+      "name": "Season 3 - Final Strike",
+      "start_date": 1768608000,
+      "end_date": 1771276800,
+      "prize_pool": "0"
+    }
+  ]
