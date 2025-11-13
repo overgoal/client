@@ -49,6 +49,8 @@ const policies = {
         { name: "add_currency", entrypoint: "add_currency" },
         { name: "spend_currency", entrypoint: "spend_currency" },
         { name: "record_login", entrypoint: "record_login" },
+        { name: "assign_user", entrypoint: "assign_user" },
+        { name: "create_or_get_user", entrypoint: "create_or_get_user" },
       ],
     },
   },
