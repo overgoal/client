@@ -6,15 +6,10 @@ import { Wallet, LogOut, Loader2 } from "lucide-react";
 import { useCreatePlayer } from "../../../dojo/hooks/useCreatePlayer";
 
 export default function ConnectionTestScreen() {
-  const {
-    status,
-    address,
-    isConnecting,
-    handleConnect,
-    handleDisconnect,
-  } = useStarknetConnect();
+  const { status, address, isConnecting, handleConnect, handleDisconnect } =
+    useStarknetConnect();
 
-  const { initializePlayer, resetInitializer, txStatus     } = useCreatePlayer();
+  const { initializePlayer, resetInitializer, txStatus } = useCreatePlayer();
 
   const isConnected = status === "connected";
 
@@ -24,16 +19,16 @@ export default function ConnectionTestScreen() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 max-w-md w-full mx-4">
-        <h1 className="text-3xl font-bold text-white mb-6 text-center">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="mx-4 w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+        <h1 className="mb-6 text-center text-3xl font-bold text-white">
           Cartridge Connection Test
         </h1>
 
         {/* Status Display */}
-        <div className="mb-6 p-4 bg-slate-800/50 rounded-lg">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-slate-400 text-sm">Status:</span>
+        <div className="mb-6 rounded-lg bg-slate-800/50 p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm text-slate-400">Status:</span>
             <span
               className={`font-semibold ${
                 isConnected ? "text-green-400" : "text-red-400"
@@ -45,8 +40,8 @@ export default function ConnectionTestScreen() {
 
           {address && (
             <div className="flex items-center justify-between">
-              <span className="text-slate-400 text-sm">Address:</span>
-              <span className="text-white font-mono text-sm">
+              <span className="text-sm text-slate-400">Address:</span>
+              <span className="font-mono text-sm text-white">
                 {formatAddress(address)}
               </span>
             </div>
@@ -59,16 +54,16 @@ export default function ConnectionTestScreen() {
             <Button
               onClick={handleConnect}
               disabled={isConnecting}
-              className="w-full px-6 py-6 text-lg font-semibold transition-all duration-300 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg shadow-red-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-red-500 to-red-600 px-6 py-6 text-lg font-semibold shadow-lg shadow-red-500/30 transition-all duration-300 hover:from-red-600 hover:to-red-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isConnecting ? (
                 <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   Connecting...
                 </>
               ) : (
                 <>
-                  <Wallet className="w-5 h-5 mr-2" />
+                  <Wallet className="mr-2 h-5 w-5" />
                   Connect Controller
                 </>
               )}
@@ -76,36 +71,38 @@ export default function ConnectionTestScreen() {
           ) : (
             <Button
               onClick={handleDisconnect}
-              className="w-full px-6 py-6 text-lg font-semibold transition-all duration-300 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 shadow-lg shadow-slate-500/30"
+              className="w-full bg-gradient-to-r from-slate-600 to-slate-700 px-6 py-6 text-lg font-semibold shadow-lg shadow-slate-500/30 transition-all duration-300 hover:from-slate-700 hover:to-slate-800"
             >
-              <LogOut className="w-5 h-5 mr-2" />
+              <LogOut className="mr-2 h-5 w-5" />
               Disconnect
             </Button>
           )}
         </div>
 
         <div>
-            <Button onClick={handleDisconnect}>    Disconnect</Button>
+          <Button onClick={handleDisconnect}> Disconnect</Button>
         </div>
 
         <div>
-            <Button onClick={() => initializePlayer("player1")}>    Create Player</Button>
+          <Button onClick={() => initializePlayer("player1")}>
+            {" "}
+            Create Player
+          </Button>
         </div>
-        <div
-        >   {txStatus} </div>
+        <div> {txStatus} </div>
 
         <div>
-            <Button onClick={() => resetInitializer()}>    Reset Initializer</Button>
+          <Button onClick={() => resetInitializer()}> Reset Initializer</Button>
         </div>
 
         {/* Status Indicator */}
         <div className="mt-6 flex items-center justify-center gap-2">
           <div
-            className={`w-3 h-3 rounded-full animate-pulse ${
+            className={`h-3 w-3 animate-pulse rounded-full ${
               isConnected ? "bg-green-500" : "bg-red-500"
             }`}
           ></div>
-          <span className="text-slate-300 text-sm">
+          <span className="text-sm text-slate-300">
             {isConnected ? "Connected to Cartridge" : "Not connected"}
           </span>
         </div>
@@ -113,4 +110,3 @@ export default function ConnectionTestScreen() {
     </div>
   );
 }
-
