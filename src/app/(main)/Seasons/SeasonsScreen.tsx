@@ -52,7 +52,7 @@ export default function SeasonsScreen() {
         <TeamsList />
       </div>
       <div className="fixed  bottom-0 w-full bg-black max-h-[120px] h-full !z-100 flex items-center justify-center">
-        <SeasonTeamItem color="purple" {...myTeam} index={1} />
+        <SeasonTeamItem  color="purple" {...myTeam} index={1} />
       </div>
     </>
   );

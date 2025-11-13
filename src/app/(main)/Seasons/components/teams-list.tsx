@@ -2,10 +2,8 @@ import SeasonTeamItem from "./team-item";
 import teamsData from "./teams.json";
 
 export type SeasonTeam = {
-  id: string;
+  id: number;
   name: string;
-  points: number;
-  members: number;
   imageUrl: string;
 };
 type SeasonTeamsListProps = {

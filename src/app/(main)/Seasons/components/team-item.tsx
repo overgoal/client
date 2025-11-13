@@ -13,9 +13,7 @@ const formatIndex = (index: number) => {
 export default function SeasonTeamItem({
   name,
   index,
-  points,
-  members,
-  color = "blue",
+  color,
   imageUrl,
 }: SeasonTeamItemProps) {
   return (
@@ -47,9 +45,9 @@ export default function SeasonTeamItem({
             className="w-full h-[1px] "
             style={{
               backgroundColor:
-                color === "blue"
-                  ? "var(--color-overgoal-blue)"
-                  : "var(--color-overgoal-purple)",
+                color === "purple"
+                  ? "var(--color-overgoal-purple)"
+                  : "var(--color-overgoal-blue)",
             }}
           ></span>
           <div className="flex flex-row gap-6 items-center justify-start ml-2">
@@ -58,7 +56,7 @@ export default function SeasonTeamItem({
                 Points:
               </span>
               <span className="text-white text-xs font-orbitron !font-medium">
-                {points}
+                {0}
               </span>
             </div>
             <span className="text-white text-xs font-orbitron !font-light flex flex-row gap-2 items-center justify-center">
@@ -66,7 +64,7 @@ export default function SeasonTeamItem({
                 Members:
               </span>
               <span className="text-white text-xs font-orbitron !font-medium">
-                {members}
+                {0}
               </span>
             </span>
           </div>

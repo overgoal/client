@@ -53,7 +53,7 @@ export default function MenuNav() {
               borderColor="var(--color-overgoal-orange)"
               backgroundColor="#3d0d00"
               position="right"
-              href="/tournament"
+              href="/tournaments"
               icon="Tournament"
               title="Tournament"
             />
