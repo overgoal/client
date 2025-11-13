@@ -64,21 +64,21 @@ function StraightConnector({
   );
 }
 
-const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    width="100%"
-    height={23}
-    viewBox="0 0 123 23"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="col-span-5 w-full"
-    {...props}
-  >
-    <line x1={0.5} y1={11.5} x2={122.5} y2={11.5} stroke="white" />
-    <path d="M0.5 23L0.5 11" stroke="white" />
-    <line x1={122} y1={12} x2={122} stroke="white" />
-  </svg>
-);
+// const SVGComponent = (props: React.SVGProps<SVGSVGElement>) => (
+//   <svg
+//     width="100%"
+//     height={23}
+//     viewBox="0 0 123 23"
+//     fill="none"
+//     xmlns="http://www.w3.org/2000/svg"
+//     className="col-span-5 w-full"
+//     {...props}
+//   >
+//     <line x1={0.5} y1={11.5} x2={122.5} y2={11.5} stroke="white" />
+//     <path d="M0.5 23L0.5 11" stroke="white" />
+//     <line x1={122} y1={12} x2={122} stroke="white" />
+//   </svg>
+// );
 
 export default function CalendarList({
   events = eventsFromTeams,
@@ -99,19 +99,6 @@ export default function CalendarList({
     return null;
   };
 
-  const renderRowTransition = (index: number, totalEvents: number) => {
-    const position = index % 3; // 0, 1, or 2 (column position)
-
-    // Render SVG after every 3rd element (end of row) but not for the last element
-    if (position === 2 && index < totalEvents - 1) {
-      return <SVGComponent key={`row-transition-${index}`} />;
-    }
-
-    if(position % 3 ===0 )
-      return <SVGComponent key={`row-transition-${index}`} />;
-
-    return null;
-  };
 
   return (
     <div className="h-full max-h-screen w-full overflow-x-hidden overflow-y-auto px-16">
