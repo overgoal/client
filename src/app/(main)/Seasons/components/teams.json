@@ -1,72 +1,67 @@
 [
   {
-    "id": "team-001",
-    "name": "Cyber Wolves",
-    "points": 2450,
-    "members": 12,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 1,
+    "name": "Cartridge City",
+    "imageUrl": "/teams/Cartridge City.webp"
   },
   {
-    "id": "team-002",
-    "name": "Neon Strikers",
-    "points": 2380,
-    "members": 15,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 2,
+    "name": "Crystal Pulse",
+    "imageUrl": "/teams/Crystal Pulse.webp"
   },
   {
-    "id": "team-003",
-    "name": "Digital Raiders",
-    "points": 2290,
-    "members": 11,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 3,
+    "name": "Cyber Lions FC",
+    "imageUrl": "/teams/Cyber Lions FC.webp"
   },
   {
-    "id": "team-004",
-    "name": "Quantum Eagles",
-    "points": 2150,
-    "members": 13,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 4,
+    "name": "dojoUnited",
+    "imageUrl": "/teams/dojoUnited.webp"
   },
   {
-    "id": "team-005",
-    "name": "Binary Titans",
-    "points": 2080,
-    "members": 14,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 5,
+    "name": "Drakon core",
+    "imageUrl": "/teams/Drakon core.webp"
   },
   {
-    "id": "team-006",
-    "name": "Pixel Panthers",
-    "points": 1950,
-    "members": 10,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 6,
+    "name": "Galactic Forge",
+    "imageUrl": "/teams/Galactic Forge.webp"
   },
   {
-    "id": "team-007",
-    "name": "Tech Guardians",
-    "points": 1890,
-    "members": 16,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 7,
+    "name": "Iron Syndicate",
+    "imageUrl": "/teams/Iron Syndicate.webp"
   },
   {
-    "id": "team-008",
-    "name": "Code Runners",
-    "points": 1780,
-    "members": 9,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 8,
+    "name": "Neon Strickers",
+    "imageUrl": "/teams/Neon Strickers.webp"
   },
   {
-    "id": "team-009",
-    "name": "Data Sharks",
-    "points": 1650,
-    "members": 12,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 9,
+    "name": "Neuro Titans",
+    "imageUrl": "/teams/Neuro Titans.webp"
   },
   {
-    "id": "team-010",
-    "name": "Matrix Lions",
-    "points": 1520,
-    "members": 11,
-    "imageUrl": "/homepage/profile_container.svg"
+    "id": 10,
+    "name": "Nova United",
+    "imageUrl": "/teams/Nova United.webp"
+  },
+  {
+    "id": 11,
+    "name": "Phantom Surge",
+    "imageUrl": "/teams/Phantom Surge.webp"
+  },
+  {
+    "id": 12,
+    "name": "Solar Reign",
+    "imageUrl": "/teams/Solar Reign.webp"
+  },
+  {
+    "id": 13,
+    "name": "VoidBreakers",
+    "imageUrl": "/teams/VoidBreakers.webp"
   }
 ]

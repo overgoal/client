@@ -1,7 +1,5 @@
 import { cn } from "../../../../../utils/utils";
 
-
-
 interface Props {
   children: React.ReactNode;
   bgColor?: string;
@@ -10,9 +8,7 @@ interface Props {
   noShadow?: boolean;
 }
 
-
-
-export default function SemiSquareContainer({
+export default function CalendarItem({
   children,
   bgColor = "black",
   borderColor = "var(--color-overgoal-blue)",
@@ -28,14 +24,17 @@ export default function SemiSquareContainer({
       )}
       style={{
         backgroundColor: borderColor,
-        clipPath: "polygon(16% 0, 100% 0, 100% 100%, 0 100%, 0 15%)",
+        clipPath: "polygon(87% 0, 100% 12%, 100% 100%, 75% 100%, 12% 100%, 0 87%, 0 0)",
       }}
     >
       <div
-        className={cn("absolute w-[98%] h-[98%] ", noShadow ? "shadow-none" : "shadow-[inset_0_0px_8px_rgba(3,228,232,100)]")}
+        className={cn(
+          "absolute w-[98%] h-[98%]",
+          noShadow ? "shadow-none" : "shadow-[inset_0_0px_8px_rgba(3,228,232,100)]"
+        )}
         style={{
           backgroundColor: bgColor,
-          clipPath: "polygon(16% 0, 100% 0, 100% 100%, 0 100%, 0 15%)",
+          clipPath: "polygon(87% 0, 100% 12%, 100% 100%, 75% 100%, 12% 100%, 0 87%, 0 0)",
         }}
       />
       <div className="relative z-10">{children}</div>

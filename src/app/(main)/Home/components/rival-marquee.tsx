@@ -51,7 +51,7 @@ export default function RivalMarquee() {
         <img src="/homepage/dev.webp" alt="dev-connect" />
       </div>
       <span className="font-orbitron text-base font-medium whitespace-nowrap text-white md:text-xl">
-        Dev Connect
+        Next Season : 30 Days
       </span>
     </div>
   );

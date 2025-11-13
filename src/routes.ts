@@ -32,3 +32,7 @@ export const connectionTest = "/connection-test";
 
 //Settings
 export const settings = "/settings";
+
+
+//calendar
+export const calendar = "/calendar";

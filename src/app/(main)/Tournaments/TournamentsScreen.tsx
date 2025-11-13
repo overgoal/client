@@ -1,165 +1,135 @@
-import { Card } from "../../../components/ui/card";
+import { useEffect, useState } from "react";
+import SemiSquareContainer from "../Home/components/semi-square/semi-square-container";
+import { BackButton } from "../../../components/ui/back-button";
 import { Button } from "../../../components/ui/button";
-import { Link } from "react-router";
 
 export default function TournamentsScreen() {
-  const tournaments = [
-    {
-      id: 1,
-      name: "Champions League",
-      status: "ongoing",
-      type: "International",
-      prizePool: 1000000,
-      participants: 32,
-      currentRound: "Round of 16",
-      startDate: "2024-02-01",
-      endDate: "2024-05-30",
-      description:
-        "The most prestigious club competition in European football.",
-    },
-    {
-      id: 2,
-      name: "Europa League",
-      status: "ongoing",
-      type: "International",
-      prizePool: 500000,
-      participants: 24,
-      currentRound: "Group Stage",
-      startDate: "2024-02-15",
-      endDate: "2024-05-22",
-      description: "Second-tier European club competition.",
-    },
-    {
-      id: 3,
-      name: "FA Cup",
-      status: "upcoming",
-      type: "Domestic",
-      prizePool: 200000,
-      participants: 64,
-      currentRound: "Not Started",
-      startDate: "2024-04-01",
-      endDate: "2024-05-25",
-      description: "England's primary national cup knockout competition.",
-    },
-    {
-      id: 4,
-      name: "Copa America",
-      status: "completed",
-      type: "International",
-      prizePool: 300000,
-      participants: 16,
-      currentRound: "Final",
-      startDate: "2024-01-10",
-      endDate: "2024-02-14",
-      description: "South America's premier international tournament.",
-    },
-  ];
+  const [countdown, setCountdown] = useState("");
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "ongoing":
-        return "bg-green-600";
-      case "upcoming":
-        return "bg-yellow-600";
-      case "completed":
-        return "bg-blue-600";
-      default:
-        return "bg-gray-600";
-    }
-  };
+  useEffect(() => {
+    const targetDate = new Date("2025-12-31T23:59:59").getTime(); // <-- change this
 
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "International":
-        return "bg-purple-600";
-      case "Domestic":
-        return "bg-indigo-600";
-      default:
-        return "bg-gray-600";
-    }
-  };
+    const updateCountdown = () => {
+      const now = Date.now();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        setCountdown("READY!");
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+    };
+
+    updateCountdown(); // initial render
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="mt-8">
-          <h1 className="text-3xl font-bold text-white mb-6">Tournaments</h1>
+    <div className="relative flex h-lvh w-full flex-col items-center justify-center gap-8 bg-[url('/backgrounds/glitch-bg.webp')] bg-cover bg-center px-12">
+      <BackButton to="/" className="absolute top-5 left-0" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {tournaments.map((tournament) => (
-              <Card
-                key={tournament.id}
-                className="bg-slate-800/50 border-slate-700 p-6"
-              >
-                <div className="flex flex-col h-full">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h2 className="text-2xl font-semibold text-white mb-2">
-                        {tournament.name}
-                      </h2>
-                      <div className="flex items-center space-x-2 mb-3">
-                        <span
-                          className={`px-2 py-1 rounded-full text-white text-xs font-medium ${getTypeColor(tournament.type)}`}
-                        >
-                          {tournament.type}
-                        </span>
-                        <span
-                          className={`px-2 py-1 rounded-full text-white text-xs font-medium ${getStatusColor(tournament.status)}`}
-                        >
-                          {tournament.status.charAt(0).toUpperCase() +
-                            tournament.status.slice(1)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+      <SemiSquareContainer
+        className="absolute top-[15%] right-[75%] z-100 h-18 w-18"
+        bgColor="#19001d"
+        noShadow
+        borderColor="#9400ff"
+      >
+        <img
+          src="/icons/Players-joined.webp"
+          alt=""
+          className="ml-4 h-[60%] w-[60%] object-contain object-center"
+        />
+      </SemiSquareContainer>
 
-                  <p className="text-slate-300 mb-4 flex-grow">
-                    {tournament.description}
-                  </p>
+      <SemiSquareContainer
+        className="absolute top-[30%] right-[75%] z-100 flex h-18 w-18 items-center justify-center"
+        bgColor="#19001d"
+        noShadow
+        borderColor="#9400ff"
+      >
+        <img
+          src="/icons/Current-prize.webp"
+          alt=""
+          className="ml-4 h-[60%] w-[60%] object-contain object-center"
+        />
+      </SemiSquareContainer>
 
-                  <div className="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <span className="text-slate-400 text-sm">Prize Pool</span>
-                      <div className="text-yellow-400 font-bold">
-                        ${tournament.prizePool.toLocaleString()}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 text-sm">
-                        Participants
-                      </span>
-                      <div className="text-white font-bold">
-                        {tournament.participants}
-                      </div>
-                    </div>
-                  </div>
+      <SemiSquareContainer
+        className="absolute top-[45%] right-[75%] z-100 h-18 w-18"
+        bgColor="#19001d"
+        noShadow
+        borderColor="#9400ff"
+      >
+        <img
+          src="/icons/Coins.webp"
+          alt=""
+          className="ml-4 h-[60%] w-[60%] object-contain object-center"
+        />
+      </SemiSquareContainer>
 
-                  <div className="space-y-2 mb-6">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-400">Current Round</span>
-                      <span className="text-white">
-                        {tournament.currentRound}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-400">Duration</span>
-                      <span className="text-white">
-                        {tournament.startDate} - {tournament.endDate}
-                      </span>
-                    </div>
-                  </div>
+      <SemiSquareContainer
+        className="relative mt-10 h-[300px] w-full"
+        bgColor="#19001d"
+        noShadow
+        borderColor="#9400ff"
+      >
+        <div className="ml-6 flex h-full w-full flex-col items-center justify-center gap-8 px-4">
+          <div className="flex flex-col items-center justify-center gap-1">
+            <span className="font-orbitron text-center text-base font-bold text-white">
+              Players joined:
+            </span>
+            <span className="text-overgoal-blue font-orbitron text-center text-2xl font-bold">
+              -
+            </span>
+          </div>
 
-                  <Link to={`/tournament/${tournament.id}`}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      View Tournament
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            ))}
+          <div className="flex flex-col items-center justify-center gap-1">
+            <span className="font-orbitron text-center text-base font-bold text-white">
+              Current prize:
+            </span>
+            <span className="text-overgoal-blue font-orbitron text-center text-2xl font-bold">
+              -
+            </span>
+          </div>
+          <div className="flex flex-col items-center jusrtify-center gap-1">
+            <span className="font-orbitron text-center text-base font-bold text-white">
+              Entry fee:
+            </span>
+            <span className="text-overgoal-blue font-orbitron text-center text-2xl font-bold">
+              -
+            </span>
           </div>
         </div>
+      </SemiSquareContainer>
+
+      <div className="mt-2 flex w-full flex-col items-center justify-center gap-2">
+        <h2 className="font-orbitron text-center text-xl font-bold text-white uppercase">
+          Next Starts in:
+        </h2>
+
+        <span className="text-overgoal-blue font-orbitron text-center text-2xl font-bold">
+          {countdown}
+        </span>
       </div>
+
+      <Button
+        variant="outline"
+        className="bg-overgoal-dark-blue/90 mt-10 mb-4 text-white"
+      >
+        <span className="font-orbitron text-base font-bold text-white uppercase">
+          Get Early Access
+        </span>
+      </Button>
     </div>
   );
 }
