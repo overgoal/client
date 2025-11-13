@@ -22,7 +22,7 @@ export default function SemiSquareContainer({
   return (
     <div
       className={cn(
-        "max-w-[66px] flex justify-center items-center max-h-[64px] w-full h-full",
+        "flex justify-center items-center w-full h-full",
         "relative overflow-hidden",
         className
       )}
