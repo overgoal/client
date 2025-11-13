@@ -1,38 +1,12 @@
-import { useEffect, useState } from "react";
 import SemiSquareContainer from "../Home/components/semi-square/semi-square-container";
 import { BackButton } from "../../../components/ui/back-button";
 import { Button } from "../../../components/ui/button";
+import { Countdown } from "../../../components/ui/countdown";
+import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
 
 export default function TournamentsScreen() {
-  const [countdown, setCountdown] = useState("");
-
-  useEffect(() => {
-    const targetDate = new Date("2025-12-31T23:59:59").getTime(); // <-- change this
-
-    const updateCountdown = () => {
-      const now = Date.now();
-      const diff = targetDate - now;
-
-      if (diff <= 0) {
-        setCountdown("READY!");
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-      );
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`);
-    };
-
-    updateCountdown(); // initial render
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // Target date for tournament start
+  const targetDate = SEASON_COUNTDOWN_TARGET_DATE;
 
   return (
     <div className="relative flex h-lvh w-full flex-col items-center justify-center gap-8 bg-[url('/backgrounds/glitch-bg.webp')] bg-cover bg-center px-12">
@@ -117,9 +91,11 @@ export default function TournamentsScreen() {
           Next Starts in:
         </h2>
 
-        <span className="text-overgoal-blue font-orbitron text-center text-2xl font-bold">
-          {countdown}
-        </span>
+        <Countdown
+          targetDate={targetDate}
+          className="text-overgoal-blue font-orbitron text-center text-2xl font-bold"
+          readyText="READY!"
+        />
       </div>
 
       <Button

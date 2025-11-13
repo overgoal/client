@@ -7,7 +7,7 @@ type Props = {
 
 export default function CalendarTeamItemComponent({ children }: Props) {
   return (
-    <div className="relative flex h-40 w-35 items-center justify-center">
+    <div className="relative flex h-35 w-23 items-center justify-center">
       <CalendarItem
         bgColor="#2b0045"
         noShadow

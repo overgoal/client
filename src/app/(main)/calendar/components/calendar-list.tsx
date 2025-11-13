@@ -102,7 +102,7 @@ export default function CalendarList({
 
   return (
     <div className="h-full max-h-screen w-full overflow-x-hidden overflow-y-auto px-16">
-      <div className="grid grid-cols-3 gap-x-32 gap-y-12">
+      <div className="grid grid-cols-3 gap-x-24 gap-y-12 ">
         {events.map((event, index) => (
           <>
             <div key={event.id} className="relative z-30 flex justify-center">

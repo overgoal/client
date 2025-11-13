@@ -20,6 +20,9 @@ import ProfileScreen from "./(main)/Profile/ProfileScreen";
 import SettingsScreen from "./(main)/settings/settingScreent";
 import ConnectionTestScreen from "./(main)/connection-test/ConnectionTestScreen";
 import CalendarScreen from "./(main)/calendar/CalendarScreen";
+import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
+import ClaimScreen from "./(main)/card/ClaimScreen";
+import SeasonCountdownScreen from "./(main)/countdown/SeasonCountdownScreen";
 
 // Import all routes
 import {
@@ -42,9 +45,8 @@ import {
   settings,
   connectionTest,
   calendar,
+  seasonCountdown,
 } from "../routes";
-import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
-import ClaimScreen from "./(main)/card/ClaimScreen";
 
 function App() {
   return (
@@ -63,6 +65,7 @@ function App() {
         <Route path={market} element={<MarketScreen />} />
         <Route path={career} element={<CareerScreen />} />
         <Route path={seasons} element={<SeasonsScreen />} />
+        <Route path={seasonCountdown} element={<SeasonCountdownScreen />} />
         <Route path={season} element={<SeasonScreen />} />
         <Route path={seasonClub} element={<SeasonClubScreen />} />
         <Route path={tournamentAll} element={<TournamentsScreen />} />

@@ -3,22 +3,24 @@ import CyberContainer from "../Home/components/cyber-container";
 import SeasonTeamItem from "./components/team-item";
 import teamsData from "./components/teams.json";
 import { BackButton } from "../../../components/ui/back-button";
+import { Countdown } from "../../../components/ui/countdown";
+import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
 
 const myTeam = teamsData[0];
 
 export default function SeasonsScreen() {
   return (
     <>
-      <div className="min-h-screen w-scren flex items-center flex-col justify-center bg-black backdrop-blur-sm p-2 gap-4">
-        <div className="w-full flex flex-row items-center justify-between my-4 mr-2">
-          <BackButton className="w-12 h-12 " />
+      <div className="w-scren flex min-h-screen flex-col items-center justify-center gap-4 bg-black p-2 backdrop-blur-sm">
+        <div className="my-4 mr-2 flex w-full flex-row items-center justify-between">
+          <BackButton className="h-12 w-12" />
           <div className="flex flex-row items-center justify-center gap-2">
             <div></div>
-            <div className="text-white text-sm font-orbitron font-medium">
+            <div className="font-orbitron text-sm font-medium text-white">
               Season 2
             </div>
           </div>
-          <CyberContainer className="!w-1/3 !h-1/3 px-3 flex flex-row items-center justify-between  ">
+          <CyberContainer className="flex !h-1/3 !w-1/3 flex-row items-center justify-between px-3">
             <svg
               width="14"
               height="11"
@@ -31,28 +33,28 @@ export default function SeasonsScreen() {
                 fill="#00EDF7"
               />
             </svg>
-            <h2 className="text-white text-sm  font-orbitron font-medium">
+            <h2 className="font-orbitron text-sm font-medium text-white">
               5000
             </h2>
           </CyberContainer>
         </div>
-        <div className="w-full flex flex-row items-center justify-center gap-2">
-          <div className="flex flex-col items-center justify-center max-w-2/3 w-full">
-            <div className="text-white text-sm font-orbitron font-medium">
+        <div className="flex w-full flex-row items-center justify-center gap-2">
+          <div className="flex w-full max-w-2/3 flex-col items-center justify-center">
+            <div className="font-orbitron text-sm font-medium text-white">
               Season ends:
             </div>
-            <div className="text-overgoal-blue text-lg font-orbitron font-medium">
-              3d 15h 21m
+            <div className="text-overgoal-blue font-orbitron text-lg font-medium">
+              <Countdown targetDate={SEASON_COUNTDOWN_TARGET_DATE} />
             </div>
           </div>
-          <div className="text-white text-sm font-orbitron font-medium max-w-1/3 w-full">
+          <div className="font-orbitron w-full max-w-1/3 text-sm font-medium text-white">
             Season 2
           </div>
         </div>
         <TeamsList />
       </div>
-      <div className="fixed  bottom-0 w-full bg-black max-h-[120px] h-full !z-100 flex items-center justify-center">
-        <SeasonTeamItem  color="purple" {...myTeam} index={1} />
+      <div className="fixed bottom-0 !z-100 flex h-full max-h-[120px] w-full items-center justify-center bg-black">
+        <SeasonTeamItem color="purple" {...myTeam} index={1} />
       </div>
     </>
   );
