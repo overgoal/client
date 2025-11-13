@@ -6,6 +6,7 @@ import { useDojoSDK } from "@dojoengine/sdk/react";
 import { useStarknetConnect } from "./useStarknetConnect";
 import { usePlayer } from "./usePlayer";
 import useAppStore from "../../zustand/store";
+import { cairoShortStringToFelt } from "@dojoengine/torii-wasm";
 
 // Types
 interface InitializeState {
@@ -53,7 +54,7 @@ export const useCreatePlayer = () => {
    * Checks if the player exists and initializes as needed
    */
   const initializePlayer =
-    useCallback(async (): Promise<InitializeResponse> => {
+    useCallback(async (playerId: string): Promise<InitializeResponse> => {
       // Prevent multiple executions
       if (isInitializing) {
         return {
@@ -154,8 +155,16 @@ export const useCreatePlayer = () => {
           console.log("📤 Executing spawn transaction...");
           //here we should call the world api to create a new player
 
-          const spawnTx = await client.game.create_or_get_user(
+          console.log("🔄 Account:", account);
+          console.log("🔄 Account address:", account.address);
+          const username = cairoShortStringToFelt(playerId); // Converts to felt252
+
+          console.log("🔄 Username:", username);
+
+          const spawnTx = await client.game.createOrGetUser(
             account as Account,
+            account.address,
+            username,
           );
 
           console.log("📥 Spawn transaction response:", spawnTx);

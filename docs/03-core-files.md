@@ -47,7 +47,7 @@ export interface TrophyCreation {
 
 // Schema definition for Dojo SDK
 export const schema: SchemaType = {
-  full_starter_react: {
+  universe: {
     Player: {
       owner: "",
       experience: 0,
@@ -152,7 +152,7 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_train_calldata(),
-        "full_starter_react", // Namespace from dojo.toml
+        "universe", // Namespace from dojo.toml
       );
     } catch (error) {
       console.error("Training failed:", error);

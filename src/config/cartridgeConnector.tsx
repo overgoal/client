@@ -58,7 +58,7 @@ const options: ControllerOptions = {
   chains: [{ rpcUrl: getRpcUrl() }],
   defaultChainId: getDefaultChainId(),
   policies,
-  namespace: "full_starter_react",
+  namespace: "universe",
   slot: "full-starter-react",
 };
 

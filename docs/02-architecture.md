@@ -170,7 +170,7 @@ const options: ControllerOptions = {
   policies,
   theme: "full-starter-react",
   colorMode: "dark",
-  namespace: "full_starter_react",
+  namespace: "universe",
   slot: "full-starter-react",
 };
 ```
@@ -191,7 +191,7 @@ export interface Player {
 }
 
 export const schema: SchemaType = {
-  full_starter_react: {
+  universe: {
     Player: {
       owner: "",
       experience: 0,
@@ -214,7 +214,7 @@ export function setupWorld(provider: DojoProvider) {
       return await provider.execute(
         snAccount as any,
         build_game_train_calldata(),
-        "full_starter_react",
+        "universe",
       );
     } catch (error) {
       console.error(error);

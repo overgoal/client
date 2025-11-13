@@ -87,7 +87,7 @@ export default function CharacterCreationScreen() {
   };
 
   const handleSpawnPlayer = () => {
-    initializePlayer().then((result) => {
+    initializePlayer(playerId || "").then((result) => {
       console.log("Spawn player result", result);
     });
   };

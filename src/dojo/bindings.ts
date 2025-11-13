@@ -1,13 +1,13 @@
 import type { SchemaType as ISchemaType } from "@dojoengine/sdk";
 
-// Type definition for `full_starter_react::models::user::User` struct
+// Type definition for `universe::models::user::User` struct
 export interface User {
   owner: string;
   username: string;
   created_at: number;
 }
 
-// Type definition for `full_starter_react::models::player::Player` struct
+// Type definition for `universe::models::player::Player` struct
 export interface Player {
   id: string;
   user_id: string;
@@ -75,7 +75,7 @@ export interface Task {
 }
 
 export interface SchemaType extends ISchemaType {
-  full_starter_react: {
+  universe: {
     User: User;
     Player: Player;
   };
@@ -88,7 +88,7 @@ export interface SchemaType extends ISchemaType {
   };
 }
 export const schema: SchemaType = {
-  full_starter_react: {
+  universe: {
     User: {
       owner: "",
       username: "",
@@ -154,8 +154,8 @@ export const schema: SchemaType = {
   },
 };
 export enum ModelsMapping {
-  User = "full_starter_react-User",
-  Player = "full_starter_react-Player",
+  User = "universe-User",
+  Player = "universe-Player",
   TrophyCreation = "achievement-TrophyCreation",
   TrophyCreationValue = "achievement-TrophyCreationValue",
   TrophyProgression = "achievement-TrophyProgression",

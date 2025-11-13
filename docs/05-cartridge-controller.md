@@ -88,7 +88,7 @@ const options: ControllerOptions = {
   policies, // Pre-approved actions
   theme, // Visual branding
   colorMode, // UI appearance
-  namespace: "full_starter_react", // Unique game identifier
+  namespace: "universe", // Unique game identifier
   slot: "full-starter-react", // Session slot name
 };
 
@@ -189,7 +189,7 @@ const options: ControllerOptions = {
       ? constants.StarknetChainId.SN_MAIN // Mainnet for production
       : constants.StarknetChainId.SN_SEPOLIA, // Sepolia for testing
 
-  namespace: "full_starter_react", // Unique identifier
+  namespace: "universe", // Unique identifier
   slot: "full-starter-react", // Session storage key
 };
 ```
