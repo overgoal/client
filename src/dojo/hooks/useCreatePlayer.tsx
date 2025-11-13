@@ -1,11 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useAccount } from "@starknet-react/core";
-import { Account } from "starknet";
+import { Account, shortString } from "starknet";
 import { useDojoSDK } from "@dojoengine/sdk/react";
 import { useStarknetConnect } from "./useStarknetConnect";
 import { usePlayer } from "./usePlayer";
 import useAppStore from "../../zustand/store";
+import { cairoShortStringToFelt } from "@dojoengine/torii-wasm";
 
 // Types
 interface InitializeState {
@@ -154,8 +155,16 @@ export const useCreatePlayer = () => {
           console.log("📤 Executing spawn transaction...");
           //here we should call the world api to create a new player
 
-          const spawnTx = await client.game.create_or_get_user(
+          console.log("🔄 Account:", account);
+          console.log("🔄 Account address:", account.address);
+          const username = cairoShortStringToFelt("player1"); // Converts to felt252
+
+          console.log("🔄 Username:", username);
+
+          const spawnTx = await client.game.createOrGetUser(
             account as Account,
+            account.address,
+            username,
           );
 
           console.log("📥 Spawn transaction response:", spawnTx);

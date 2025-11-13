@@ -18,6 +18,7 @@ import TournamentsScreen from "./(main)/Tournaments/TournamentsScreen";
 import TournamentScreen from "./(main)/Tournament/TournamentScreen";
 import ProfileScreen from "./(main)/Profile/ProfileScreen";
 import SettingsScreen from "./(main)/settings/settingScreent";
+import ConnectionTestScreen from "./(main)/connection-test/ConnectionTestScreen";
 
 // Import all routes
 import {
@@ -38,6 +39,7 @@ import {
   login,
   claim,
   settings,
+  connectionTest,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 import ClaimScreen from "./(main)/card/ClaimScreen";
@@ -66,6 +68,7 @@ function App() {
         <Route path={profile} element={<ProfileScreen />} />
         {/* <Route path={"/card"} element={<ClaimScreen />} /> */}
         <Route path={claim} element={<ClaimScreen />} />
+        <Route path={connectionTest} element={<ConnectionTestScreen />} />
         <Route path={settings} element={<SettingsScreen />} />
       </Routes>
     </BrowserRouter>

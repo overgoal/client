@@ -213,7 +213,7 @@ export interface Player {
 }
 
 export const schema: SchemaType = {
-  full_starter_react: {
+  universe: {
     Player: {
       owner: "",
       experience: 0,
@@ -252,7 +252,7 @@ const game_trainShooting = async (snAccount: Account | AccountInterface) => {
     return await provider.execute(
       snAccount as any,
       build_game_trainShooting_calldata(),
-      "full_starter_react",
+      "universe",
     );
   } catch (error) {
     console.error(error);
@@ -293,7 +293,7 @@ pub trait IGame<T> {
 
 ```cairo
 fn train_shooting(ref self: ContractState) {
-    let mut world = self.world(@"full_starter_react");
+    let mut world = self.world(@"universe");
     let store = StoreTrait::new(world);
     let achievement_store = AchievementStoreTrait::new(world);
 
@@ -319,7 +319,7 @@ fn train_shooting(ref self: ContractState) {
 
 **📋 Required Pattern for ALL System Functions:**
 
-1. `let mut world = self.world(@"full_starter_react");`
+1. `let mut world = self.world(@"universe");`
 2. `let store = StoreTrait::new(world);`
 3. `let achievement_store = AchievementStoreTrait::new(world);`
 4. `let player = store.read_player();`
@@ -590,7 +590,7 @@ const policies = {
 ```cairo
 // ❌ BAD - Using custom emit! or different pattern
 fn improve_charisma(ref self: ContractState) {
-    let mut world = self.world(@"full_starter_react");
+    let mut world = self.world(@"universe");
     let store = StoreTrait::new(world);
 
     store.improve_charisma();
@@ -601,7 +601,7 @@ fn improve_charisma(ref self: ContractState) {
 
 // ✅ GOOD - Follow the EXACT same pattern as ALL other functions
 fn improve_charisma(ref self: ContractState) {
-    let mut world = self.world(@"full_starter_react");
+    let mut world = self.world(@"universe");
     let store = StoreTrait::new(world);
     let achievement_store = AchievementStoreTrait::new(world);
 
