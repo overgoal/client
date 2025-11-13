@@ -101,7 +101,7 @@ export default function TournamentsScreen() {
               -
             </span>
           </div>
-          <div className="flex flex-col items-center justify-center gap-1">
+          <div className="flex flex-col items-center jusrtify-center gap-1">
             <span className="font-orbitron text-center text-base font-bold text-white">
               Entry fee:
             </span>

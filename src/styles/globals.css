@@ -403,3 +403,36 @@
   /* -webkit-text-stroke: 6px black; */
   /* text-stroke: 6px black; */
 }
+
+.calendar-item-container {
+  position: relative;
+  background-color: var(--container-color, var(--color-overgoal-blue));
+  clip-path: polygon(87% 0, 100% 12%, 100% 100%, 75% 100%, 12% 100%, 0 87%, 0 0);
+}
+
+.calendar-item-container::before {
+  content: "";
+  position: absolute;
+  background-color: var(--container-color, var(--color-overgoal-blue));
+  opacity: 0.9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 97%;
+  height: 98%;
+  z-index: -1;
+  clip-path: polygon(87% 0, 100% 12%, 100% 100%, 75% 100%, 12% 100%, 0 87%, 0 0);
+}
+
+.calendar-item-container::after {
+  content: "";
+  background-color: var(--container-bg-color, var(--color-overgoal-dark-blue));
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 96%;
+  height: 95%;
+  z-index: -1;
+  clip-path: polygon(87% 0, 100% 12%, 100% 100%, 75% 100%, 12% 100%, 0 87%, 0 0);
+}
