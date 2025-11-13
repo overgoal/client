@@ -54,7 +54,7 @@ export const useCreatePlayer = () => {
    * Checks if the player exists and initializes as needed
    */
   const initializePlayer =
-    useCallback(async (): Promise<InitializeResponse> => {
+    useCallback(async (playerId: string): Promise<InitializeResponse> => {
       // Prevent multiple executions
       if (isInitializing) {
         return {
@@ -157,7 +157,7 @@ export const useCreatePlayer = () => {
 
           console.log("🔄 Account:", account);
           console.log("🔄 Account address:", account.address);
-          const username = cairoShortStringToFelt("player1"); // Converts to felt252
+          const username = cairoShortStringToFelt(playerId); // Converts to felt252
 
           console.log("🔄 Username:", username);
 

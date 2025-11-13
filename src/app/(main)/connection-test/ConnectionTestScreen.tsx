@@ -89,13 +89,13 @@ export default function ConnectionTestScreen() {
         </div>
 
         <div>
-            <Button onClick={initializePlayer}>    Create Player</Button>
+            <Button onClick={() => initializePlayer("player1")}>    Create Player</Button>
         </div>
         <div
         >   {txStatus} </div>
 
         <div>
-            <Button onClick={resetInitializer}>    Reset Initializer</Button>
+            <Button onClick={() => resetInitializer()}>    Reset Initializer</Button>
         </div>
 
         {/* Status Indicator */}

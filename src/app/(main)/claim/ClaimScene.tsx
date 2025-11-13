@@ -133,6 +133,7 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     [],
   );
 
+
   // Memoize camera settings
   const cameraSettings = useMemo(
     () => ({
@@ -181,7 +182,6 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     [],
   );
 
-  // Fetch player data on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
