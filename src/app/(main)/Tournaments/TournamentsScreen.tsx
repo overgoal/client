@@ -11,10 +11,14 @@ export default function TournamentsScreen() {
 
   return (
     <div className="relative flex h-lvh w-full flex-col items-center justify-center gap-8 bg-[url('/backgrounds/glitch-bg.webp')] bg-cover bg-center px-12">
-      <BackButton to="/" className="absolute top-5 left-0" />
+      <BackButton to="/" className="absolute top-5 left-0 z-100" />
+
+      <div className="absolute top-0 h-20 w-full object-cover object-center">
+        <img src="/tournaments/banner-tournament.webp" alt="" />
+      </div>
 
       <SemiSquareContainer
-        className="absolute top-[15%] right-[75%] z-100 h-18 w-18"
+        className="absolute top-[24%] right-[75%] z-100 h-18 w-18"
         bgColor="#19001d"
         noShadow
         borderColor="#9400ff"
@@ -27,7 +31,7 @@ export default function TournamentsScreen() {
       </SemiSquareContainer>
 
       <SemiSquareContainer
-        className="absolute top-[30%] right-[75%] z-100 flex h-18 w-18 items-center justify-center"
+        className="absolute top-[37%] right-[75%] z-100 flex h-18 w-18 items-center justify-center"
         bgColor="#19001d"
         noShadow
         borderColor="#9400ff"
@@ -40,7 +44,7 @@ export default function TournamentsScreen() {
       </SemiSquareContainer>
 
       <SemiSquareContainer
-        className="absolute top-[45%] right-[75%] z-100 h-18 w-18"
+        className="absolute top-[50%] right-[75%] z-100 h-18 w-18"
         bgColor="#19001d"
         noShadow
         borderColor="#9400ff"
@@ -53,7 +57,7 @@ export default function TournamentsScreen() {
       </SemiSquareContainer>
 
       <SemiSquareContainer
-        className="relative mt-10 h-[300px] w-full"
+        className="relative mt-20 h-[300px] w-full"
         bgColor="#19001d"
         noShadow
         borderColor="#9400ff"
