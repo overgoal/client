@@ -55,7 +55,7 @@ function StraightConnector({
 }) {
   return (
     <div
-      className={`bg-overgoal-blue absolute z-10 ${
+      className={`bg-overgoal-blue absolute -z-10 ${
         position === "horizontal"
           ? "top-1/2 left-13 h-0.5 w-10 transform"
           : "top-full left-1/2 h-12 w-0.5 -translate-x-1/2 transform"
@@ -101,13 +101,13 @@ export default function CalendarList({
 
 
   return (
-    <div className="h-full max-h-screen w-full overflow-x-hidden overflow-y-auto px-16">
+    <div className="h-full max-h-screen w-full overflow-x-hidden overflow-y-auto px-16 py-8">
       <div className="grid grid-cols-3 gap-x-24 gap-y-12 ">
         {events.map((event, index) => (
           <>
-            <div key={event.id} className="relative z-30 flex justify-center">
+            <div key={event.id} className="relative z-30! flex justify-center">
               <CalendarComponent>
-                <span className="font-orbitron text-overgoal-blue text-center text-base font-normal">
+                <span className="font-orbitron text-overgoal-blue text-center text-base font-normal z-30!">
                   {event.date}
                 </span>
                 <img

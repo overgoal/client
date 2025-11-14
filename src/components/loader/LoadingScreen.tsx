@@ -12,8 +12,9 @@ export default function LoadingScreen({ isLoading = true, progress = 0 }: Loadin
   if (!isLoading) return null;
 
   return (
-    <div className="bg-u absolute z-100! flex h-lvh w-screen flex-col items-center justify-center gap-4 transition-opacity duration-500">
+    <div className="bg-overgoal-dark-blue absolute z-100! flex h-lvh w-screen flex-col items-center justify-center gap-4 transition-opacity duration-500">
       <img
+        loading="lazy"
         src={background}
         alt="background"
         className="absolute inset-0 z-0 h-full w-full object-cover"
