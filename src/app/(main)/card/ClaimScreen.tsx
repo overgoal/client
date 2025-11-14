@@ -11,7 +11,7 @@ import { PlayerData } from "../../../components/models/PlayerModel";
 const getCategoyContainer = (category: string) => {
   switch (category) {
     case "bronze":
-      return "/claim/claim-container-gold.webp";
+      return "/claim/claim-container-bronze.webp";
     case "gold":
       return "/claim/claim-container-gold.webp";
     case "platinum":
