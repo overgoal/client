@@ -49,6 +49,7 @@ export function HomeMenuItem({
           <Button className="lifestyle-inner-container w-full h-full p-4 flex flex-col gap-2 items-center  justify-center">
             <div className={cn("flex flex-col gap-2 items-center justify-center ", position === "left" ? "-rotate-10" : "rotate-10")}>
               <img
+                loading="lazy"
                 src={getIcon(icon as keyof typeof getIcon)}
                 alt={title}
                 className={cn("w-6  h-6 -rotate-2", position === "left" ? "-rotate-2" : "-rotate-2")}

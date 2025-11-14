@@ -2,7 +2,8 @@ import SemiSquareContainer from "../Home/components/semi-square/semi-square-cont
 import { BackButton } from "../../../components/ui/back-button";
 import { Button } from "../../../components/ui/button";
 import { Countdown } from "../../../components/ui/countdown";
-import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
+import { SEASON_COUNTDOWN_TARGET_DATE, socialLinks } from "../Home/constants";
+import { Link } from "react-router";
 
 export default function TournamentsScreen() {
   // Target date for tournament start
@@ -75,7 +76,7 @@ export default function TournamentsScreen() {
               -
             </span>
           </div>
-          <div className="flex flex-col items-center jusrtify-center gap-1">
+          <div className="jusrtify-center flex flex-col items-center gap-1">
             <span className="font-orbitron text-center text-base font-bold text-white">
               Entry fee:
             </span>
@@ -98,14 +99,18 @@ export default function TournamentsScreen() {
         />
       </div>
 
-      <Button
-        variant="outline"
-        className="bg-overgoal-dark-blue/90 mt-10 mb-4 text-white"
-      >
-        <span className="font-orbitron text-base font-bold text-white uppercase">
-          Get Early Access
-        </span>
-      </Button>
+      <div className="flex flex-row items-center justify-center gap-2">
+        {socialLinks.map((link) => (
+          <Link to={link.href} key={link.title}>
+            <Button
+              variant="outline"
+              className="bg-overgoal-dark-blue/90 text-white"
+            >
+              {link.title}
+            </Button>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
