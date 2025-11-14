@@ -1,0 +1,158 @@
+{
+  "season_players": [
+    {
+      "id": "1",
+      "season_id": "2024",
+      "season_club_id": "101",
+      "overgoal_player_id": "1001",
+      "team_relationship": 85,
+      "fans_relationship": 92,
+      "season_points": 2450,
+      "matches_won": 18,
+      "matches_lost": 4,
+      "trophies_won": 2
+    },
+    {
+      "id": "2",
+      "season_id": "2024",
+      "season_club_id": "102",
+      "overgoal_player_id": "1002",
+      "team_relationship": 78,
+      "fans_relationship": 95,
+      "season_points": 3200,
+      "matches_won": 22,
+      "matches_lost": 3,
+      "trophies_won": 3
+    },
+    {
+      "id": "3",
+      "season_id": "2024",
+      "season_club_id": "103",
+      "overgoal_player_id": "1003",
+      "team_relationship": 95,
+      "fans_relationship": 75,
+      "season_points": 1800,
+      "matches_won": 15,
+      "matches_lost": 8,
+      "trophies_won": 1
+    },
+    {
+      "id": "4",
+      "season_id": "2024",
+      "season_club_id": "104",
+      "overgoal_player_id": "1004",
+      "team_relationship": 88,
+      "fans_relationship": 82,
+      "season_points": 2100,
+      "matches_won": 16,
+      "matches_lost": 6,
+      "trophies_won": 1
+    },
+    {
+      "id": "5",
+      "season_id": "2024",
+      "season_club_id": "105",
+      "overgoal_player_id": "1005",
+      "team_relationship": 65,
+      "fans_relationship": 88,
+      "season_points": 950,
+      "matches_won": 8,
+      "matches_lost": 12,
+      "trophies_won": 0
+    },
+    {
+      "id": "6",
+      "season_id": "2024",
+      "season_club_id": "106",
+      "overgoal_player_id": "1006",
+      "team_relationship": 98,
+      "fans_relationship": 99,
+      "season_points": 4500,
+      "matches_won": 28,
+      "matches_lost": 1,
+      "trophies_won": 4
+    },
+    {
+      "id": "7",
+      "season_id": "2024",
+      "season_club_id": "107",
+      "overgoal_player_id": "1007",
+      "team_relationship": 82,
+      "fans_relationship": 70,
+      "season_points": 1200,
+      "matches_won": 12,
+      "matches_lost": 9,
+      "trophies_won": 0
+    },
+    {
+      "id": "8",
+      "season_id": "2024",
+      "season_club_id": "108",
+      "overgoal_player_id": "1008",
+      "team_relationship": 75,
+      "fans_relationship": 85,
+      "season_points": 2800,
+      "matches_won": 20,
+      "matches_lost": 5,
+      "trophies_won": 2
+    },
+    {
+      "id": "9",
+      "season_id": "2023",
+      "season_club_id": "201",
+      "overgoal_player_id": "1001",
+      "team_relationship": 72,
+      "fans_relationship": 78,
+      "season_points": 1850,
+      "matches_won": 14,
+      "matches_lost": 8,
+      "trophies_won": 1
+    },
+    {
+      "id": "10",
+      "season_id": "2023",
+      "season_club_id": "202",
+      "overgoal_player_id": "1006",
+      "team_relationship": 95,
+      "fans_relationship": 96,
+      "season_points": 4200,
+      "matches_won": 26,
+      "matches_lost": 2,
+      "trophies_won": 3
+    }
+  ],
+  "default_season_player": {
+    "id": "0",
+    "season_id": "2024",
+    "season_club_id": "100",
+    "overgoal_player_id": "1000",
+    "team_relationship": 50,
+    "fans_relationship": 50,
+    "season_points": 500,
+    "matches_won": 5,
+    "matches_lost": 5,
+    "trophies_won": 0
+  },
+  "seasons": {
+    "2024": {
+      "name": "Premier League 2024",
+      "status": "active"
+    },
+    "2023": {
+      "name": "Premier League 2023",
+      "status": "completed"
+    }
+  },
+  "clubs": {
+    "101": { "name": "Cyber Lions FC", "color": "#FF6B35" },
+    "102": { "name": "Neon Strikers", "color": "#00D9FF" },
+    "103": { "name": "Steel Defenders", "color": "#4ECDC4" },
+    "104": { "name": "Precision United", "color": "#45B7D1" },
+    "105": { "name": "Veteran Warriors", "color": "#96CEB4" },
+    "106": { "name": "Superstar FC", "color": "#FFEAA7" },
+    "107": { "name": "Guardian United", "color": "#DDA0DD" },
+    "108": { "name": "Rocket Rangers", "color": "#98D8C8" },
+    "201": { "name": "Legacy Lions", "color": "#F7DC6F" },
+    "202": { "name": "Champion City", "color": "#BB8FCE" }
+  }
+}

@@ -33,9 +33,12 @@ export const connectionTest = "/connection-test";
 //Settings
 export const settings = "/settings";
 
-
 //calendar
 export const calendar = "/calendar";
 
 //Season Countdown
 export const seasonCountdown = "/season-countdown";
+
+//Overgoal Player Example
+export const overgoalPlayerExample = "/overgoal-player-example";
+export const seasonPlayerExample = "/season-player-example";

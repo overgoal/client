@@ -23,6 +23,7 @@ import CalendarScreen from "./(main)/calendar/CalendarScreen";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 import ClaimScreen from "./(main)/card/ClaimScreen";
 import SeasonCountdownScreen from "./(main)/countdown/SeasonCountdownScreen";
+import { OvergoalPlayerExample } from "../examples/OvergoalPlayerExample";
 
 // Import all routes
 import {
@@ -46,7 +47,10 @@ import {
   connectionTest,
   calendar,
   seasonCountdown,
+  overgoalPlayerExample,
+  seasonPlayerExample,
 } from "../routes";
+import { SeasonPlayerExample } from "../examples/SeasonPlayerExample";
 
 function App() {
   return (
@@ -54,7 +58,6 @@ function App() {
       <Routes>
         {/* Unauthenticated routes */}
         <Route path={login} element={<LoginScreen />} />
-
         {/* Authenticated routes */}
         <Route path={characterCreation} element={<CharacterCreationScreen />} />
         <Route path={main} element={<HomePage />} />
@@ -76,6 +79,16 @@ function App() {
         <Route path={connectionTest} element={<ConnectionTestScreen />} />
         <Route path={settings} element={<SettingsScreen />} />
         <Route path={calendar} element={<CalendarScreen />} />
+        <Route
+          path={overgoalPlayerExample}
+          element={<OvergoalPlayerExample />}
+        />{" "}
+        // TODO: Remove this
+        <Route
+          path={seasonPlayerExample}
+          element={<SeasonPlayerExample />}
+        />{" "}
+        // TODO: Remove this
       </Routes>
     </BrowserRouter>
   );

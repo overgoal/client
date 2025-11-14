@@ -1,13 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { OvergoalPlayer, Player } from "../lib/schema";
+import { Player } from "../lib/schema";
+import { OvergoalPlayer, SeasonPlayer } from "../dojo/bindings";
 
 // Application state
 interface AppState {
   // Player data
   player: Player | null;
   overgoalPlayer: OvergoalPlayer | null;
+  seasonPlayer: SeasonPlayer | null;
   // UI state
   isLoading: boolean;
   error: string | null;
@@ -21,10 +23,12 @@ interface AppActions {
   // Player actions
   setPlayer: (player: Player | null) => void;
   setOvergoalPlayer: (overgoalPlayer: OvergoalPlayer | null) => void;
+  setSeasonPlayer: (seasonPlayer: SeasonPlayer | null) => void;
 
-  // overgoal player actions
+  // Player getters
   getPlayer: () => Player | null;
   getOvergoalPlayer: () => OvergoalPlayer | null;
+  getSeasonPlayer: () => SeasonPlayer | null;
 
   // UI actions
   setLoading: (loading: boolean) => void;
@@ -41,6 +45,7 @@ type AppStore = AppState & AppActions;
 const initialState: AppState = {
   player: null,
   overgoalPlayer: null,
+  seasonPlayer: null,
   isLoading: false,
   error: null,
   gameStarted: false,
@@ -56,8 +61,10 @@ const useAppStore = create<AppStore>()(
       // Player actions
       setPlayer: (player) => set({ player }),
       setOvergoalPlayer: (overgoalPlayer) => set({ overgoalPlayer }),
+      setSeasonPlayer: (seasonPlayer) => set({ seasonPlayer }),
       getPlayer: () => get().player,
       getOvergoalPlayer: () => get().overgoalPlayer,
+      getSeasonPlayer: () => get().seasonPlayer,
 
       // UI actions
       setLoading: (isLoading) => set({ isLoading }),
@@ -70,6 +77,8 @@ const useAppStore = create<AppStore>()(
       name: "overgoal-store",
       partialize: (state) => ({
         player: state.player,
+        overgoalPlayer: state.overgoalPlayer,
+        seasonPlayer: state.seasonPlayer,
         gameStarted: state.gameStarted,
       }),
     },
