@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 // import { useNavigate } from "react-router";
-import { usePlayer } from "../../../dojo/hooks/usePlayer";
 // import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
 // import useAppStore from "../../../zustand/store";
 import HomeMenu from "./components/menu";
@@ -9,9 +8,7 @@ import Scene from "../../../components/webgl/Scene";
 import LoadingScreen from "../../../components/loader/LoadingScreen";
 
 export default function HomePage() {
-  // const navigate = useNavigate();
-  const { player } = usePlayer();
-
+  // const { player } = usePlayer();
   // const { handleDisconnect } = useStarknetConnect();
   // const resetStore = useAppStore((state) => state.resetStore);
 
@@ -21,10 +18,6 @@ export default function HomePage() {
     background: false,
     scene: false,
   });
-
-  useEffect(() => {
-    console.log(player);
-  }, [player]);
 
   // Track when all assets are loaded
   useEffect(() => {
@@ -43,10 +36,6 @@ export default function HomePage() {
     }
   }, [assetsLoaded]);
 
-  // const handleBackgroundLoad = () => {
-  //   setAssetsLoaded(prev => ({ ...prev, background: true }));
-  // };
-
   const handleSceneLoadComplete = () => {
     setAssetsLoaded((prev) => ({ ...prev, scene: true }));
   };
@@ -59,26 +48,10 @@ export default function HomePage() {
     [],
   );
 
-  // const handleDisconnectAction = () => {
-  //   handleDisconnect();
-  //   navigate("/login");
-  //   resetStore();
-  // };
-
   return (
     <div className="relative h-full min-h-dvh w-full" style={containerStyles}>
       {/* Loading Screen Overlay */}
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
-
-      {/* Background Image Layer */}
-      {/* <img
-        src={background}
-        alt="background"
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        width={1000}
-        height={1000}
-        onLoad={handleBackgroundLoad}
-      /> */}
 
       {/* 3D Scene Layer - positioned behind UI */}
       <div className="pointer-events-auto absolute inset-0 z-20">

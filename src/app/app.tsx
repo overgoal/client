@@ -1,5 +1,8 @@
 import { Routes, Route, BrowserRouter } from "react-router";
 
+// Import layout components
+import { AuthenticatedLayout } from "../components/layout/AuthenticatedLayout";
+
 // Import existing page components
 import HomePage from "./(main)/Home/HomePage";
 import LoginScreen from "./(login)/Login/LoginScreen";
@@ -54,28 +57,32 @@ function App() {
       <Routes>
         {/* Unauthenticated routes */}
         <Route path={login} element={<LoginScreen />} />
-
-        {/* Authenticated routes */}
-        <Route path={characterCreation} element={<CharacterCreationScreen />} />
-        <Route path={main} element={<HomePage />} />
-        <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
-        <Route path={preMatch} element={<PreMatchScreen />} />
-        <Route path={match} element={<MatchScreen />} />
-        <Route path={matchResult} element={<MatchResultScreen />} />
-        <Route path={market} element={<MarketScreen />} />
-        <Route path={career} element={<CareerScreen />} />
-        <Route path={seasons} element={<SeasonsScreen />} />
-        <Route path={seasonCountdown} element={<SeasonCountdownScreen />} />
-        <Route path={season} element={<SeasonScreen />} />
-        <Route path={seasonClub} element={<SeasonClubScreen />} />
-        <Route path={tournamentAll} element={<TournamentsScreen />} />
-        <Route path={tournamentCurrent} element={<TournamentScreen />} />
-        <Route path={profile} element={<ProfileScreen />} />
-        {/* <Route path={"/card"} element={<ClaimScreen />} /> */}
         <Route path={claim} element={<ClaimScreen />} />
-        <Route path={connectionTest} element={<ConnectionTestScreen />} />
-        <Route path={settings} element={<SettingsScreen />} />
-        <Route path={calendar} element={<CalendarScreen />} />
+
+        {/* All authenticated routes under AuthenticatedLayout */}
+        <Route element={<AuthenticatedLayout />}>
+          <Route
+            path={characterCreation}
+            element={<CharacterCreationScreen />}
+          />
+          <Route path={main} element={<HomePage />} />
+          <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
+          <Route path={preMatch} element={<PreMatchScreen />} />
+          <Route path={match} element={<MatchScreen />} />
+          <Route path={matchResult} element={<MatchResultScreen />} />
+          <Route path={market} element={<MarketScreen />} />
+          <Route path={career} element={<CareerScreen />} />
+          <Route path={seasons} element={<SeasonsScreen />} />
+          <Route path={seasonCountdown} element={<SeasonCountdownScreen />} />
+          <Route path={season} element={<SeasonScreen />} />
+          <Route path={seasonClub} element={<SeasonClubScreen />} />
+          <Route path={tournamentAll} element={<TournamentsScreen />} />
+          <Route path={tournamentCurrent} element={<TournamentScreen />} />
+          <Route path={profile} element={<ProfileScreen />} />
+          <Route path={connectionTest} element={<ConnectionTestScreen />} />
+          <Route path={settings} element={<SettingsScreen />} />
+          <Route path={calendar} element={<CalendarScreen />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
