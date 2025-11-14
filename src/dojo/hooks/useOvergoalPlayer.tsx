@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useAccount } from "@starknet-react/core";
 import { addAddressPadding } from "starknet";
-import { dojoConfig } from "../dojoConfig";
-import { OvergoalPlayer } from "../../lib/schema";
+import { OvergoalPlayer } from "../bindings";
 import useAppStore from "../../zustand/store";
+import mockPlayersData from "../../data/mock-overgoal-players.json";
 
 interface UseOvergoalPlayerReturn {
   overgoalPlayer: OvergoalPlayer | null;
@@ -13,95 +13,53 @@ interface UseOvergoalPlayerReturn {
   refetch: () => Promise<void>;
 }
 
-// Constants
-const TORII_URL = dojoConfig.toriiUrl + "/graphql";
-const OVERGOAL_PLAYER_QUERY = `
-    query GetOvergoalPlayer($playerId: ContractAddress!) {
-        fullStarterReactOvergoalPlayerModels(where: { player_id: $playerId }) {
-            edges {
-                node {
-                    player_id
-                    goal_currency
-                    energy
-                    speed
-                    dribble
-                    pass
-                    vision
-                    freekick
-                    strength
-                    profile_image
-                    is_retired
-                }
-            }
-            totalCount
-        }
-    }
-`;
-
-// Helper to convert hex values to numbers
-const hexToNumber = (hexValue: string | number): number => {
-  if (typeof hexValue === "number") return hexValue;
-
-  if (typeof hexValue === "string" && hexValue.startsWith("0x")) {
-    return parseInt(hexValue, 16);
-  }
-
-  if (typeof hexValue === "string") {
-    return parseInt(hexValue, 10);
-  }
-
-  return 0;
+// Mock data helper function
+const getPlayerByAddress = (address: string): OvergoalPlayer | null => {
+  // For demo purposes, we'll map addresses to different players
+  // In a real implementation, this would be based on actual user data
+  const addressHash = address.slice(-1); // Use last character of address
+  const playerIndex = parseInt(addressHash, 16) % mockPlayersData.players.length;
+  
+  const mockPlayer = mockPlayersData.players[playerIndex] || mockPlayersData.default_player;
+  
+  return {
+    id: mockPlayer.id,
+    universe_player_id: mockPlayer.universe_player_id,
+    goal_currency: mockPlayer.goal_currency,
+    energy: mockPlayer.energy,
+    speed: mockPlayer.speed,
+    leadership: mockPlayer.leadership,
+    pass: mockPlayer.pass,
+    shoot: mockPlayer.shoot,
+    freekick: mockPlayer.freekick,
+    is_injured: mockPlayer.is_injured,
+    visor_type: mockPlayer.visor_type,
+    visor_color: mockPlayer.visor_color,
+    player_category: mockPlayer.player_category,
+    player_name: mockPlayer.player_name,
+    player_description: mockPlayer.player_description,
+  };
 };
 
-// Function to fetch overgoal player data from GraphQL
+// Function to simulate fetching overgoal player data (using mock data)
 const fetchOvergoalPlayerData = async (
-  playerId: string,
+  userAddress: string,
 ): Promise<OvergoalPlayer | null> => {
   try {
-    console.log("🔍 Fetching overgoal player with player_id:", playerId);
+    console.log("🔍 Fetching overgoal player with address:", userAddress);
 
-    const response = await fetch(TORII_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: OVERGOAL_PLAYER_QUERY,
-        variables: { playerId },
-      }),
-    });
+    // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const result = await response.json();
-    console.log("📡 GraphQL response:", result);
-
-    if (!result.data?.fullStarterReactOvergoalPlayerModels?.edges?.length) {
-      console.log("❌ No overgoal player found in response");
+    const playerData = getPlayerByAddress(userAddress);
+    
+    if (!playerData) {
+      console.log("❌ No overgoal player found for address");
       return null;
     }
 
-    // Extract overgoal player data
-    const rawPlayerData =
-      result.data.fullStarterReactOvergoalPlayerModels.edges[0].node;
-    console.log("📄 Raw overgoal player data:", rawPlayerData);
-
-    // Convert hex values to numbers and create OvergoalPlayer object
-    const overgoalPlayerData: OvergoalPlayer = {
-      player_id: rawPlayerData.player_id,
-      goal_currency: hexToNumber(rawPlayerData.goal_currency),
-      energy: hexToNumber(rawPlayerData.energy),
-      speed: hexToNumber(rawPlayerData.speed),
-      dribble: hexToNumber(rawPlayerData.dribble),
-      pass: hexToNumber(rawPlayerData.pass),
-      vision: hexToNumber(rawPlayerData.vision),
-      freekick: hexToNumber(rawPlayerData.freekick),
-      strength: hexToNumber(rawPlayerData.strength),
-      profile_image: rawPlayerData.profile_image || null,
-      is_retired: Boolean(rawPlayerData.is_retired),
-    };
-
-    console.log(
-      "✅ Overgoal player data after conversion:",
-      overgoalPlayerData,
-    );
-    return overgoalPlayerData;
+    console.log("✅ Mock overgoal player data:", playerData);
+    return playerData;
   } catch (error) {
     console.error("❌ Error fetching overgoal player:", error);
     throw error;
@@ -138,7 +96,8 @@ export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
 
       setOvergoalPlayer(overgoalPlayerData);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Reduced delay since we're using mock data
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
       setIsFetched(true);
 
