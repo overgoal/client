@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import {iconMap} from "./iconMap";
+import { iconMap } from "./iconMap";
+import { createClient } from "@supabase/supabase-js";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -18,3 +19,12 @@ export const calculateStamina = (stamina: number) => {
 export const getIcon = (iconName: string) => {
   return iconMap[iconName as keyof typeof iconMap] || null;
 };
+
+// supabase
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export default supabase;

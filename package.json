@@ -34,6 +34,7 @@
     "@react-three/postprocessing": "^3.0.4",
     "@starknet-react/chains": "^5.0.3",
     "@starknet-react/core": "^5.0.3",
+    "@supabase/supabase-js": "^2.81.1",
     "@types/three": "^0.181.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
