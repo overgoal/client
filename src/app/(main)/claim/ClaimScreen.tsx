@@ -18,7 +18,6 @@ import { useAccount } from "@starknet-react/core";
 import ClaimScene from "./ClaimScene";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { Button } from "../../../components/ui/button";
-import { cn } from "../../../utils/utils";
 
 // Helper function to convert UUID to felt252 hex
 const uuidToFelt252 = (uuid: string): string => {
@@ -193,7 +192,7 @@ export default function ClaimScreen() {
             <Button
               onClick={handleClaim}
               disabled={isClaiming || completed || !sceneLoaded}
-              className="airstrike-normal pointer-events-auto flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat text-5xl font-bold text-white absolute bottom-10"
+              className="airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat text-5xl font-bold text-white"
             >
               {getButtonText()}
             </Button>

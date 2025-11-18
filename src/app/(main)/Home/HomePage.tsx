@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 // import { useNavigate } from "react-router";
-import { usePlayer } from "../../../dojo/hooks/usePlayer";
 // import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
 // import useAppStore from "../../../zustand/store";
 import HomeMenu from "./components/menu";
@@ -10,7 +9,7 @@ import LoadingScreen from "../../../components/loader/LoadingScreen";
 
 export default function HomePage() {
   // const navigate = useNavigate();
-  const { player } = usePlayer();
+  // const { player } = usePlayer();
   // const { handleDisconnect } = useStarknetConnect();
   // const resetStore = useAppStore((state) => state.resetStore);
 
@@ -21,9 +20,7 @@ export default function HomePage() {
     scene: false,
   });
 
-  useEffect(() => {
-    console.log(player);
-  }, [player]);
+  
 
   // Track when all assets are loaded
   useEffect(() => {

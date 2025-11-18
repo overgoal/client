@@ -1,176 +1,175 @@
-import { useEffect, useState, useMemo } from "react";
-import { useAccount } from "@starknet-react/core";
-import { addAddressPadding } from "starknet";
-import { dojoConfig } from "../dojoConfig";
-import { Player } from "../../lib/schema";
-import useAppStore from "../../zustand/store";
-import { UniversePlayer } from "../bindings";
+// import { useEffect, useState, useMemo } from "react";
+// import { useAccount } from "@starknet-react/core";
+// import { addAddressPadding } from "starknet";
+// import { dojoConfig } from "../dojoConfig";
+// import { Player } from "../../lib/schema";
+// import useAppStore from "../../zustand/store";
 
-interface UsePlayerReturn {
-  player: Player | null;
-  isFetched: boolean;
-  isLoading: boolean;
-  error: Error | null;
-  refetch: () => Promise<void>;
-}
+// interface UsePlayerReturn {
+//   player: Player | null;
+//   isFetched: boolean;
+//   isLoading: boolean;
+//   error: Error | null;
+//   refetch: () => Promise<void>;
+// }
 
-// Constants
-const TORII_URL = dojoConfig.toriiUrl + "/graphql";
-const PLAYER_QUERY = `
-    query GetPlayer($playerOwner: ContractAddress!) {
-        fullStarterReactPlayerModels(where: { owner: $playerOwner }) {
-            edges {
-                node {
-                    owner
-                    fame
-                    charisma
-                    stamina
-                    intelligence
-                    leadership
-                    universe_currency
-                    last_login_at
-                }
-            }
-            totalCount
-        }
-    }
-`;
+// // Constants
+// const TORII_URL = dojoConfig.toriiUrl + "/graphql";
+// const PLAYER_QUERY = `
+//     query GetPlayer($playerOwner: ContractAddress!) {
+//         fullStarterReactPlayerModels(where: { owner: $playerOwner }) {
+//             edges {
+//                 node {
+//                     owner
+//                     fame
+//                     charisma
+//                     stamina
+//                     intelligence
+//                     leadership
+//                     universe_currency
+//                     last_login_at
+//                 }
+//             }
+//             totalCount
+//         }
+//     }
+// `;
 
-// Helper to convert hex values to numbers
-const hexToNumber = (hexValue: string | number): number => {
-  if (typeof hexValue === "number") return hexValue;
+// // Helper to convert hex values to numbers
+// const hexToNumber = (hexValue: string | number): number => {
+//   if (typeof hexValue === "number") return hexValue;
 
-  if (typeof hexValue === "string" && hexValue.startsWith("0x")) {
-    return parseInt(hexValue, 16);
-  }
+//   if (typeof hexValue === "string" && hexValue.startsWith("0x")) {
+//     return parseInt(hexValue, 16);
+//   }
 
-  if (typeof hexValue === "string") {
-    return parseInt(hexValue, 10);
-  }
+//   if (typeof hexValue === "string") {
+//     return parseInt(hexValue, 10);
+//   }
 
-  return 0;
-};
+//   return 0;
+// };
 
-// Function to fetch player data from GraphQL
-const fetchPlayerData = async (playerOwner: string): Promise<UniversePlayer | null> => {
-  try {
-    console.log("🔍 Fetching player with owner:", playerOwner);
+// // Function to fetch player data from GraphQL
+// const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
+//   try {
+//     console.log("🔍 Fetching player with owner:", playerOwner);
 
-    const response = await fetch(TORII_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: PLAYER_QUERY,
-        variables: { playerOwner },
-      }),
-    });
+//     const response = await fetch(TORII_URL, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         query: PLAYER_QUERY,
+//         variables: { playerOwner },
+//       }),
+//     });
 
-    const result = await response.json();
-    console.log("📡 GraphQL response:", result);
+//     const result = await response.json();
+//     console.log("📡 GraphQL response:", result);
 
-    if (!result.data?.fullStarterReactPlayerModels?.edges?.length) {
-      console.log("❌ No player found in response");
-      return null;
-    }
+//     if (!result.data?.fullStarterReactPlayerModels?.edges?.length) {
+//       console.log("❌ No player found in response");
+//       return null;
+//     }
 
-    // Extract player data
-    const rawPlayerData =
-      result.data.fullStarterReactPlayerModels.edges[0].node;
-    console.log("📄 Raw player data:", rawPlayerData);
+//     // Extract player data
+//     const rawPlayerData =
+//       result.data.fullStarterReactPlayerModels.edges[0].node;
+//     console.log("📄 Raw player data:", rawPlayerData);
 
-    // Convert hex values to numbers - using your structure
+//     // Convert hex values to numbers - using your structure
 
-    const playerData: UniversePlayer = {
-      id: rawPlayerData.owner,
-      user_id: rawPlayerData.owner,
-      name: rawPlayerData.owner,
-      created_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
-      last_updated_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
-      fame: hexToNumber(rawPlayerData.fame),
-      charisma: hexToNumber(rawPlayerData.charisma),
-      stamina: hexToNumber(rawPlayerData.stamina),
-      intelligence: hexToNumber(rawPlayerData.intelligence),
-      leadership: hexToNumber(rawPlayerData.leadership),
-      universe_currency: hexToNumber(rawPlayerData.universe_currency),
-      last_login_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
-    };
+//     const playerData: Player = {
+//       id: rawPlayerData.owner,
+//       user_id: rawPlayerData.owner,
+//       name: rawPlayerData.owner,
+//       created_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
+//       last_updated_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
+//       fame: hexToNumber(rawPlayerData.fame),
+//       charisma: hexToNumber(rawPlayerData.charisma),
+//       stamina: hexToNumber(rawPlayerData.stamina),
+//       intelligence: hexToNumber(rawPlayerData.intelligence),
+//       leadership: hexToNumber(rawPlayerData.leadership),
+//       universe_currency: hexToNumber(rawPlayerData.universe_currency),
+//       last_login_at: new Date(hexToNumber(rawPlayerData.last_login_at)),
+//     };
 
-    console.log("✅ Player data after conversion:", playerData);
-    return playerData;
-  } catch (error) {
-    console.error("❌ Error fetching player:", error);
-    throw error;
-  }
-};
+//     console.log("✅ Player data after conversion:", playerData);
+//     return playerData;
+//   } catch (error) {
+//     console.error("❌ Error fetching player:", error);
+//     throw error;
+//   }
+// };
 
-// Main hook
-export const usePlayer = (): UsePlayerReturn => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isFetched, setIsFetched] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
-  const { account } = useAccount();
+// // Main hook
+// export const usePlayer = (): UsePlayerReturn => {
+//   const [isLoading, setIsLoading] = useState<boolean>(true);
+//   const [isFetched, setIsFetched] = useState<boolean>(false);
+//   const [error, setError] = useState<Error | null>(null);
+//   const { account } = useAccount();
 
-  const storePlayer = useAppStore((state) => state.universePlayer);
-  const setPlayer = useAppStore((state) => state.setUniversePlayer);
+//   const storeUniversePlayer = useAppStore((state) => state.universePlayer);
+//   const setUniversePlayer = useAppStore((state) => state.setUniversePlayer);
 
-  const userAddress = useMemo(
-    () => (account ? addAddressPadding(account.address).toLowerCase() : ""),
-    [account],
-  );
+//   const userAddress = useMemo(
+//     () => (account ? addAddressPadding(account.address).toLowerCase() : ""),
+//     [account],
+//   );
 
-  const refetch = async () => {
-    if (!userAddress) {
-      setIsLoading(false);
-      return;
-    }
+//   const refetch = async () => {
+//     if (!userAddress) {
+//       setIsLoading(false);
+//       return;
+//     }
 
-    try {
-      setIsLoading(true);
-      setError(null);
+//     try {
+//       setIsLoading(true);
+//       setError(null);
 
-      const playerData = await fetchPlayerData(userAddress);
-      console.log("🎮 Player data fetched:", playerData);
+//       const playerData = await fetchPlayerData(userAddress);
+//       console.log("🎮 Player data fetched:", playerData);
 
-      setPlayer(playerData);
+//       setUniversePlayer(playerData);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+//       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setIsFetched(true);
+//       setIsFetched(true);
 
-      const updatedPlayer = useAppStore.getState().player;
-      console.log("💾 Player in store after update:", updatedPlayer);
-    } catch (err) {
-      const error =
-        err instanceof Error ? err : new Error("Unknown error occurred");
-      console.error("❌ Error in refetch:", error);
-      setError(error);
-      setPlayer(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//       const updatedPlayer = useAppStore.getState().universePlayer;
+//       console.log("💾 Player in store after update:", updatedPlayer);
+//     } catch (err) {
+//       const error =
+//         err instanceof Error ? err : new Error("Unknown error occurred");
+//       console.error("❌ Error in refetch:", error);
+//       setError(error);
+//       setUniversePlayer(null);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  useEffect(() => {
-    if (userAddress) {
-      console.log("🔄 Address changed, refetching player data");
-      refetch();
-    }
-  }, [userAddress]);
+//   useEffect(() => {
+//     if (userAddress) {
+//       console.log("🔄 Address changed, refetching player data");
+//       refetch();
+//     }
+//   }, [userAddress]);
 
-  useEffect(() => {
-    if (!account) {
-      console.log("❌ No account, clearing player data");
-      setPlayer(null);
-      setError(null);
-      setIsLoading(false);
-    }
-  }, [account, setPlayer]);
+//   useEffect(() => {
+//     if (!account) {
+//       console.log("❌ No account, clearing player data");
+//       setUniversePlayer(null);
+//       setError(null);
+//       setIsLoading(false);
+//     }
+//   }, [account, setUniversePlayer]);
 
-  return {
-    player: storePlayer,
-    isFetched,
-    isLoading,
-    error,
-    refetch,
-  };
-};
+//   return {
+//     player: storeUniversePlayer,
+//     isFetched,
+//     isLoading,
+//     error,
+//     refetch,
+//   };
+// };

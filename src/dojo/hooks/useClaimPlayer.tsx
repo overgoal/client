@@ -30,10 +30,6 @@ export const useClaimPlayer = () => {
   const { 
     setIsClaimingPlayer, 
     setClaimSuccess,
-    setUser,
-    setUniversePlayer,
-    setOvergoalPlayer,
-    setSeasonPlayer
   } = useAppStore();
 
   // Local state

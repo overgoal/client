@@ -35,7 +35,6 @@ import {
   preMatch,
   match,
   matchResult,
-  characterCreation,
   preMatchNonMatch,
   login,
   claim,
@@ -43,7 +42,6 @@ import {
   connectionTest,
   calendar,
 } from "../routes";
-import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
 import ClaimScreen from "./(main)/claim/ClaimScreen";
 
 function App() {
@@ -54,7 +52,7 @@ function App() {
         <Route path={login} element={<LoginScreen />} />
 
         {/* Authenticated routes */}
-        <Route path={characterCreation} element={<CharacterCreationScreen />} />
+        {/* <Route path={characterCreation} element={<CharacterCreationScreen />} /> */}
         <Route path={main} element={<HomePage />} />
         <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
         <Route path={preMatch} element={<PreMatchScreen />} />

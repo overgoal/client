@@ -4,7 +4,6 @@ import { useAccount } from "@starknet-react/core";
 import { Account } from "starknet";
 import { useDojoSDK } from "@dojoengine/sdk/react";
 import { useStarknetConnect } from "./useStarknetConnect";
-import { usePlayer } from "./usePlayer";
 import useAppStore from "../../zustand/store";
 import { cairoShortStringToFelt } from "@dojoengine/torii-wasm";
 import { lookupAddresses } from '@cartridge/controller';
