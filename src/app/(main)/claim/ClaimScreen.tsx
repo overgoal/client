@@ -44,8 +44,33 @@ export default function ClaimScreen() {
 
   const [sceneLoaded, setSceneLoaded] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [hasAttemptedClaim, setHasAttemptedClaim] = useState(false);
 
-  // Handle claim button click
+  // Auto-claim after successful connection
+  useEffect(() => {
+    const autoClaim = async () => {
+      if (status === "connected" && account && player_id && !isClaiming && !completed && !hasAttemptedClaim) {
+        setHasAttemptedClaim(true);
+        
+        // Convert UUID to felt252 hex format
+        const playerIdFelt = uuidToFelt252(player_id);
+        const result = await claimPlayer(playerIdFelt);
+
+        if (result.success) {
+          setShowSuccess(true);
+          
+          // Navigate to home after 5 seconds
+          setTimeout(() => {
+            navigate("/");
+          }, 5000);
+        }
+      }
+    };
+
+    autoClaim();
+  }, [status, account, player_id, isClaiming, completed, hasAttemptedClaim, claimPlayer, navigate]);
+
+  // Handle claim button click (for manual retry if auto-claim fails)
   const handleClaim = async () => {
     if (!player_id) {
       return;
@@ -55,6 +80,8 @@ export default function ClaimScreen() {
       await handleConnect();
       return;
     }
+
+    setHasAttemptedClaim(true);
 
     // Convert UUID to felt252 hex format
     const playerIdFelt = uuidToFelt252(player_id);
@@ -88,10 +115,11 @@ export default function ClaimScreen() {
 
   // Get button text
   const getButtonText = () => {
-    if (status !== "connected") return "Connect Wallet";
+    if (status !== "connected") return "Connect Wallet to Claim";
     if (isClaiming) return getStepMessage();
     if (completed) return "Claimed! Redirecting...";
-    return "Claim Player";
+    if (error) return "Retry Claim";
+    return "Claiming...";
   };
 
   return (
