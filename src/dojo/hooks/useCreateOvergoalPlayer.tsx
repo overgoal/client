@@ -29,11 +29,8 @@ export const useCreateOvergoalPlayer = () => {
   const dojoState = useDojoStore((state) => state);
   const { account } = useAccount();
   const { status } = useStarknetConnect();
-  const {
-    overgoalPlayer,
-    isLoading: overgoalPlayerLoading,
-    refetch: refetchOvergoalPlayer,
-  } = useOvergoalPlayer();
+  const { isLoading: overgoalPlayerLoading, refetch: refetchOvergoalPlayer } =
+    useOvergoalPlayer();
   const { setLoading } = useAppStore();
 
   // Local state
@@ -253,7 +250,6 @@ export const useCreateOvergoalPlayer = () => {
       status,
       account,
       refetchOvergoalPlayer,
-      overgoalPlayer,
       isInitializing,
       client.game,
       dojoState,
