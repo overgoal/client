@@ -1,80 +1,185 @@
 /*
-  ClaimScreen - Example usage of the new PlayerModel components
+  ClaimScreen - Player claiming flow
   
-  Usage:
-  1. Import PlayerModel wrapper (automatically selects correct model based on body_type)
-  2. Or import individual model components: ChangeableModel1, ChangeableModel2, ChangeableModel3
+  Flow:
+  1. User navigates to /claim/:player_id
+  2. Connect with Cartridge Controller
+  3. Call create_or_get_user with address and username
+  4. Call claim_player with player_id
+  5. Show success popup with player info
+  6. Navigate to main screen
 */
 
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import PlayerModel from "../../../components/models/PlayerModel";
-import type { PlayerData } from "../../../components/models/shared-types";
-
-// Example player data
-const examplePlayer: PlayerData = {
-  user_id: 1,
-  created_at: Date.now(),
-  last_updated_at: Date.now(),
-  last_login_at: Date.now(),
-  fame: 75,
-  charisma: 80,
-  stamina: 85,
-  strength: 70,
-  agility: 90,
-  intelligence: 75,
-  energy: 80,
-  speed: 88,
-  leadership: 72,
-  pass: 85,
-  shoot: 90,
-  freekick: 78,
-  universe_currency: 1000,
-  body_type: 1, // 0, 1, or 2 - Change this to test different models
-  skin_color: 1,
-  beard_type: 1,
-  hair_type: 0,
-  hair_color: 2,
-  visor_type: 1,
-  visor_color: 1,
-  team_id: 1,
-  player_category: "gold",
-  player_name: "Test Player",
-  player_description: "A test player",
-  linkID: 1,
-};
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
+import { useClaimPlayer } from "../../../dojo/hooks/useClaimPlayer";
+import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
+import { useAccount } from "@starknet-react/core";
+import ClaimScene from "./ClaimScene";
+import { GlitchText } from "../../../components/ui/glitch-text";
+import { cn } from "../../../utils/utils";
 
 export default function ClaimScreen() {
-  return (
-    <div className="h-screen w-full">
-      <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        
-        {/* Using PlayerModel wrapper - automatically selects correct model */}
-        <PlayerModel 
-          playerData={examplePlayer}
-          position={[0, -1, 0]}
-          scale={1}
-        />
-        
-        {/* Alternative: Use specific model components directly */}
-        {/* 
-        <ChangeableModel1 
-          playerData={{ ...examplePlayer, body_type: 1 }}
-          position={[0, -1, 0]}
-        />
-        */}
-        
-        <OrbitControls />
-      </Canvas>
+  const { player_id } = useParams<{ player_id: string }>();
+  const navigate = useNavigate();
+  const { handleConnect, status } = useStarknetConnect();
+  const { account } = useAccount();
+  const { 
+    claimPlayer, 
+    isClaiming, 
+    error, 
+    completed, 
+    currentStep,
+    txHash,
+    txStatus 
+  } = useClaimPlayer();
+
+  const [sceneLoaded, setSceneLoaded] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  // Auto-connect if not connected
+  useEffect(() => {
+    if (status !== "connected" && !isClaiming) {
+      console.log("🔌 Auto-connecting to Cartridge Controller...");
+      handleConnect();
+    }
+  }, [status, handleConnect, isClaiming]);
+
+  // Handle claim button click
+  const handleClaim = async () => {
+    if (!player_id) {
+      console.error("❌ No player_id provided");
+      return;
+    }
+
+    if (status !== "connected") {
+      console.log("🔌 Connecting to Cartridge Controller...");
+      await handleConnect();
+      return;
+    }
+
+    console.log("🎯 Starting claim process for player:", player_id);
+    const result = await claimPlayer(player_id);
+
+    if (result.success) {
+      console.log("✅ Claim successful!");
+      setShowSuccess(true);
       
-      <div className="absolute top-4 left-4 bg-black/70 text-white p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Player Model Components</h2>
-        <p className="text-sm">Body Type: {examplePlayer.body_type}</p>
-        <p className="text-xs mt-2 text-gray-300">
-          Change body_type (0, 1, or 2) to test different models
-        </p>
+      // Navigate to home after 5 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 5000);
+    }
+  };
+
+  // Get step message
+  const getStepMessage = () => {
+    switch (currentStep) {
+      case "connecting":
+        return "Connecting to Cartridge Controller...";
+      case "creating_user":
+        return "Creating your account...";
+      case "claiming":
+        return "Claiming player...";
+      case "success":
+        return "Player claimed successfully!";
+      default:
+        return "Ready to claim";
+    }
+  };
+
+  // Get button text
+  const getButtonText = () => {
+    if (status !== "connected") return "Connect Wallet";
+    if (isClaiming) return getStepMessage();
+    if (completed) return "Claimed! Redirecting...";
+    return "Claim Player";
+  };
+
+  return (
+    <div className="relative h-screen w-full overflow-hidden bg-gradient-to-b from-black via-purple-900/20 to-black">
+      {/* 3D Player Scene */}
+      <div className="absolute inset-0 z-0">
+        {player_id && (
+          <ClaimScene 
+            playerLinkId={player_id} 
+            onLoadComplete={() => setSceneLoaded(true)}
+          />
+        )}
+      </div>
+
+      {/* Loading Overlay */}
+      {!sceneLoaded && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/80">
+          <div className="text-center">
+            <div className="mb-4 h-16 w-16 animate-spin rounded-full border-4 border-purple-500 border-t-transparent mx-auto" />
+            <GlitchText text="Loading Player..." className="text-2xl" />
+          </div>
+        </div>
+      )}
+
+      {/* Claim UI */}
+      <div className="absolute inset-0 z-20 pointer-events-none">
+        <div className="flex h-full flex-col items-center justify-end pb-20">
+          {/* Error Message */}
+          {error && (
+            <div className="pointer-events-auto mb-4 rounded-lg bg-red-500/90 px-6 py-3 text-white backdrop-blur-sm">
+              <p className="font-bold">❌ Error</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+
+          {/* Success Popup */}
+          {showSuccess && (
+            <div className="pointer-events-auto mb-4 rounded-lg bg-green-500/90 px-8 py-6 text-white backdrop-blur-sm animate-pulse">
+              <GlitchText text="🎉 Mint Successful!" className="text-3xl mb-2" />
+              <p className="text-sm">Redirecting to main screen...</p>
+              {txHash && (
+                <p className="text-xs mt-2 opacity-70">
+                  TX: {txHash.slice(0, 10)}...{txHash.slice(-8)}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Claim Button */}
+          {!showSuccess && (
+            <button
+              onClick={handleClaim}
+              disabled={isClaiming || completed || !sceneLoaded}
+              className={cn(
+                "pointer-events-auto rounded-lg px-12 py-4 text-xl font-bold transition-all",
+                "bg-gradient-to-r from-purple-600 to-pink-600 text-white",
+                "hover:from-purple-500 hover:to-pink-500 hover:scale-105",
+                "disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed disabled:scale-100",
+                "shadow-lg hover:shadow-purple-500/50"
+              )}
+            >
+              {getButtonText()}
+            </button>
+          )}
+
+          {/* Status Info */}
+          {isClaiming && (
+            <div className="pointer-events-auto mt-4 rounded-lg bg-black/70 px-6 py-3 text-white backdrop-blur-sm">
+              <p className="text-sm">{getStepMessage()}</p>
+              {txStatus && (
+                <p className="text-xs mt-1 opacity-70">
+                  Status: {txStatus}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Account Info */}
+          {account && status === "connected" && !isClaiming && (
+            <div className="pointer-events-auto mt-4 rounded-lg bg-black/50 px-4 py-2 text-white/70 backdrop-blur-sm">
+              <p className="text-xs">
+                Connected: {account.address.slice(0, 6)}...{account.address.slice(-4)}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -44,7 +44,7 @@ import {
   calendar,
 } from "../routes";
 import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
-import ClaimScreen from "./(main)/card/ClaimScreen";
+import ClaimScreen from "./(main)/claim/ClaimScreen";
 
 function App() {
   return (
