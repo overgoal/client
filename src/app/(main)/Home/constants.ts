@@ -25,7 +25,7 @@ export const socialLinks = [
   {
     title: "Twitter",
     iconName: "twitter",
-    href: "https://twitter.com/overgoal",
+    href: "https://x.com/overgoalgame",
   },
   {
     title: "Discord",

@@ -62,8 +62,8 @@ export default function HomePage() {
       </div>
 
       {/* UI Overlay Layer - positioned on top */}
-      <div className="relative z-30 h-lvh">
-        <div className="h-dvh">
+      <div className="relative z-30 h-dvh">
+        <div className="h-full flex flex-col pb-6">
           <HomeMenu />
         </div>
       </div>
