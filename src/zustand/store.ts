@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { 
-  UniversePlayer, 
-  OvergoalPlayer, 
+import {
+  UniversePlayer,
+  OvergoalPlayer,
   User,
   Season,
   Club,
   SeasonClub,
-  SeasonPlayer
+  SeasonPlayer,
 } from "../dojo/bindings";
 
 // Application state
@@ -18,16 +18,18 @@ interface AppState {
   universePlayer: UniversePlayer | null;
   overgoalPlayer: OvergoalPlayer | null;
   seasonPlayer: SeasonPlayer | null;
-  
+  claimPlayerID: string | null;
+  claimedPlayerLinkId: string | null; // Permanently store the claimed player's link ID
+
   // Game world data
   currentSeason: Season | null;
   playerClub: Club | null;
   seasonClub: SeasonClub | null;
-  
+
   // UI state
   isLoading: boolean;
   error: string | null;
-  
+
   // Claim flow state
   isClaimingPlayer: boolean;
   claimSuccess: boolean;
@@ -39,16 +41,18 @@ interface AppActions {
   setUser: (user: User | null) => void;
   getUser: () => User | null;
 
-  
   // Player actions
   setUniversePlayer: (player: UniversePlayer | null) => void;
   setOvergoalPlayer: (overgoalPlayer: OvergoalPlayer | null) => void;
   setSeasonPlayer: (seasonPlayer: SeasonPlayer | null) => void;
-  
+  setClaimIsClaiming: (id: string) => void;
+  setClaimedPlayerLinkId: (linkId: string | null) => void;
+
   getUniversePlayer: () => UniversePlayer | null;
   getOvergoalPlayer: () => OvergoalPlayer | null;
   getSeasonPlayer: () => SeasonPlayer | null;
-  
+  getClaimedPlayerLinkId: () => string | null;
+
   // Game world actions
   setCurrentSeason: (season: Season | null) => void;
   setPlayerClub: (club: Club | null) => void;
@@ -57,7 +61,7 @@ interface AppActions {
   // UI actions
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  
+
   // Claim flow actions
   setIsClaimingPlayer: (claiming: boolean) => void;
   setClaimSuccess: (success: boolean) => void;
@@ -75,6 +79,8 @@ const initialState: AppState = {
   universePlayer: null,
   overgoalPlayer: null,
   seasonPlayer: null,
+  claimPlayerID: null,
+  claimedPlayerLinkId: null,
   currentSeason: null,
   playerClub: null,
   seasonClub: null,
@@ -99,11 +105,14 @@ const useAppStore = create<AppStore>()(
       setUniversePlayer: (universePlayer) => set({ universePlayer }),
       setOvergoalPlayer: (overgoalPlayer) => set({ overgoalPlayer }),
       setSeasonPlayer: (seasonPlayer) => set({ seasonPlayer }),
-      
+      setClaimIsClaiming: (id: string) => set({ claimPlayerID: id }),
+      setClaimedPlayerLinkId: (claimedPlayerLinkId) => set({ claimedPlayerLinkId }),
+
       getUniversePlayer: () => get().universePlayer,
       getOvergoalPlayer: () => get().overgoalPlayer,
       getSeasonPlayer: () => get().seasonPlayer,
-      
+      getClaimedPlayerLinkId: () => get().claimedPlayerLinkId,
+
       // Game world actions
       setCurrentSeason: (currentSeason) => set({ currentSeason }),
       setPlayerClub: (playerClub) => set({ playerClub }),
@@ -112,7 +121,7 @@ const useAppStore = create<AppStore>()(
       // UI actions
       setLoading: (isLoading) => set({ isLoading }),
       setError: (error) => set({ error }),
-      
+
       // Claim flow actions
       setIsClaimingPlayer: (isClaimingPlayer) => set({ isClaimingPlayer }),
       setClaimSuccess: (claimSuccess) => set({ claimSuccess }),
@@ -127,6 +136,7 @@ const useAppStore = create<AppStore>()(
         universePlayer: state.universePlayer,
         overgoalPlayer: state.overgoalPlayer,
         seasonPlayer: state.seasonPlayer,
+        claimedPlayerLinkId: state.claimedPlayerLinkId,
         currentSeason: state.currentSeason,
         playerClub: state.playerClub,
         seasonClub: state.seasonClub,

@@ -23,7 +23,7 @@ interface CalendarListProps {
 // Generate calendar events from teams.json data
 const generateEventsFromTeams = (): CalendarEvent[] => {
   const teams: Team[] = teamsData;
-  const startDate = new Date(2024, 9, 6); // October 6, 2024
+  const startDate = new Date(2025, 11, 1); // October 6, 2024
 
   return teams.map((team, index) => {
     const eventDate = new Date(startDate);

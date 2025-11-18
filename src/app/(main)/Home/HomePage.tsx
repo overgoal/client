@@ -52,17 +52,17 @@ export default function HomePage() {
   );
 
   return (
-    <div className="relative h-full min-h-dvh w-full" style={containerStyles}>
+    <div className="relative h-dvh w-full" style={containerStyles}>
       {/* Loading Screen Overlay */}
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
 
       {/* 3D Scene Layer - positioned behind UI */}
-      <div className="pointer-events-auto absolute inset-0 z-20">
+      <div className="pointer-events-auto absolute inset-0 z-20 ">
         <Scene onLoadComplete={handleSceneLoadComplete} />
       </div>
 
       {/* UI Overlay Layer - positioned on top */}
-      <div className="relative z-30 min-h-dvh">
+      <div className="relative z-30 h-lvh">
         <div className="h-dvh">
           <HomeMenu />
         </div>
