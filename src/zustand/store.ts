@@ -38,6 +38,7 @@ interface AppActions {
   // User actions
   setUser: (user: User | null) => void;
   getUser: () => User | null;
+
   
   // Player actions
   setUniversePlayer: (player: UniversePlayer | null) => void;

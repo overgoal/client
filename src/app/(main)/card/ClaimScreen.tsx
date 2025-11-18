@@ -38,7 +38,7 @@ const ClaimScreen = () => {
   }, []);
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden">
+    <div className="relative h-dvh w-full overflow-hidden ">
       {/* Loading Screen Overlay */}
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
 

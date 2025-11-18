@@ -4,6 +4,7 @@ import { addAddressPadding } from "starknet";
 import { dojoConfig } from "../dojoConfig";
 import { Player } from "../../lib/schema";
 import useAppStore from "../../zustand/store";
+import { UniversePlayer } from "../bindings";
 
 interface UsePlayerReturn {
   player: Player | null;
@@ -51,7 +52,7 @@ const hexToNumber = (hexValue: string | number): number => {
 };
 
 // Function to fetch player data from GraphQL
-const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
+const fetchPlayerData = async (playerOwner: string): Promise<UniversePlayer | null> => {
   try {
     console.log("🔍 Fetching player with owner:", playerOwner);
 
@@ -79,7 +80,7 @@ const fetchPlayerData = async (playerOwner: string): Promise<Player | null> => {
 
     // Convert hex values to numbers - using your structure
 
-    const playerData: Player = {
+    const playerData: UniversePlayer = {
       id: rawPlayerData.owner,
       user_id: rawPlayerData.owner,
       name: rawPlayerData.owner,
@@ -109,8 +110,8 @@ export const usePlayer = (): UsePlayerReturn => {
   const [error, setError] = useState<Error | null>(null);
   const { account } = useAccount();
 
-  const storePlayer = useAppStore((state) => state.player);
-  const setPlayer = useAppStore((state) => state.setPlayer);
+  const storePlayer = useAppStore((state) => state.universePlayer);
+  const setPlayer = useAppStore((state) => state.setUniversePlayer);
 
   const userAddress = useMemo(
     () => (account ? addAddressPadding(account.address).toLowerCase() : ""),

@@ -1,12 +1,13 @@
-import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
+import { Html, OrbitControls, Preload, useProgress, useTexture } from "@react-three/drei";
 import { useEffect, useMemo, useState, Suspense } from "react";
+import * as THREE from "three";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
 import { GlitchText } from "../../../components/ui/glitch-text";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { cn } from "../../../utils/utils";
 
 const getCategoyContainer = (category: string) => {
@@ -45,6 +46,18 @@ function ClaimSceneContent({
   onLoadComplete,
 }: ClaimSceneContentProps) {
   const { progress } = useProgress();
+  const { viewport } = useThree();
+
+  const texture = useTexture("/claim/claims-bg.webp");
+  
+  // Configure texture settings for better quality
+  useEffect(() => {
+    if (texture) {
+      texture.generateMipmaps = false;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+    }
+  }, [texture]);
 
   useEffect(() => {
     if (progress === 100 && onLoadComplete) {
@@ -90,7 +103,7 @@ function ClaimSceneContent({
             src={getPlayerTeamImage(player?.team_id || 0)}
             alt=""
             className={cn(
-              "absolute top-30  left-1/2 -translate-x-1/2 z-100 h-20 w-20",
+              "absolute top-30 left-1/2 z-100 h-20 w-20 -translate-x-1/2",
               player?.team_id === 3 || player?.team_id === 1 ? "h-18 w-16" : "",
             )}
           />
@@ -99,11 +112,20 @@ function ClaimSceneContent({
 
       {!player && (
         <Html center>
-          <div className="text-white text-xl">
-            Loading player data...
-          </div>
+          <div className="text-xl text-white">Loading player data...</div>
         </Html>
       )}
+
+      {/* Background plane positioned behind everything */}
+      <mesh position={[0, 0, 0]} scale={[viewport.width * 1.2, viewport.height * 1.2, 1]}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial 
+          map={texture} 
+          transparent={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
 
       {player?.body_type === 0 && (
         <ChangeableModel1
@@ -133,14 +155,17 @@ function ClaimSceneContent({
           rotation={[0, 0, 0]}
         />
       )}
-      
-      {player && player.body_type !== 0 && player.body_type !== 1 && player.body_type !== 2 && (
-        <Html center>
-          <div className="text-white text-xl">
-            Unknown body type: {player.body_type}
-          </div>
-        </Html>
-      )}
+
+      {player &&
+        player.body_type !== 0 &&
+        player.body_type !== 1 &&
+        player.body_type !== 2 && (
+          <Html center>
+            <div className="text-xl text-white">
+              Unknown body type: {player.body_type}
+            </div>
+          </Html>
+        )}
 
       <Preload all />
     </>
@@ -158,7 +183,6 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     () => typeof window !== "undefined" && window.innerWidth < 768,
     [],
   );
-
 
   // Memoize camera settings
   const cameraSettings = useMemo(
@@ -218,7 +242,7 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
           (player: PlayerData) =>
             player.linkID.toString() === playerLinkId.toString(),
         );
-        
+
         if (player) {
           setPlayer(player);
         }
