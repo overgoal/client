@@ -1,9 +1,18 @@
+import { useNavigate } from "react-router";
 import { BackButton } from "../../../components/ui/back-button";
 import { Button } from "../../../components/ui/button";
+import { useStarknetConnect } from "../../../dojo/hooks/useStarknetConnect";
 
 type Props = {};
 
 export default function SettingsScreen({}: Props) {
+  const { handleDisconnect } = useStarknetConnect();
+  const navigate = useNavigate();
+
+  const onDisconnect = () => {
+    handleDisconnect();
+    navigate("/login");
+  };
   return (
     <div className="flex h-dvh w-screen flex-col items-start justify-start gap-10 bg-[url('/backgrounds/glitch-bg.webp')] bg-cover bg-center px-4">
       <BackButton to="/" className="absolute top-5 left-0" />
@@ -17,6 +26,7 @@ export default function SettingsScreen({}: Props) {
 
       <div className="flex w-full items-center justify-center">
         <Button
+          onClick={onDisconnect}
           variant="outline"
           className="bg-overgoal-dark-blue/90 text-white"
         >

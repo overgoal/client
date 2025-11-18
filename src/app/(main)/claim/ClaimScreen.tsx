@@ -18,6 +18,7 @@ import { useAccount } from "@starknet-react/core";
 import ClaimScene from "./ClaimScene";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { Button } from "../../../components/ui/button";
+import { cn } from "../../../utils/utils";
 
 // Helper function to convert UUID to felt252 hex
 const uuidToFelt252 = (uuid: string): string => {
@@ -68,7 +69,7 @@ export default function ClaimScreen() {
 
           // Navigate to home after 5 seconds
           setTimeout(() => {
-            navigate("/");
+            navigate("/season-countdown");
           }, 5000);
         }
       }
@@ -123,7 +124,7 @@ export default function ClaimScreen() {
       case "claiming":
         return "Claiming player...";
       case "success":
-        return "Player claimed successfully!";
+        return "Claimed successfully!";
       default:
         return "Ready to claim";
     }
@@ -192,21 +193,23 @@ export default function ClaimScreen() {
             <Button
               onClick={handleClaim}
               disabled={isClaiming || completed || !sceneLoaded}
-              className="airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat text-5xl font-bold text-white"
+              className={cn("airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat  font-bold text-white",
+                getButtonText() === "Claim" ? "text-5xl" : "text-2xl",
+              )}
             >
               {getButtonText()}
             </Button>
           )}
 
           {/* Status Info */}
-          {isClaiming && (
+          {/* {isClaiming && (
             <div className="pointer-events-auto mt-4 rounded-lg bg-black/70 px-6 py-3 text-white backdrop-blur-sm">
               <p className="text-sm">{getStepMessage()}</p>
               {txStatus && (
                 <p className="mt-1 text-xs opacity-70">Status: {txStatus}</p>
               )}
             </div>
-          )}
+          )} */}
 
           {/* Account Info */}
           {account && status === "connected" && !isClaiming && (

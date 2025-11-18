@@ -1,10 +1,16 @@
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { SEASON_COUNTDOWN_TARGET_DATE } from "../constants";
 
 export default function RivalMarquee() {
   const root = useRef<HTMLDivElement>(null);
   const inner = useRef<HTMLDivElement>(null);
+
+  const daysUntilSeasonStart = Math.floor(
+    (new Date(SEASON_COUNTDOWN_TARGET_DATE).getTime() - new Date().getTime()) /
+      (1000 * 60 * 60 * 24),
+  );
 
   useGSAP(() => {
     if (!inner.current) return;
@@ -51,7 +57,8 @@ export default function RivalMarquee() {
         <img src="/homepage/dev.webp" alt="dev-connect" />
       </div>
       <span className="font-orbitron text-base font-medium whitespace-nowrap text-white md:text-xl">
-        Next Season : 30 Days
+        Season 0 Starts in:{" "}
+        <span className="text-overgoal-blue">{daysUntilSeasonStart} days</span>
       </span>
     </div>
   );

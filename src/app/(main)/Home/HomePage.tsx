@@ -24,7 +24,7 @@ export default function HomePage() {
 
   // Track when all assets are loaded
   useEffect(() => {
-    if ( assetsLoaded.scene) {
+    if (assetsLoaded.scene) {
       setLoadingProgress(100);
       // Add a small delay before hiding the loader for smooth transition
       const timer = setTimeout(() => {
@@ -33,17 +33,14 @@ export default function HomePage() {
       return () => clearTimeout(timer);
     } else {
       // Update progress based on what's loaded
-      const progress = Object.values(assetsLoaded).filter(Boolean).length / 2 * 100;
+      const progress =
+        (Object.values(assetsLoaded).filter(Boolean).length / 2) * 100;
       setLoadingProgress(progress);
     }
   }, [assetsLoaded]);
 
-  // const handleBackgroundLoad = () => {
-  //   setAssetsLoaded(prev => ({ ...prev, background: true }));
-  // };
-
   const handleSceneLoadComplete = () => {
-    setAssetsLoaded(prev => ({ ...prev, scene: true }));
+    setAssetsLoaded((prev) => ({ ...prev, scene: true }));
   };
 
   // Memoize static styles to prevent re-creation
@@ -54,34 +51,18 @@ export default function HomePage() {
     [],
   );
 
-  // const handleDisconnectAction = () => {
-  //   handleDisconnect();
-  //   navigate("/login");
-  //   resetStore();
-  // };
-
   return (
-    <div className="w-full min-h-dvh h-full relative" style={containerStyles}>
+    <div className="relative h-full min-h-dvh w-full" style={containerStyles}>
       {/* Loading Screen Overlay */}
       <LoadingScreen isLoading={isLoading} progress={loadingProgress} />
 
-      {/* Background Image Layer */}
-      {/* <img
-        src={background}
-        alt="background"
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        width={1000}
-        height={1000}
-        onLoad={handleBackgroundLoad}
-      /> */}
-
       {/* 3D Scene Layer - positioned behind UI */}
-      <div className="absolute inset-0 z-20 pointer-events-auto">
+      <div className="pointer-events-auto absolute inset-0 z-20">
         <Scene onLoadComplete={handleSceneLoadComplete} />
       </div>
 
       {/* UI Overlay Layer - positioned on top */}
-      <div className="relative min-h-dvh z-30">
+      <div className="relative z-30 min-h-dvh">
         <div className="h-dvh">
           <HomeMenu />
         </div>

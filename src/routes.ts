@@ -36,3 +36,6 @@ export const settings = "/settings";
 
 //calendar
 export const calendar = "/calendar";
+
+//Season Countdown
+export const seasonCountdown = "/season-countdown";
