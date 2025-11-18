@@ -8,6 +8,9 @@ import SemiSquareContainer from "../Home/components/semi-square/semi-square-cont
 import CyberContainer from "../Home/components/cyber-container";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { StaminaBar } from "../../../components/ui/stamina-bar";
+import { Countdown } from "../../../components/ui/countdown";
+import { KATANA_PREFUNDED_ADDRESS } from "@dojoengine/core";
+import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
 
 export default function PreMatchScreen() {
   return (
@@ -26,7 +29,7 @@ export default function PreMatchScreen() {
           <div className="relative flex h-full w-full flex-row items-center justify-center gap-1">
             <PreMatchTeam
               teamName="Dojo United"
-              teamImage="https://via.placeholder.com/150"
+              teamImage="/teams/dojoUnited.webp"
               side="left"
               isMyTeam={true}
             />
@@ -37,7 +40,7 @@ export default function PreMatchScreen() {
 
             <PreMatchTeam
               teamName="Cartridge City"
-              teamImage="https://via.placeholder.com/150"
+              teamImage="/teams/Cartridge City.webp"
               side="right"
               isMyTeam={false}
             />
@@ -84,18 +87,16 @@ export default function PreMatchScreen() {
 
           <div
             className={cn(
-              "z-100 mt-3 h-full max-h-[73px] w-full max-w-[236px]",
+              "z-100 mt-2 h-full w-full flex flex-col items-center justify-center gap-2",
               "flex items-center justify-center",
-              "bg-[url('/homepage/play_button.svg')] bg-contain bg-center bg-no-repeat",
             )}
           >
-            <Link to="/pre-match/1">
-              <Button className="h-full w-full" asChild={true}>
-                <p className="airstrike-normal !text-5xl text-white uppercase">
-                  Play
-                </p>
-              </Button>
-            </Link>
+            <GlitchText text="Next Season Starts in:" className="text-xl" />
+            <Countdown
+              targetDate={SEASON_COUNTDOWN_TARGET_DATE}
+              className="text-overgoal-blue font-orbitron text-center text-3xl font-bold"
+              readyText="SEASON IS LIVE!"
+            />
           </div>
         </div>
       </div>

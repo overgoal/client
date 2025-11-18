@@ -5,16 +5,19 @@ export const HOME_MENU_ITEMS = [
     title: "Season",
     iconName: "calendar",
     href: "/seasons",
+    disabled: false,
   },
   {
     title: "Market",
     iconName: "market",
     href: "/market",
+    disabled: true,
   },
   {
     title: "Inventory",
     iconName: "inventory",
     href: "/Inventory",
+    disabled: true,
   },
 ] as const;
 
@@ -27,6 +30,6 @@ export const socialLinks = [
   {
     title: "Discord",
     iconName: "discord",
-    href: "https://discord.gg/DzesxGFf",
+    href: "https://discord.gg/rn6dMNpR2e",
   },
 ] as const;

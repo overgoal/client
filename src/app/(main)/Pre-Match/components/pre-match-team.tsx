@@ -10,6 +10,7 @@ export default function PreMatchTeam({
   teamName,
   side,
   isMyTeam,
+  teamImage,
 }: PreMatchTeamProps) {
   return (
     <div className={cn("w-full relative   h-full min-w-[90px] min-h-[300px] ")}>
@@ -30,7 +31,7 @@ export default function PreMatchTeam({
       >
         <div className="w-full h-full flex items-center justify-center max-w-[60px] max-h-[60px]">
           <img
-            src={"/teams/dojoUnited.webp"}
+            src={teamImage}
             alt="team"
             className="w-full h-full object-cover"
           />
