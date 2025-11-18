@@ -6,7 +6,6 @@ import { OvergoalPlayer } from "../../lib/schema";
 import useAppStore from "../../zustand/store";
 
 interface UseOvergoalPlayerReturn {
-  overgoalPlayer: OvergoalPlayer | null;
   isFetched: boolean;
   isLoading: boolean;
   error: Error | null;
@@ -115,7 +114,6 @@ export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
   const [error, setError] = useState<Error | null>(null);
   const { account } = useAccount();
 
-  const storeOvergoalPlayer = useAppStore((state) => state.overgoalPlayer);
   const setOvergoalPlayer = useAppStore((state) => state.setOvergoalPlayer);
 
   const userAddress = useMemo(
@@ -136,7 +134,6 @@ export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
       const overgoalPlayerData = await fetchOvergoalPlayerData(userAddress);
       console.log("🎮 Overgoal player data fetched:", overgoalPlayerData);
 
-      setOvergoalPlayer(overgoalPlayerData);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -175,7 +172,6 @@ export const useOvergoalPlayer = (): UseOvergoalPlayerReturn => {
   }, [account, setOvergoalPlayer]);
 
   return {
-    overgoalPlayer: storeOvergoalPlayer,
     isFetched,
     isLoading,
     error,
