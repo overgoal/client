@@ -7,22 +7,28 @@ type MenuItemProps = {
   title: string;
   icon: React.ReactNode;
   href: string;
+  disabled?: boolean;
 };
 
 const MenuItem = (props: MenuItemProps) => {
   return (
     <div
       className={cn(
-        "bg-[#170028] max-w-[75px] flex justify-center items-center max-h-[70px] w-full h-full",
-        "menu-item"
+        "flex h-full max-h-[70px] w-full max-w-[75px] items-center justify-center bg-[#170028]",
+        "menu-item",
       )}
     >
       <Link to={props.href}>
-        <Button className="flex flex-col relative gap-1  justify-center p-3 items-center h-full w-full">
-          <img src={props.icon as string} alt={props.title} className="w-6 h-6" />
-          <p className="text-[11px] text-white  font-orbitron">
-            {props.title}
-          </p>
+        <Button
+          disabled={props.disabled}
+          className="relative flex h-full w-full flex-col items-center justify-center gap-1 p-3"
+        >
+          <img
+            src={props.icon as string}
+            alt={props.title}
+            className="h-6 w-6"
+          />
+          <p className="font-orbitron text-[11px] text-white">{props.title}</p>
         </Button>
       </Link>
     </div>

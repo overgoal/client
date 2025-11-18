@@ -32,6 +32,7 @@ export default function MenuFooter() {
             title={item.title}
             icon={getIcon(item.iconName)}
             href={item.href}
+            disabled={item.disabled}
           />
         ))}
       </div>

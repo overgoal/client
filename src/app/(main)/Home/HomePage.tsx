@@ -8,6 +8,7 @@ import Scene from "../../../components/webgl/Scene";
 import LoadingScreen from "../../../components/loader/LoadingScreen";
 
 export default function HomePage() {
+  // const navigate = useNavigate();
   // const { player } = usePlayer();
   // const { handleDisconnect } = useStarknetConnect();
   // const resetStore = useAppStore((state) => state.resetStore);
@@ -18,6 +19,8 @@ export default function HomePage() {
     background: false,
     scene: false,
   });
+
+  
 
   // Track when all assets are loaded
   useEffect(() => {

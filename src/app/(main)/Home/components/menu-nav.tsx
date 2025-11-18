@@ -81,6 +81,7 @@ export default function MenuNav() {
               icon="Career"
               title="Career"
               size="small"
+              disabled={true}
             />
           </div>
 
@@ -93,6 +94,7 @@ export default function MenuNav() {
               href="/lifestyle"
               icon="LifeStyle"
               title="Lifestyle"
+              disabled={true}
             />
 
             <HomeMenuItem

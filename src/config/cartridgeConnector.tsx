@@ -51,6 +51,7 @@ const policies = {
         { name: "record_login", entrypoint: "record_login" },
         { name: "assign_user", entrypoint: "assign_user" },
         { name: "create_or_get_user", entrypoint: "create_or_get_user" },
+        { name: "claim_player", entrypoint: "claim_player" },
       ],
     },
   },

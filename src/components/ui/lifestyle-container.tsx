@@ -12,6 +12,7 @@ interface HomeMenuItemProps {
   icon?: string;
   title?: string;
   size?: "small" | "large";
+  disabled?: boolean;
 }
 
 export function HomeMenuItem({
@@ -23,6 +24,7 @@ export function HomeMenuItem({
   icon = "Calendar",
   title = "Calendar",
   size = "large",
+  disabled = false,
 }: HomeMenuItemProps) {
   const clipClass =
     position === "left" ? "lifestyle-clip-left" : "lifestyle-clip-right ";
@@ -45,8 +47,8 @@ export function HomeMenuItem({
       }
     >
       <div className="lifestyle-inner-container w-full h-full">
-        <Link to={href}>
-          <Button className="lifestyle-inner-container w-full h-full p-4 flex flex-col gap-2 items-center  justify-center">
+        <Link to={disabled ? "" : href}>
+          <Button disabled={disabled} className="lifestyle-inner-container w-full h-full p-4 flex flex-col gap-2 items-center  justify-center">
             <div className={cn("flex flex-col gap-2 items-center justify-center ", position === "left" ? "-rotate-10" : "rotate-10")}>
               <img
                 loading="lazy"

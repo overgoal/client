@@ -23,8 +23,7 @@ import ProfileScreen from "./(main)/Profile/ProfileScreen";
 import SettingsScreen from "./(main)/settings/settingScreent";
 import ConnectionTestScreen from "./(main)/connection-test/ConnectionTestScreen";
 import CalendarScreen from "./(main)/calendar/CalendarScreen";
-import CharacterCreationScreen from "./(login)/CharacterCreation/CharacterCreationScreen";
-import ClaimScreen from "./(main)/card/ClaimScreen";
+import ClaimScreen from "./(main)/claim/ClaimScreen";
 import SeasonCountdownScreen from "./(main)/countdown/SeasonCountdownScreen";
 
 // Import all routes
@@ -41,7 +40,6 @@ import {
   preMatch,
   match,
   matchResult,
-  characterCreation,
   preMatchNonMatch,
   login,
   claim,
@@ -61,10 +59,6 @@ function App() {
 
         {/* All authenticated routes under AuthenticatedLayout */}
         <Route element={<AuthenticatedLayout />}>
-          <Route
-            path={characterCreation}
-            element={<CharacterCreationScreen />}
-          />
           <Route path={main} element={<HomePage />} />
           <Route path={preMatchNonMatch} element={<PreNonMatchScreen />} />
           <Route path={preMatch} element={<PreMatchScreen />} />

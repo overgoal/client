@@ -1,11 +1,38 @@
-import { OrbitControls, Preload, useProgress } from "@react-three/drei";
+import { Html, OrbitControls, Preload, useProgress, useTexture } from "@react-three/drei";
 import { useEffect, useMemo, useState, Suspense } from "react";
+import * as THREE from "three";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
-import { Canvas } from "@react-three/fiber";
+import { GlitchText } from "../../../components/ui/glitch-text";
+import { Canvas, useThree } from "@react-three/fiber";
+import { cn } from "../../../utils/utils";
+
+const getCategoyContainer = (category: string) => {
+  switch (category) {
+    case "bronze":
+      return "/claim/claim-container-gold.webp";
+    case "gold":
+      return "/claim/claim-container-gold.webp";
+    case "platinum":
+      return "/claim/claim-container-platinum.webp";
+  }
+};
+
+const getPlayerTeamImage = (team: number) => {
+  switch (team) {
+    case 0:
+      return "/teams/Cartridge City.webp";
+    case 1:
+      return "/teams/dojoUnited.webp";
+    case 2:
+      return "/teams/Nova United.webp";
+    case 3:
+      return "/teams/Drakon core.webp";
+  }
+};
 
 interface ClaimSceneContentProps {
   player: PlayerData | null;
@@ -19,6 +46,18 @@ function ClaimSceneContent({
   onLoadComplete,
 }: ClaimSceneContentProps) {
   const { progress } = useProgress();
+  const { viewport } = useThree();
+
+  const texture = useTexture("/claim/claims-bg.webp");
+  
+  // Configure texture settings for better quality
+  useEffect(() => {
+    if (texture) {
+      texture.generateMipmaps = false;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+    }
+  }, [texture]);
 
   useEffect(() => {
     if (progress === 100 && onLoadComplete) {
@@ -27,12 +66,66 @@ function ClaimSceneContent({
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [progress, onLoadComplete]);
+  }, [progress, onLoadComplete, player]);
+
+  // Fallback: If player exists but models aren't loading, call onLoadComplete after 5 seconds
+  useEffect(() => {
+    if (player && onLoadComplete) {
+      const fallbackTimer = setTimeout(() => {
+        onLoadComplete();
+      }, 5000);
+      return () => clearTimeout(fallbackTimer);
+    }
+  }, [player, onLoadComplete]);
 
   return (
     <>
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
+
+      <Html fullscreen className="pointer-events-none p-1">
+        <div className="airstrike-normal mt-18 w-full text-center">
+          <img
+            src={getCategoyContainer(player?.player_category || "bronze")}
+            alt=""
+            className="absolute top-10 left-0 z-90 h-25 w-full"
+          />
+          <img
+            src="/claim/claim-container-gradient.webp"
+            alt=""
+            className="absolute top-10 left-0 z-20 h-24 w-full"
+          />
+          <GlitchText
+            text={player?.player_name || ""}
+            className="z-100 text-3xl"
+          />
+          <img
+            src={getPlayerTeamImage(player?.team_id || 0)}
+            alt=""
+            className={cn(
+              "absolute top-30 left-1/2 z-100 h-20 w-20 -translate-x-1/2",
+              player?.team_id === 3 || player?.team_id === 1 ? "h-18 w-16" : "",
+            )}
+          />
+        </div>
+      </Html>
+
+      {!player && (
+        <Html center>
+          <div className="text-xl text-white">Loading player data...</div>
+        </Html>
+      )}
+
+      {/* Background plane positioned behind everything */}
+      <mesh position={[0, 0, 0]} scale={[viewport.width * 1.2, viewport.height * 1.2, 1]}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial 
+          map={texture} 
+          transparent={false}
+          depthWrite={false}
+          toneMapped={false}
+        />
+      </mesh>
 
       {player?.body_type === 0 && (
         <ChangeableModel1
@@ -62,6 +155,17 @@ function ClaimSceneContent({
           rotation={[0, 0, 0]}
         />
       )}
+
+      {player &&
+        player.body_type !== 0 &&
+        player.body_type !== 1 &&
+        player.body_type !== 2 && (
+          <Html center>
+            <div className="text-xl text-white">
+              Unknown body type: {player.body_type}
+            </div>
+          </Html>
+        )}
 
       <Preload all />
     </>
@@ -138,8 +242,10 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
           (player: PlayerData) =>
             player.linkID.toString() === playerLinkId.toString(),
         );
-        setPlayer(player);
-        console.log(player, "player");
+
+        if (player) {
+          setPlayer(player);
+        }
       } catch (error) {
         console.error("Failed to fetch player data:", error);
       }

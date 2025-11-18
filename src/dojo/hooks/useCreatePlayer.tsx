@@ -4,7 +4,6 @@ import { useAccount } from "@starknet-react/core";
 import { Account } from "starknet";
 import { useDojoSDK } from "@dojoengine/sdk/react";
 import { useStarknetConnect } from "./useStarknetConnect";
-import { usePlayer } from "./usePlayer";
 import useAppStore from "../../zustand/store";
 import { cairoShortStringToFelt } from "@dojoengine/torii-wasm";
 import { lookupAddresses } from '@cartridge/controller';
@@ -32,11 +31,11 @@ export const useCreatePlayer = () => {
   const dojoState = useDojoStore((state) => state);
   const { account } = useAccount();
   const { status } = useStarknetConnect();
-  const {
-    player,
-    isLoading: playerLoading,
-    refetch: refetchPlayer,
-  } = usePlayer();
+  // const {
+  //   player,
+  //   isLoading: playerLoading,
+  //   refetch: refetchPlayer,
+  // } = usePlayer();
   const { setLoading } = useAppStore();
 
   // Local state
@@ -100,13 +99,13 @@ export const useCreatePlayer = () => {
 
         // Refetch player data
         console.log("🔄 Fetching latest player data...");
-        await refetchPlayer();
+        // await refetchPlayer();
 
         // Wait a bit to ensure data is loaded
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         // Direct check from the store
-        const storePlayer = useAppStore.getState().player;
+        const storePlayer = useAppStore.getState().universePlayer;
 
         // Simple check if the player exists in the store
         const playerExists = storePlayer !== null;
@@ -192,7 +191,7 @@ export const useCreatePlayer = () => {
 
             // Refetch player data
             console.log("🔄 Refetching player data after spawn...");
-            await refetchPlayer();
+            // await refetchPlayer();
 
             setInitState((prev) => ({
               ...prev,
@@ -253,8 +252,8 @@ export const useCreatePlayer = () => {
     }, [
       status,
       account,
-      refetchPlayer,
-      player,
+      // refetchPlayer,
+      // player,
       isInitializing,
       client.game,
       dojoState,
@@ -278,8 +277,8 @@ export const useCreatePlayer = () => {
 
   // Sync loading state with the store
   useEffect(() => {
-    setLoading(initState.isInitializing || playerLoading);
-  }, [initState.isInitializing, playerLoading, setLoading]);
+    setLoading(initState.isInitializing || false);
+  }, [initState.isInitializing, setLoading]);
 
   return {
     // State
@@ -290,7 +289,7 @@ export const useCreatePlayer = () => {
     txHash: initState.txHash,
     txStatus: initState.txStatus,
     isConnected: status === "connected",
-    playerExists: useAppStore.getState().player !== null,
+    // playerExists: useAppStore.getState().player !== null,
 
     // Actions
     initializePlayer,
