@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import TeamsList from "./components/teams-list";
 import CyberContainer from "../Home/components/cyber-container";
 import SeasonTeamItem from "./components/team-item";
@@ -5,10 +6,33 @@ import teamsData from "./components/teams.json";
 import { BackButton } from "../../../components/ui/back-button";
 import { Countdown } from "../../../components/ui/countdown";
 import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
-
-const myTeam = teamsData[0];
+import useAppStore from "../../../zustand/store";
+import playersData from "../../../../data/players.json";
 
 export default function SeasonsScreen() {
+  const { claimedPlayerLinkId } = useAppStore();
+  const [playerTeam, setPlayerTeam] = useState(teamsData[0]); // Default to first team
+
+  useEffect(() => {
+    if (claimedPlayerLinkId) {
+      // Find the player using the linkID
+      const claimedPlayer = playersData.find(
+        (player) => player.linkID === claimedPlayerLinkId,
+      );
+      
+      if (claimedPlayer && claimedPlayer.team_id) {
+        // Find the team using the player's team_id
+        const team = teamsData.find(
+          (team) => team.id === claimedPlayer.team_id,
+        );
+        
+        if (team) {
+          setPlayerTeam(team);
+        }
+      }
+    }
+  }, [claimedPlayerLinkId]);
+
   return (
     <>
       <div className="w-scren flex min-h-screen flex-col items-center justify-center gap-4 bg-black p-2 backdrop-blur-sm">
@@ -17,7 +41,7 @@ export default function SeasonsScreen() {
           <div className="flex flex-row items-center justify-center gap-2">
             <div></div>
             <div className="font-orbitron text-sm font-medium text-white">
-              Season 2
+              Season 0
             </div>
           </div>
           <CyberContainer className="flex !h-1/3 !w-1/3 flex-row items-center justify-between px-3">
@@ -41,20 +65,20 @@ export default function SeasonsScreen() {
         <div className="flex w-full flex-row items-center justify-center gap-2">
           <div className="flex w-full max-w-2/3 flex-col items-center justify-center">
             <div className="font-orbitron text-sm font-medium text-white">
-              Season ends:
+              Season starts:
             </div>
             <div className="text-overgoal-blue font-orbitron text-lg font-medium">
               <Countdown targetDate={SEASON_COUNTDOWN_TARGET_DATE} />
             </div>
           </div>
           <div className="font-orbitron w-full max-w-1/3 text-sm font-medium text-white">
-            Season 2
+            Season 0
           </div>
         </div>
         <TeamsList />
       </div>
       <div className="fixed bottom-0 !z-100 flex h-full max-h-[120px] w-full items-center justify-center bg-black">
-        <SeasonTeamItem color="purple" {...myTeam} index={1} />
+        <SeasonTeamItem color="purple" {...playerTeam} index={1} />
       </div>
     </>
   );

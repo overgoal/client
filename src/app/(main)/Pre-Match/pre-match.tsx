@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { BackButton } from "../../../components/ui/back-button";
 import { cn } from "../../../utils/utils";
 import preMatchBackground from "/backgrounds/glitch-bg.webp";
@@ -8,8 +9,34 @@ import { GlitchText } from "../../../components/ui/glitch-text";
 import { StaminaBar } from "../../../components/ui/stamina-bar";
 import { Countdown } from "../../../components/ui/countdown";
 import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
+import useAppStore from "../../../zustand/store";
+import teamsData from "../Seasons/components/teams.json";
+import playersData from "../../../../data/players.json";
 
 export default function PreMatchScreen() {
+  const { claimedPlayerLinkId } = useAppStore();
+  const [playerTeam, setPlayerTeam] = useState(teamsData[3]); // Default to "dojoUnited" (id: 4, index: 3)
+
+  useEffect(() => {
+    if (claimedPlayerLinkId) {
+      // Find the player using the linkID
+      const claimedPlayer = playersData.find(
+        (player) => player.linkID === claimedPlayerLinkId,
+      );
+      
+      if (claimedPlayer && claimedPlayer.team_id) {
+        // Find the team using the player's team_id
+        const team = teamsData.find(
+          (team) => team.id === claimedPlayer.team_id,
+        );
+        
+        if (team) {
+          setPlayerTeam(team);
+        }
+      }
+    }
+  }, [claimedPlayerLinkId]);
+
   return (
     <div className="bg-overgoal-dark-blue h-full min-h-dvh w-full p-4">
       <img
@@ -25,8 +52,8 @@ export default function PreMatchScreen() {
 
           <div className="relative flex h-full w-full flex-row items-center justify-center gap-1">
             <PreMatchTeam
-              teamName="Dojo United"
-              teamImage="/teams/dojoUnited.webp"
+              teamName={playerTeam.name}
+              teamImage={playerTeam.imageUrl}
               side="left"
               isMyTeam={true}
             />

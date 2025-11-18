@@ -17,9 +17,9 @@ export default function CalendarTeamItemComponent({ children }: Props) {
         {children}
       </CalendarItem>
       <div className="border-overgoal-purple text-overgoal-blue font-orbitron absolute right-0 bottom-0 flex h-8 w-20 flex-row items-center justify-between border-1 bg-[#1b002b] px-4 text-base font-normal">
-        <span>0</span>
         <span>-</span>
-        <span>0</span>
+        <span>|</span>
+        <span>-</span>
       </div>
     </div>
   );

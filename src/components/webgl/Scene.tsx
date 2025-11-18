@@ -1,9 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  Preload,
-  useProgress,
-} from "@react-three/drei";
+import { OrbitControls, Preload, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Lights from "./components/lights";
 import { PlayerData } from "../models/ChangeableModels";
@@ -11,6 +7,7 @@ import ChangeableModel1 from "../models/ChangeableModel1";
 import ChangeableModel2 from "../models/ChangeableModel2";
 import ChangeableModel3 from "../models/ChangeableModel3";
 import BackgroundPlane from "./background";
+import useAppStore from "../../zustand/store";
 
 interface SceneContentProps {
   player: PlayerData | null;
@@ -40,7 +37,6 @@ function SceneContent({
       <OrbitControls {...orbitControlsSettings} />
       <Lights />
       <BackgroundPlane />
-      
 
       {player && player.body_type === 0 && (
         <ChangeableModel1
@@ -141,7 +137,14 @@ const Scene = ({ onLoadComplete }: SceneProps) => {
         const res = await fetch("/players.json");
         const data = await res.json();
         if (data.length > 0) {
-          setPlayer(data[3]); // Set initial player
+          const claimPlayerID = useAppStore.getState().claimedPlayerLinkId;
+
+          console.log("🎮 Claim Player ID:", claimPlayerID);
+          const claimedPlayer = data.find(
+            (player: PlayerData) =>
+              player.linkID.toString() === claimPlayerID?.toString(),
+          );
+          setPlayer(claimedPlayer || data[3]); // Set initial player
         }
       } catch (error) {
         console.error("Failed to fetch player data:", error);

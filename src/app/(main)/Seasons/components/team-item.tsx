@@ -25,7 +25,7 @@ export default function SeasonTeamItem({
       <BoxContainer
         color={color}
         isSingleSide={true}
-        className="w-[50px] h-[50px] !z-100 flex items-center justify-center"
+        className="w-[50px] h-[50px] z-100! flex items-center justify-center"
       >
         <span
           className="text-lg font-orbitron font-medium text-center "

@@ -12,10 +12,30 @@ export default function PreMatchTeam({
   isMyTeam,
   teamImage,
 }: PreMatchTeamProps) {
+  // Split team name into words for better line breaking
+  const formatTeamName = (name: string) => {
+    const words = name.split(' ');
+    if (words.length <= 2) {
+      return name;
+    }
+    
+    // For names with more than 2 words, split into two lines
+    const midPoint = Math.ceil(words.length / 2);
+    const firstLine = words.slice(0, midPoint).join(' ');
+    const secondLine = words.slice(midPoint).join(' ');
+    
+    return (
+      <>
+        <span className="block">{firstLine}</span>
+        <span className="block">{secondLine}</span>
+      </>
+    );
+  };
+
   return (
-    <div className={cn("w-full relative   h-full min-w-[90px] min-h-[300px] ")}>
+    <div className={cn("relative h-full min-h-[300px] w-full min-w-[90px]")}>
       <div
-        className="absolute inset-0 bg-contain bg-no-repeat bg-center z-0 w-full h-full "
+        className="absolute inset-0 z-0 h-full w-full bg-contain bg-center bg-no-repeat"
         style={{
           backgroundImage: isMyTeam
             ? "url('/pre-match/myTeamContainer.svg')"
@@ -25,25 +45,25 @@ export default function PreMatchTeam({
 
       <div
         className={cn(
-          "w-full h-full flex flex-col items-center justify-center min-h-[250px] gap-8 relative z-10 pt-2",
+          "relative z-10 flex h-full min-h-[250px] w-full flex-col items-center justify-center gap-8 pt-2",
           side === "left" ? "pr-5" : "pl-5",
         )}
       >
-        <div className="w-full h-full flex items-center justify-center max-w-[60px] max-h-[60px]">
+        <div className="flex h-full max-h-[60px] w-full max-w-[60px] items-center justify-center">
           <img
             src={teamImage}
             alt="team"
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
-        <h1
-          className={cn(
-            "text-white text-lg font-bold font-orbitron uppercase text-center leading-6 mx-auto  break-words max-w-[140px]",
-            isMyTeam ? "text-overgoal-lime-green" : "text-overgoal-error",
-          )}
-        >
-          {teamName}
-        </h1>
+          <h1
+            className={cn(
+              "font-orbitron mx-auto max-w-[140px] text-center text-lg leading-6 font-bold text-white uppercase",
+              isMyTeam ? "text-overgoal-lime-green" : "text-overgoal-error",
+            )}
+          >
+            {formatTeamName(teamName)}
+          </h1>
       </div>
     </div>
   );

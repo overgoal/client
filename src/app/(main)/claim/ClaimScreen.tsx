@@ -19,6 +19,7 @@ import ClaimScene from "./ClaimScene";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { Button } from "../../../components/ui/button";
 import { cn } from "../../../utils/utils";
+import useAppStore from "../../../zustand/store";
 
 // Helper function to convert UUID to felt252 hex
 const uuidToFelt252 = (uuid: string): string => {
@@ -33,8 +34,10 @@ export default function ClaimScreen() {
   const navigate = useNavigate();
   const { handleConnect, status } = useStarknetConnect();
   const { account } = useAccount();
-  const { claimPlayer, isClaiming, error, completed, currentStep, txHash } =
+  const { claimPlayer, isClaiming, error, completed, currentStep } =
     useClaimPlayer();
+
+  const { setClaimIsClaiming, setClaimedPlayerLinkId } = useAppStore();
 
   const [sceneLoaded, setSceneLoaded] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -59,6 +62,8 @@ export default function ClaimScreen() {
 
 
         if (result.success) {
+          // Save the claimed player's link ID to the store
+          setClaimedPlayerLinkId(player_id);
           setShowSuccess(true);
 
           // Navigate to home after 5 seconds
@@ -98,7 +103,14 @@ export default function ClaimScreen() {
     const playerIdFelt = uuidToFelt252(player_id);
     const result = await claimPlayer(playerIdFelt);
 
+    console.log("🎮 Result:", result);
+    console.log("🎮 Player ID:", playerIdFelt);
+
+    setClaimIsClaiming(playerIdFelt);
+
     if (result.success) {
+      // Save the claimed player's link ID to the store
+      setClaimedPlayerLinkId(player_id);
       setShowSuccess(true);
 
       // Navigate to home after 5 seconds
@@ -134,7 +146,7 @@ export default function ClaimScreen() {
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-gradient-to-b from-black via-purple-900/20 to-black">
+    <div className="relative h-dvh w-full overflow-hidden bg-linear-to-b from-black via-purple-900/20 to-black">
       {/* 3D Player Scene */}
       <div className="absolute inset-0 z-0">
         {player_id && (
@@ -166,21 +178,6 @@ export default function ClaimScreen() {
             </div>
           )}
 
-          {/* Success Popup */}
-          {showSuccess && (
-            <div className="pointer-events-auto mb-4 animate-pulse rounded-lg bg-green-500/90 px-8 py-6 text-white backdrop-blur-sm">
-              <GlitchText
-                text="🎉 Mint Successful!"
-                className="mb-2 text-3xl"
-              />
-              <p className="text-sm">Redirecting to main screen...</p>
-              {txHash && (
-                <p className="mt-2 text-xs opacity-70">
-                  TX: {txHash.slice(0, 10)}...{txHash.slice(-8)}
-                </p>
-              )}
-            </div>
-          )}
 
           {/* Claim Button */}
           {!showSuccess && (
