@@ -81,35 +81,24 @@ export const useClaimPlayer = () => {
       });
       setIsClaimingPlayer(true);
 
-      console.log("🎮 Starting player claim process...");
-      console.log("🆔 Player ID:", playerId);
-      console.log("👤 Account address:", account.address);
-
       // Step 1: Get username from Cartridge
       setClaimState((prev) => ({ ...prev, step: "creating_user" }));
-      console.log("🔍 Looking up username from Cartridge...");
       
       const usernameMap = await lookupAddresses([account.address]);
       const username = usernameMap.get(account.address) || "";
-      
-      console.log("✅ Username found:", username);
 
       // Step 2: Create or get user
-      console.log("👤 Creating/getting user...");
       const createUserTx = await client.game.createOrGetUser(
         account as Account,
         account.address,
         cairoShortStringToFelt(username),
       );
 
-      console.log("📥 Create user transaction response:", createUserTx);
-
       if (!createUserTx || createUserTx.code !== "SUCCESS") {
         throw new Error("Failed to create/get user: " + createUserTx?.code);
       }
 
       // Wait for user creation to be processed
-      console.log("⏳ Waiting for user creation to be processed...");
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Step 3: Claim the player
@@ -119,14 +108,10 @@ export const useClaimPlayer = () => {
         txStatus: "PENDING"
       }));
       
-      console.log("🎯 Claiming player with ID:", playerId);
-      
       const claimTx = await client.game.claimPlayer(
         account as Account,
         playerId,
       );
-
-      console.log("📥 Claim transaction response:", claimTx);
 
       if (claimTx?.transaction_hash) {
         setClaimState((prev) => ({
@@ -136,8 +121,6 @@ export const useClaimPlayer = () => {
       }
 
       if (claimTx && claimTx.code === "SUCCESS") {
-        console.log("🎉 Player claimed successfully!");
-
         setClaimState((prev) => ({
           ...prev,
           txStatus: "SUCCESS",
@@ -145,7 +128,6 @@ export const useClaimPlayer = () => {
         }));
 
         // Wait for the transaction to be processed
-        console.log("⏳ Waiting for claim transaction to be processed...");
         await new Promise((resolve) => setTimeout(resolve, 3500));
 
         // Mark as complete
@@ -163,19 +145,47 @@ export const useClaimPlayer = () => {
           transactionHash: claimTx.transaction_hash,
         };
       } else {
+        // Parse error message from transaction response
+        let errorMessage = "Claim transaction failed";
+        
+        if (claimTx?.message) {
+          const message = claimTx.message.toLowerCase();
+          if (message.includes("player already minted") || message.includes("already claimed")) {
+            errorMessage = "Player already minted! This player has already been claimed.";
+          } else {
+            errorMessage = claimTx.message;
+          }
+        } else if (claimTx?.code) {
+          errorMessage = `Claim transaction failed with code: ${claimTx.code}`;
+        }
+        
         setClaimState((prev) => ({
           ...prev,
           txStatus: "REJECTED",
+          error: errorMessage,
         }));
-        throw new Error("Claim transaction failed with code: " + claimTx?.code);
+        throw new Error(errorMessage);
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Failed to claim player. Please try again.";
-
-      console.error("❌ Error claiming player:", error);
+      let errorMessage = "Failed to claim player. Please try again.";
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+        
+        // Additional parsing for contract revert messages
+        if (errorMessage.includes("Execution was reverted")) {
+          const revertMatch = errorMessage.match(/failure reason: \[([^\]]+)\]/);
+          if (revertMatch) {
+            errorMessage = revertMatch[1];
+          }
+        }
+        
+        // Check for specific error patterns
+        const lowerMessage = errorMessage.toLowerCase();
+        if (lowerMessage.includes("player already minted") || lowerMessage.includes("already claimed")) {
+          errorMessage = "Player already minted! This player has already been claimed.";
+        }
+      }
 
       setClaimState((prev) => ({
         ...prev,
@@ -194,7 +204,6 @@ export const useClaimPlayer = () => {
    * Reset the claim state
    */
   const resetClaimState = useCallback(() => {
-    console.log("🔄 Resetting claim state...");
     setClaimState({
       isClaiming: false,
       error: null,

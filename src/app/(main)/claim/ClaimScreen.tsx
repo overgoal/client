@@ -19,8 +19,16 @@ import ClaimScene from "./ClaimScene";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { cn } from "../../../utils/utils";
 
+// Helper function to convert UUID to felt252 hex
+const uuidToFelt252 = (uuid: string): string => {
+  // Remove hyphens from UUID
+  const hex = uuid.replace(/-/g, '');
+  // Add 0x prefix
+  return '0x' + hex;
+};
+
 export default function ClaimScreen() {
-  const { player_id } = useParams<{ player_id: string }>();
+  const { id: player_id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { handleConnect, status } = useStarknetConnect();
   const { account } = useAccount();
@@ -37,32 +45,22 @@ export default function ClaimScreen() {
   const [sceneLoaded, setSceneLoaded] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Auto-connect if not connected
-  useEffect(() => {
-    if (status !== "connected" && !isClaiming) {
-      console.log("🔌 Auto-connecting to Cartridge Controller...");
-      handleConnect();
-    }
-  }, [status, handleConnect, isClaiming]);
-
   // Handle claim button click
   const handleClaim = async () => {
     if (!player_id) {
-      console.error("❌ No player_id provided");
       return;
     }
 
     if (status !== "connected") {
-      console.log("🔌 Connecting to Cartridge Controller...");
       await handleConnect();
       return;
     }
 
-    console.log("🎯 Starting claim process for player:", player_id);
-    const result = await claimPlayer(player_id);
+    // Convert UUID to felt252 hex format
+    const playerIdFelt = uuidToFelt252(player_id);
+    const result = await claimPlayer(playerIdFelt);
 
     if (result.success) {
-      console.log("✅ Claim successful!");
       setShowSuccess(true);
       
       // Navigate to home after 5 seconds

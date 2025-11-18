@@ -53,7 +53,17 @@ function ClaimSceneContent({
       }, 500);
       return () => clearTimeout(timer);
     }
-  }, [progress, onLoadComplete]);
+  }, [progress, onLoadComplete, player]);
+
+  // Fallback: If player exists but models aren't loading, call onLoadComplete after 5 seconds
+  useEffect(() => {
+    if (player && onLoadComplete) {
+      const fallbackTimer = setTimeout(() => {
+        onLoadComplete();
+      }, 5000);
+      return () => clearTimeout(fallbackTimer);
+    }
+  }, [player, onLoadComplete]);
 
   return (
     <>
@@ -87,6 +97,14 @@ function ClaimSceneContent({
         </div>
       </Html>
 
+      {!player && (
+        <Html center>
+          <div className="text-white text-xl">
+            Loading player data...
+          </div>
+        </Html>
+      )}
+
       {player?.body_type === 0 && (
         <ChangeableModel1
           defaultAnimtion="Dance 2"
@@ -114,6 +132,14 @@ function ClaimSceneContent({
           position={[0, -200, 0]}
           rotation={[0, 0, 0]}
         />
+      )}
+      
+      {player && player.body_type !== 0 && player.body_type !== 1 && player.body_type !== 2 && (
+        <Html center>
+          <div className="text-white text-xl">
+            Unknown body type: {player.body_type}
+          </div>
+        </Html>
       )}
 
       <Preload all />
@@ -192,8 +218,10 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
           (player: PlayerData) =>
             player.linkID.toString() === playerLinkId.toString(),
         );
-        setPlayer(player);
-        console.log(player, "player");
+        
+        if (player) {
+          setPlayer(player);
+        }
       } catch (error) {
         console.error("Failed to fetch player data:", error);
       }
