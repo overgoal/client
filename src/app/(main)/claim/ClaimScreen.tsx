@@ -33,15 +33,8 @@ export default function ClaimScreen() {
   const navigate = useNavigate();
   const { handleConnect, status } = useStarknetConnect();
   const { account } = useAccount();
-  const {
-    claimPlayer,
-    isClaiming,
-    error,
-    completed,
-    currentStep,
-    txHash,
-    txStatus,
-  } = useClaimPlayer();
+  const { claimPlayer, isClaiming, error, completed, currentStep, txHash } =
+    useClaimPlayer();
 
   const [sceneLoaded, setSceneLoaded] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -193,7 +186,8 @@ export default function ClaimScreen() {
             <Button
               onClick={handleClaim}
               disabled={isClaiming || completed || !sceneLoaded}
-              className={cn("airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat  font-bold text-white",
+              className={cn(
+                "airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat font-bold text-white",
                 getButtonText() === "Claim" ? "text-5xl" : "text-2xl",
               )}
             >

@@ -1,5 +1,4 @@
 import { Countdown } from "../../../components/ui/countdown";
-import { BackButton } from "../../../components/ui/back-button";
 import { Button } from "../../../components/ui/button";
 import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
 import { Link } from "react-router";

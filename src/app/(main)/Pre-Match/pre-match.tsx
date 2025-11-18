@@ -1,6 +1,4 @@
 import { BackButton } from "../../../components/ui/back-button";
-import { Button } from "../../../components/ui/button";
-import { Link } from "react-router";
 import { cn } from "../../../utils/utils";
 import preMatchBackground from "/backgrounds/glitch-bg.webp";
 import PreMatchTeam from "./components/pre-match-team";
@@ -9,7 +7,6 @@ import CyberContainer from "../Home/components/cyber-container";
 import { GlitchText } from "../../../components/ui/glitch-text";
 import { StaminaBar } from "../../../components/ui/stamina-bar";
 import { Countdown } from "../../../components/ui/countdown";
-import { KATANA_PREFUNDED_ADDRESS } from "@dojoengine/core";
 import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
 
 export default function PreMatchScreen() {
@@ -87,7 +84,7 @@ export default function PreMatchScreen() {
 
           <div
             className={cn(
-              "z-100 mt-2 h-full w-full flex flex-col items-center justify-center gap-2",
+              "z-100 mt-2 flex h-full w-full flex-col items-center justify-center gap-2",
               "flex items-center justify-center",
             )}
           >
