@@ -1,8 +1,8 @@
 const teamTextures = {
-  0: "/models/Male/new-text/Cartridge_Mat_skin_",
-  1: "/models/Male/new-text/Dojo_Mat_skin_",
-  3: "/models/Male/new-text/Dracon Core_Mat_skin_",
-  2: "/models/Male/new-text/NovaUnited_Mat_skin_",
+  1: "/models/Male/new-text/Cartridge_Mat_skin_",
+  4: "/models/Male/new-text/Dojo_Mat_skin_",
+  5: "/models/Male/new-text/Dracon Core_Mat_skin_",
+  10: "/models/Male/new-text/NovaUnited_Mat_skin_",
 };
 
 export const mapTeamTexture = (team: number, skin: number) => {
@@ -10,6 +10,7 @@ export const mapTeamTexture = (team: number, skin: number) => {
     teamTextures[team as keyof typeof teamTextures] + (skin + 1) + ".png";
   return texture;
 };
+
 
 const accesoriesTextures = {
   0: "/models/Male/new-text/Accesories_Mat_1.png",

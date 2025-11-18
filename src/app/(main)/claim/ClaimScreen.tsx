@@ -57,6 +57,7 @@ export default function ClaimScreen() {
         const playerIdFelt = uuidToFelt252(player_id);
         const result = await claimPlayer(playerIdFelt);
 
+
         if (result.success) {
           setShowSuccess(true);
 

@@ -21,15 +21,16 @@ const getCategoyContainer = (category: string) => {
   }
 };
 
+
 const getPlayerTeamImage = (team: number) => {
   switch (team) {
-    case 0:
-      return "/teams/Cartridge City.webp";
     case 1:
+      return "/teams/Cartridge City.webp";
+    case 4:
       return "/teams/dojoUnited.webp";
-    case 2:
+    case 10:
       return "/teams/Nova United.webp";
-    case 3:
+    case 5:
       return "/teams/Drakon core.webp";
   }
 };
@@ -117,7 +118,7 @@ function ClaimSceneContent({
       )}
 
       {/* Background plane positioned behind everything */}
-      <mesh position={[0, 0, 0]} scale={[viewport.width * 1.2, viewport.height * 1.2, 1]}>
+      <mesh position={[0, 0, -100]} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]}>
         <planeGeometry args={[1, 1]} />
         <meshBasicMaterial 
           map={texture} 
@@ -220,7 +221,7 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     () => ({
       enablePan: true,
       enableZoom: false,
-      enableRotate: true,
+      enableRotate: false,
       autoRotate: false,
       autoRotateSpeed: 5,
       minDistance: 300,
@@ -238,10 +239,12 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
         const res = await fetch("/players.json");
         const data = await res.json();
 
+
         const player = data.find(
           (player: PlayerData) =>
             player.linkID.toString() === playerLinkId.toString(),
         );
+
 
         if (player) {
           setPlayer(player);

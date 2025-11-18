@@ -53,16 +53,21 @@ export default function ChangeableModel3({
     "/models/Male/new-text/new_model_3.glb",
   ) as unknown as GLTFModel3;
 
+
+  
+
   // Load textures
   const skinTextureUrl = mapTeamTexture(
     playerData.team_id,
     playerData.skin_color,
   );
+
   const skinTexture = useTexture(skinTextureUrl);
   const hairTexture = useTexture(mapAccesoriesTexture(playerData.hair_color));
   const accesoriesTexture = useTexture(
     mapAccesoriesTexture(playerData.visor_color),
   );
+
 
   // Set color space on textures
   useEffect(() => {
