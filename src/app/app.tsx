@@ -25,6 +25,7 @@ import ConnectionTestScreen from "./(main)/connection-test/ConnectionTestScreen"
 import CalendarScreen from "./(main)/calendar/CalendarScreen";
 import ClaimScreen from "./(main)/claim/ClaimScreen";
 import SeasonCountdownScreen from "./(main)/countdown/SeasonCountdownScreen";
+import PostLoginScreen from "./(main)/post-login";
 
 // Import all routes
 import {
@@ -47,6 +48,7 @@ import {
   connectionTest,
   calendar,
   seasonCountdown,
+  postLoginScreen,
 } from "../routes";
 
 function App() {
@@ -56,6 +58,7 @@ function App() {
         {/* Unauthenticated routes */}
         <Route path={login} element={<LoginScreen />} />
         <Route path={claim} element={<ClaimScreen />} />
+        <Route path={postLoginScreen} element={<PostLoginScreen />} />
 
         {/* All authenticated routes under AuthenticatedLayout */}
         <Route element={<AuthenticatedLayout />}>

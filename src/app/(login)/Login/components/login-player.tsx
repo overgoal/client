@@ -45,7 +45,7 @@ export function LoginPlayer({
       console.log(
         "🎮 Controller connected successfully, calling onLoginSuccess",
       );
-      navigate("/");
+      navigate("/post-login-screen");
       hasCalledSuccess.current = true;
     }
   }, [isConnected, hasAccount]);
