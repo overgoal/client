@@ -60,6 +60,7 @@ const policies = {
 const options: ControllerOptions = {
   chains: [{ rpcUrl: getRpcUrl() }],
   defaultChainId: getDefaultChainId(),
+  preset: "overgoal",
   policies,
   namespace: "universe",
   slot: "full-starter-react",
