@@ -1,4 +1,10 @@
-import { Html, OrbitControls, Preload, useGLTF, useProgress } from "@react-three/drei";
+import {
+  Html,
+  OrbitControls,
+  Preload,
+  useGLTF,
+  useProgress,
+} from "@react-three/drei";
 import { useEffect, useMemo, useState, Suspense } from "react";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
@@ -239,6 +245,8 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     fetchData();
   }, [playerLinkId]);
 
+  // ... existing code ...
+
   return (
     <>
       <img
@@ -252,12 +260,23 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
         dpr={dpr}
         className="pointer-events-auto h-full w-full"
         style={{
-          touchAction: "none", // Prevent default touch behaviors
-          background: "transparent", // Make canvas background transparent
+          touchAction: "none",
+          background: "transparent",
         }}
       >
-        {/* <Perf position="top-left" /> */}
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Html center>
+              <div className="flex flex-col items-center gap-2">
+                <img
+                  src="/claim/claims-bg.webp"
+                  alt="Loading"
+                  className="h-32 w-32"
+                />
+              </div>
+            </Html>
+          }
+        >
           <ClaimSceneContent
             player={player}
             orbitControlsSettings={orbitControlsSettings}
