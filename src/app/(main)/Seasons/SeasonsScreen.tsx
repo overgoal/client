@@ -41,7 +41,7 @@ export default function SeasonsScreen() {
           <div className="flex flex-row items-center justify-center gap-2">
             <div></div>
             <div className="font-orbitron text-sm font-medium text-white">
-              Season 0
+              Season 00
             </div>
           </div>
           <CyberContainer className="flex !h-1/3 !w-1/3 flex-row items-center justify-between px-3">
@@ -72,7 +72,7 @@ export default function SeasonsScreen() {
             </div>
           </div>
           <div className="font-orbitron w-full max-w-1/3 text-sm font-medium text-white">
-            Season 0
+            Season 00
           </div>
         </div>
         <TeamsList />

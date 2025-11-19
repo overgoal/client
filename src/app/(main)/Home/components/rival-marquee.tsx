@@ -57,7 +57,7 @@ export default function RivalMarquee() {
         <img src="/homepage/dev.webp" alt="dev-connect" />
       </div>
       <span className="font-orbitron text-base font-medium whitespace-nowrap text-white md:text-xl">
-        Season 0 Starts in:{" "}
+        Season 00 Starts in:{" "}
         <span className="text-overgoal-blue">{daysUntilSeasonStart} days</span>
       </span>
     </div>
