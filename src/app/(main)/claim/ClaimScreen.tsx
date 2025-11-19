@@ -193,16 +193,6 @@ export default function ClaimScreen() {
             </Button>
           )}
 
-          {/* Status Info */}
-          {/* {isClaiming && (
-            <div className="pointer-events-auto mt-4 rounded-lg bg-black/70 px-6 py-3 text-white backdrop-blur-sm">
-              <p className="text-sm">{getStepMessage()}</p>
-              {txStatus && (
-                <p className="mt-1 text-xs opacity-70">Status: {txStatus}</p>
-              )}
-            </div>
-          )} */}
-
           {/* Account Info */}
           {account && status === "connected" && !isClaiming && (
             <div className="pointer-events-auto mt-4 rounded-lg bg-black/50 px-4 py-2 text-white/70 backdrop-blur-sm">

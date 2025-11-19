@@ -1,12 +1,5 @@
-import {
-  Html,
-  OrbitControls,
-  Preload,
-  useProgress,
-  useTexture,
-} from "@react-three/drei";
+import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
 import { useEffect, useMemo, useState, Suspense } from "react";
-import * as THREE from "three";
 import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
@@ -52,17 +45,6 @@ function ClaimSceneContent({
   onLoadComplete,
 }: ClaimSceneContentProps) {
   const { progress } = useProgress();
-
-  const texture = useTexture("/claim/claims-bg.webp");
-
-  // Configure texture settings for better quality
-  useEffect(() => {
-    if (texture) {
-      texture.generateMipmaps = false;
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-    }
-  }, [texture]);
 
   useEffect(() => {
     if (progress === 100 && onLoadComplete) {
