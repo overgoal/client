@@ -33,9 +33,9 @@ export const connectionTest = "/connection-test";
 //Settings
 export const settings = "/settings";
 
-
 //calendar
 export const calendar = "/calendar";
 
 //Season Countdown
 export const seasonCountdown = "/season-countdown";
+export const postLoginScreen = "/post-login-screen";
