@@ -13,7 +13,7 @@ import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
 import ChangeableModel3 from "../../../components/models/ChangeableModel3";
 import { GlitchText } from "../../../components/ui/glitch-text";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { cn } from "../../../utils/utils";
 
 const getCategoyContainer = (category: string) => {
@@ -52,7 +52,6 @@ function ClaimSceneContent({
   onLoadComplete,
 }: ClaimSceneContentProps) {
   const { progress } = useProgress();
-  const { viewport } = useThree();
 
   const texture = useTexture("/claim/claims-bg.webp");
 
