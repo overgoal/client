@@ -1,4 +1,10 @@
-import { Html, OrbitControls, Preload, useProgress, useTexture } from "@react-three/drei";
+import {
+  Html,
+  OrbitControls,
+  Preload,
+  useProgress,
+  useTexture,
+} from "@react-three/drei";
 import { useEffect, useMemo, useState, Suspense } from "react";
 import * as THREE from "three";
 import Lights from "../../../components/webgl/components/lights";
@@ -20,7 +26,6 @@ const getCategoyContainer = (category: string) => {
       return "/claim/claim-container-platinum.webp";
   }
 };
-
 
 const getPlayerTeamImage = (team: number) => {
   switch (team) {
@@ -50,7 +55,7 @@ function ClaimSceneContent({
   const { viewport } = useThree();
 
   const texture = useTexture("/claim/claims-bg.webp");
-  
+
   // Configure texture settings for better quality
   useEffect(() => {
     if (texture) {
@@ -118,7 +123,7 @@ function ClaimSceneContent({
       )}
 
       {/* Background plane positioned behind everything */}
-      <mesh position={[0, 0, -100]} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]}>
+      {/* <mesh position={[0, 0, -100]} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]}>
         <planeGeometry args={[1, 1]} />
         <meshBasicMaterial 
           map={texture} 
@@ -126,7 +131,7 @@ function ClaimSceneContent({
           depthWrite={false}
           toneMapped={false}
         />
-      </mesh>
+      </mesh> */}
 
       {player?.body_type === 0 && (
         <ChangeableModel1
@@ -221,7 +226,7 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
     () => ({
       enablePan: true,
       enableZoom: false,
-      enableRotate: false,
+      enableRotate: true,
       autoRotate: false,
       autoRotateSpeed: 5,
       minDistance: 300,
@@ -239,12 +244,10 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
         const res = await fetch("/players.json");
         const data = await res.json();
 
-
         const player = data.find(
           (player: PlayerData) =>
             player.linkID.toString() === playerLinkId.toString(),
         );
-
 
         if (player) {
           setPlayer(player);
@@ -258,25 +261,32 @@ const ClaimScene = ({ playerLinkId, onLoadComplete }: ClaimSceneProps) => {
   }, [playerLinkId]);
 
   return (
-    <Canvas
-      camera={cameraSettings}
-      gl={glSettings}
-      dpr={dpr}
-      className="pointer-events-auto h-full w-full"
-      style={{
-        touchAction: "none", // Prevent default touch behaviors
-        background: "transparent", // Make canvas background transparent
-      }}
-    >
-      {/* <Perf position="top-left" /> */}
-      <Suspense fallback={null}>
-        <ClaimSceneContent
-          player={player}
-          orbitControlsSettings={orbitControlsSettings}
-          onLoadComplete={onLoadComplete}
-        />
-      </Suspense>
-    </Canvas>
+    <>
+      <img
+        src="/claim/claims-bg.webp"
+        alt=""
+        className="absolute top-0 left-0 h-full w-full object-cover"
+      />
+      <Canvas
+        camera={cameraSettings}
+        gl={glSettings}
+        dpr={dpr}
+        className="pointer-events-auto h-full w-full"
+        style={{
+          touchAction: "none", // Prevent default touch behaviors
+          background: "transparent", // Make canvas background transparent
+        }}
+      >
+        {/* <Perf position="top-left" /> */}
+        <Suspense fallback={null}>
+          <ClaimSceneContent
+            player={player}
+            orbitControlsSettings={orbitControlsSettings}
+            onLoadComplete={onLoadComplete}
+          />
+        </Suspense>
+      </Canvas>
+    </>
   );
 };
 
