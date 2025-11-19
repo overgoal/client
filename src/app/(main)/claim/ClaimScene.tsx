@@ -1,6 +1,5 @@
-import { Html, OrbitControls, Preload, useProgress } from "@react-three/drei";
+import { Html, OrbitControls, Preload, useGLTF, useProgress } from "@react-three/drei";
 import { useEffect, useMemo, useState, Suspense } from "react";
-import Lights from "../../../components/webgl/components/lights";
 import { PlayerData } from "../../../components/models/ChangeableModels";
 import ChangeableModel1 from "../../../components/models/ChangeableModel1";
 import ChangeableModel2 from "../../../components/models/ChangeableModel2";
@@ -33,6 +32,16 @@ const getPlayerTeamImage = (team: number) => {
   }
 };
 
+const MODEL_PATHS = {
+  0: "/models/Male/new-text/new_model.glb",
+  1: "/models/Male/new-text/new_model.glb",
+  2: "/models/Male/new-text/new_model.glb",
+};
+
+Object.values(MODEL_PATHS).forEach((path) => {
+  useGLTF.preload(path);
+});
+
 interface ClaimSceneContentProps {
   player: PlayerData | null;
   orbitControlsSettings: any;
@@ -60,7 +69,7 @@ function ClaimSceneContent({
     if (player && onLoadComplete) {
       const fallbackTimer = setTimeout(() => {
         onLoadComplete();
-      }, 5000);
+      }, 100);
       return () => clearTimeout(fallbackTimer);
     }
   }, [player, onLoadComplete]);
@@ -68,7 +77,6 @@ function ClaimSceneContent({
   return (
     <>
       <OrbitControls {...orbitControlsSettings} />
-      <Lights />
 
       <Html fullscreen className="pointer-events-none p-1">
         <div className="airstrike-normal mt-18 w-full text-center">
@@ -89,6 +97,7 @@ function ClaimSceneContent({
           <img
             src={getPlayerTeamImage(player?.team_id || 0)}
             alt=""
+            loading="eager"
             className={cn(
               "absolute top-30 left-1/2 z-100 h-20 w-20 -translate-x-1/2",
               player?.team_id === 3 || player?.team_id === 1 ? "h-18 w-16" : "",
