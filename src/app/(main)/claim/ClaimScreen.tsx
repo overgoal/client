@@ -185,7 +185,7 @@ export default function ClaimScreen() {
               onClick={handleClaim}
               disabled={isClaiming || completed || !sceneLoaded}
               className={cn(
-                "airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat font-bold text-white",
+                "airstrike-normal pointer-events-auto absolute bottom-10 flex h-24 w-full items-center justify-center bg-[url('/common/button-container.webp')] bg-contain bg-center bg-no-repeat font-bold text-white disabled:opacity-100",
                 getButtonText() === "Claim" ? "text-5xl" : "text-2xl",
               )}
             >

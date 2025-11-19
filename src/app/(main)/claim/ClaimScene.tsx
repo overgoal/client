@@ -121,17 +121,6 @@ function ClaimSceneContent({
         </Html>
       )}
 
-      {/* Background plane positioned behind everything */}
-      {/* <mesh position={[0, 0, -100]} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]}>
-        <planeGeometry args={[1, 1]} />
-        <meshBasicMaterial 
-          map={texture} 
-          transparent={false}
-          depthWrite={false}
-          toneMapped={false}
-        />
-      </mesh> */}
-
       {player?.body_type === 0 && (
         <ChangeableModel1
           defaultAnimtion="Dance 2"
