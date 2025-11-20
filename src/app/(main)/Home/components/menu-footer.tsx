@@ -1,31 +1,37 @@
 import { cn } from "../../../../utils/utils";
-import { Button } from "../../../../components/ui/button";
-import { HOME_MENU_ITEMS } from "../constants";
+import { HOME_MENU_ITEMS, SEASON_COUNTDOWN_TARGET_DATE } from "../constants";
 import MenuItem from "./menu-item";
-import { Link } from "react-router";
 import { getIcon } from "../../../../utils/utils";
-
-
+import { Countdown } from "../../../../components/ui/countdown";
 
 export default function MenuFooter() {
   return (
-    <div className="relative w-full bg-black max-h-[175px] h-full home-footer ">
+    <div className="home-footer relative h-full max-h-[175px] w-full bg-black">
       <div
         className={cn(
-          "max-w-[236px] max-h-[73px] w-full h-full absolute left-1/2 -translate-x-1/2 z-100 -top-3 ",
+          "absolute -top-3 left-1/2 z-100 h-full max-h-[73px] w-full max-w-[236px] -translate-x-1/2",
           "flex items-center justify-center",
           "bg-[url('/homepage/play_button.svg')] bg-contain bg-center",
+          "disabled:opacity-90",
         )}
       >
-        <Link to="/pre-match/1">
-          <Button className="w-full h-full " asChild={true}>
-            <p className="text-white !text-5xl  uppercase airstrike-normal">
+        <div className="flex flex-col items-center justify-center">
+          <span className="text-base text-white font-orbitron">Season 0 Starts:</span>
+          <Countdown
+            targetDate={SEASON_COUNTDOWN_TARGET_DATE}
+            className="text-overgoal-blue font-orbitron text-center text-xl font-bold"
+            readyText="SEASON IS LIVE!"
+          />
+        </div>
+        {/* <Link to="/pre-match/1" className="">
+          <Button className="h-full w-full" asChild={true}>
+            <p className="airstrike-normal !text-5xl text-white uppercase">
               Play
             </p>
           </Button>
-        </Link>
+        </Link> */}
       </div>
-      <div className="flex flex-row items-end justify-center gap-8  relative h-full w-full text-white  p-4">
+      <div className="relative flex h-full w-full flex-row items-end justify-center gap-8 p-4 text-white">
         {HOME_MENU_ITEMS.map((item) => (
           <MenuItem
             key={item.title}
