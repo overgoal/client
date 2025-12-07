@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import { LiveHeader } from "./components/LiveHeader";
 import { EventFeed } from "./components/EventFeed";
 import { MatchControls } from "./components/MatchControls";

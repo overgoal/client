@@ -1,6 +1,5 @@
 import React from "react";
 import { cn } from "../../../../utils/utils";
-import { Shield, Sword, Scale } from "lucide-react"; // Fallback icons
 
 // Define Types
 type EffortLevel = "low" | "medium" | "high";
