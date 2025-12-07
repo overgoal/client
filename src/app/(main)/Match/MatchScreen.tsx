@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import { LiveHeader } from "./components/LiveHeader";
 import { EventFeed } from "./components/EventFeed";
 import { MatchControls } from "./components/MatchControls";
-import { BackButton } from "../../../components/ui/back-button";
 
 // --- Types ---
 type MatchEvent = {
@@ -46,8 +45,6 @@ const GOAL_EVENTS = [
 ];
 
 export default function MatchScreen() {
-  const { matchId } = useParams(); // matchId is present in URL but unused in client logic currently
-
   // Game State
   const [time, setTime] = useState(0);
   const [homeScore, setHomeScore] = useState(0);
