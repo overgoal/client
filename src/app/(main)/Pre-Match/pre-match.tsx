@@ -12,6 +12,8 @@ import { SEASON_COUNTDOWN_TARGET_DATE } from "../Home/constants";
 import useAppStore from "../../../zustand/store";
 import teamsData from "../Seasons/components/teams.json";
 import playersData from "../../../../data/players.json";
+import { Button } from "../../../components/ui/button";
+import { Link } from "react-router";
 
 export default function PreMatchScreen() {
   const { claimedPlayerLinkId } = useAppStore();
@@ -23,13 +25,13 @@ export default function PreMatchScreen() {
       const claimedPlayer = playersData.find(
         (player) => player.linkID === claimedPlayerLinkId,
       );
-      
+
       if (claimedPlayer && claimedPlayer.team_id) {
         // Find the team using the player's team_id
         const team = teamsData.find(
           (team) => team.id === claimedPlayer.team_id,
         );
-        
+
         if (team) {
           setPlayerTeam(team);
         }
@@ -109,18 +111,43 @@ export default function PreMatchScreen() {
             </div>
           </div>
 
-          <div
-            className={cn(
-              "z-100 mt-2 flex h-full w-full flex-col items-center justify-center gap-2",
-              "flex items-center justify-center",
-            )}
-          >
-            <GlitchText text="Next Season Starts in:" className="text-xl" />
-            <Countdown
-              targetDate={SEASON_COUNTDOWN_TARGET_DATE}
-              className="text-overgoal-blue font-orbitron text-center text-3xl font-bold"
-              readyText="SEASON IS LIVE!"
-            />
+          <div className="mt-16 flex w-full items-center justify-center">
+            <div
+              className={cn(
+                "z-100 h-full max-h-[73px] w-full max-w-[236px]",
+                "flex items-center justify-center",
+                "bg-[url('/homepage/play_button.svg')] bg-contain bg-center",
+                "disabled:opacity-90",
+                "bg-no-repeat",
+              )}
+            >
+              {!import.meta.env.DEV ? (
+                <div
+                  className={cn(
+                    "z-100 mt-2 flex h-full w-full flex-col items-center justify-center gap-2",
+                    "flex items-center justify-center",
+                  )}
+                >
+                  <GlitchText
+                    text="Next Season Starts in:"
+                    className="text-xl"
+                  />
+                  <Countdown
+                    targetDate={SEASON_COUNTDOWN_TARGET_DATE}
+                    className="text-overgoal-blue font-orbitron text-center text-3xl font-bold"
+                    readyText="SEASON IS LIVE!"
+                  />
+                </div>
+              ) : (
+                <Link to="/match/1" className="">
+                  <Button className="h-full w-full" asChild={true}>
+                    <p className="airstrike-normal !text-5xl text-white uppercase">
+                      Play
+                    </p>
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
