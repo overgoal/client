@@ -57,21 +57,21 @@ async function main() {
     if (rootElement) {
       createRoot(rootElement).render(
         <StrictMode>
-          <div className="min-h-screen bg-red-900 flex items-center justify-center">
-            <div className="text-white text-center p-8">
-              <h1 className="text-2xl font-bold mb-4">
+          <div className="flex min-h-screen items-center justify-center bg-red-900">
+            <div className="p-8 text-center text-white">
+              <h1 className="mb-4 text-2xl font-bold">
                 ⚠️ Dojo Initialization Error
               </h1>
               <p className="mb-4">Failed to connect to Dojo SDK</p>
               <details className="text-left">
-                <summary className="cursor-pointer mb-2">
+                <summary className="mb-2 cursor-pointer">
                   Error Details:
                 </summary>
-                <pre className="text-xs bg-black p-4 rounded overflow-auto">
+                <pre className="overflow-auto rounded bg-black p-4 text-xs">
                   {error instanceof Error ? error.message : String(error)}
                 </pre>
               </details>
-              <p className="text-sm mt-4 opacity-70">
+              <p className="mt-4 text-sm opacity-70">
                 Check your Dojo configuration and network connection
               </p>
             </div>
