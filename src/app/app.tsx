@@ -50,6 +50,7 @@ import {
   seasonCountdown,
   postLoginScreen,
 } from "../routes";
+import GameScene from "./(game)/GameScene";
 
 function App() {
   return (
@@ -59,6 +60,8 @@ function App() {
         <Route path={login} element={<LoginScreen />} />
         <Route path={claim} element={<ClaimScreen />} />
         <Route path={postLoginScreen} element={<PostLoginScreen />} />
+        <Route path={"/game"} element={<GameScene />} />
+
 
         {/* All authenticated routes under AuthenticatedLayout */}
         <Route element={<AuthenticatedLayout />}>

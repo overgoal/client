@@ -46,7 +46,9 @@ export interface CharacterConfig {
 }
 
 // Convert player JSON data to CharacterConfig
-export function playerDataToCharacterConfig(player: PlayerData): CharacterConfig {
+export function playerDataToCharacterConfig(
+  player: PlayerData,
+): CharacterConfig {
   const visorColorMap: Record<number, string> = {
     0: "#ff0000", // Red
     1: "#00ff00", // Green
@@ -95,3 +97,22 @@ export interface BaseModelProps {
   defaultAnimtion?: string;
 }
 
+export interface GameModelProps {
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: number | [number, number, number];
+  animationName?: string;
+  body_type: 0 | 1 | 2;
+  skin_color: 0 | 1 | 2;
+  beard_type: 0 | 1;
+  hair_type: 0 | 1;
+  hair_color: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  visor_type: 0 | 1 | 2;
+  visor_color: 0 | 1 | 2;
+  team_id: number;
+  goalkeeper: {
+    isGoalKeeper: boolean;
+    type: 0 | 1;
+  }
+  isTeamMate: boolean;
+}
