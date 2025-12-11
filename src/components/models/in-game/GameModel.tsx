@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useFBX, useTexture } from "@react-three/drei";
+import { Outlines, useFBX, useTexture } from "@react-three/drei";
 import { FBXLoader } from "three-stdlib";
 import { mapAccesoriesTexture } from "../../../utils/mapTeamTexture";
 import { useLoader, useFrame } from "@react-three/fiber";
@@ -194,8 +194,6 @@ export default function GameModel(props: GameModelProps) {
     if (!fbxModel) return;
 
     fbxModel.traverse((child) => {
-      console.log(child.name, child.name.includes(props.hair_type.toString()));
-
       if (
         child.name.includes("Hair") &&
         !child.name.includes(props.hair_type.toString())
@@ -247,6 +245,7 @@ export default function GameModel(props: GameModelProps) {
   return (
     <group ref={group} {...props} dispose={null}>
       <primitive object={fbxModel} />
+      <Outlines thickness={1.5} color="black" angle={0} />
     </group>
   );
 }
