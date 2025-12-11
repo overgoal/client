@@ -1,10 +1,15 @@
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Outlines, useFBX, useTexture } from "@react-three/drei";
+import { Outlines, useAnimations, useFBX, useTexture } from "@react-three/drei";
 import { FBXLoader } from "three-stdlib";
 import { mapAccesoriesTexture } from "../../../utils/mapTeamTexture";
 import { useLoader, useFrame } from "@react-three/fiber";
 import { GameModelProps } from "../shared-types";
+import {
+  CapsuleCollider,
+  RapierRigidBody,
+  RigidBody,
+} from "@react-three/rapier";
 
 const getBodyModel = (body_type: number) => {
   switch (body_type) {
@@ -20,46 +25,63 @@ const getBodyModel = (body_type: number) => {
 };
 
 export default function GameModel(props: GameModelProps) {
+  const rb = useRef<RapierRigidBody>(null);
   const group = useRef<THREE.Group>(null);
-  const mixer = useRef<THREE.AnimationMixer | null>(null);
-  const actionRef = useRef<THREE.AnimationAction | null>(null);
+
+  // --- NEW: Animation state refs ---
+  const previousActionRef = useRef<THREE.AnimationAction | null>(null);
+  const idleInitializedRef = useRef(false);
 
   // Load FBX model
   const fbxModel = useLoader(FBXLoader, getBodyModel(props.body_type));
 
-  // Load animation FBX if provided
-  // Note: We'll load it conditionally in useEffect to avoid hook rules violation
-  const [animationFbx, setAnimationFbx] = useState<THREE.Group | null>(null);
+  // Load Animations
+  const { animations: defensiveIdleAnims } = useFBX(
+    "/models/in-game/animations/DefensiveIdle.fbx",
+  );
+  const { animations: jogForwardAnims } = useFBX(
+    "/models/in-game/animations/JogForward.fbx",
+  );
+  const { animations: jogDiagLeftAnims } = useFBX(
+    "/models/in-game/animations/JogForwardDiagonalLeft.fbx",
+  );
+  const { animations: jogDiagRightAnims } = useFBX(
+    "/models/in-game/animations/JogForwardDiagonalRight.fbx",
+  );
+  const { animations: strikeAnims } = useFBX(
+    "/models/in-game/animations/StrikeForwardJog.fbx",
+  );
 
-  useEffect(() => {
-    if (!props.animationName) {
-      setAnimationFbx(null);
-      return;
-    }
+  // Rename CLIPS directly to avoid name collisions if they share default names
+  useMemo(() => {
+    if (defensiveIdleAnims[0]) defensiveIdleAnims[0].name = "DefensiveIdle";
+    if (jogForwardAnims[0]) jogForwardAnims[0].name = "JogForward";
+    if (jogDiagLeftAnims[0])
+      jogDiagLeftAnims[0].name = "JogForwardDiagonalLeft";
+    if (jogDiagRightAnims[0])
+      jogDiagRightAnims[0].name = "JogForwardDiagonalRight";
+    if (strikeAnims[0]) strikeAnims[0].name = "StrikeForwardJog";
+  }, [
+    defensiveIdleAnims,
+    jogForwardAnims,
+    jogDiagLeftAnims,
+    jogDiagRightAnims,
+    strikeAnims,
+  ]);
 
-    let cancelled = false;
-    const loader = new FBXLoader();
+  // Bind animations
+  const { actions } = useAnimations(
+    [
+      defensiveIdleAnims[0],
+      jogForwardAnims[0],
+      jogDiagLeftAnims[0],
+      jogDiagRightAnims[0],
+      strikeAnims[0],
+    ],
+    group,
+  );
 
-    loader.load(
-      `/models/in-game/animations/${props.animationName}.fbx`,
-      (loaded) => {
-        if (!cancelled) {
-          setAnimationFbx(loaded);
-        }
-      },
-      undefined,
-      (error) => {
-        if (!cancelled) {
-          console.error("Error loading animation FBX:", error);
-          setAnimationFbx(null);
-        }
-      },
-    );
-
-    return () => {
-      cancelled = true;
-    };
-  }, [props.animationName]);
+  const [currentAction, setCurrentAction] = useState("DefensiveIdle");
 
   // Get texture URL based on goalkeeper/defender status
   const { type } = props.goalkeeper;
@@ -94,55 +116,144 @@ export default function GameModel(props: GameModelProps) {
     }
   }, [skinTexture, accesoriesTexture, hairTexture]);
 
-  // Setup FBX animation
+  // --- NEW: Initialize idle once so there's always a base layer playing ---
   useEffect(() => {
-    if (!fbxModel) return;
+    if (!actions || idleInitializedRef.current) return;
 
-    // Find root bone or use the model itself as root
-    let root: THREE.Object3D | null = null;
+    const idle = actions["DefensiveIdle"];
+    if (!idle) return;
 
-    // Try to find mixamorigHips or similar root bone
-    fbxModel.traverse((child) => {
-      if (child instanceof THREE.Bone && child.name.includes("Hips")) {
-        root = child;
-      }
-    });
+    idle.reset();
+    idle.enabled = true;
+    idle.setEffectiveTimeScale(1);
+    idle.setEffectiveWeight(1);
+    idle.play();
 
-    // If no bone found, use the model itself
-    if (!root) {
-      root = fbxModel;
+    previousActionRef.current = idle;
+    idleInitializedRef.current = true;
+  }, [actions]);
+
+  // --- NEW: Crossfade from previous action to current action ---
+  useEffect(() => {
+    if (!actions || !currentAction) return;
+
+    const nextAction = actions[currentAction];
+    if (!nextAction) return;
+
+    const previousAction = previousActionRef.current;
+
+    nextAction.reset();
+    nextAction.enabled = true;
+    nextAction.setEffectiveTimeScale(
+      currentAction === "DefensiveIdle" ? 1 : 1.5,
+    );
+    nextAction.setEffectiveWeight(2);
+    nextAction.play();
+
+    if (previousAction && previousAction !== nextAction) {
+      // smooth crossfade between clips
+      previousAction.crossFadeTo(nextAction, 0.2, false);
+    } else if (!previousAction) {
+      // first action ever
+      nextAction.fadeIn(0.2);
     }
 
-    const mixerInstance = new THREE.AnimationMixer(root);
-    mixer.current = mixerInstance;
+    previousActionRef.current = nextAction;
+  }, [currentAction, actions]);
 
-    // Use animation from separate FBX if provided, otherwise use animations from model FBX
-    const animations = animationFbx?.animations || fbxModel.animations;
-
-    if (animations && animations.length > 0) {
-      const clip = animations[0];
-      const action = mixerInstance.clipAction(clip);
-      actionRef.current = action;
-
-      action.reset();
-      action.setLoop(THREE.LoopRepeat, Infinity);
-      action.play();
-    }
-
+  // Optional: clean up on unmount (doesn't affect runtime blends)
+  useEffect(() => {
     return () => {
-      if (actionRef.current) {
-        actionRef.current.stop();
-        actionRef.current = null;
-      }
-      mixerInstance.stopAllAction();
-      mixer.current = null;
+      if (!actions) return;
+      Object.values(actions).forEach((action) => {
+        action?.stop();
+      });
     };
-  }, [fbxModel, animationFbx]);
+  }, [actions]);
 
-  // Update mixer on each frame
+  // Update movement + choose animation
   useFrame((_state, delta) => {
-    if (mixer.current) {
-      mixer.current.update(delta);
+    if (!rb.current || !props.targetPosition) return;
+
+    // Current position
+    const pos = rb.current.translation();
+
+    // Direction to target (XZ plane only)
+    const dirX = props.targetPosition[0] - pos.x;
+    const dirZ = props.targetPosition[2] - pos.z;
+    const len = Math.hypot(dirX, dirZ);
+
+    if (len > 0.1) {
+      // ---- Movement ----
+      const normX = dirX / len;
+      const normZ = dirZ / len;
+
+      const speed = 25; // units per second
+      rb.current.setNextKinematicTranslation({
+        x: pos.x + normX * speed * delta,
+        y: pos.y,
+        z: pos.z + normZ * speed * delta,
+      });
+
+      // ---- Animation Direction ----
+      const movementDir = new THREE.Vector3(normX, 0, normZ);
+
+      // Always rotate model towards movement direction when moving
+      const currentRot = rb.current.rotation();
+      const currentQuat = new THREE.Quaternion(
+        currentRot.x,
+        currentRot.y,
+        currentRot.z,
+        currentRot.w,
+      );
+
+      const targetQuat = new THREE.Quaternion().setFromUnitVectors(
+        new THREE.Vector3(0, 0, 1),
+        movementDir,
+      );
+
+      const slerpSpeed = 5 * delta;
+      currentQuat.slerp(targetQuat, slerpSpeed);
+
+      rb.current.setNextKinematicRotation({
+        x: currentQuat.x,
+        y: currentQuat.y,
+        z: currentQuat.z,
+        w: currentQuat.w,
+      });
+
+      // Calculate angle for animation selection
+      const forward = new THREE.Vector3(0, 0, 1)
+        .applyQuaternion(currentQuat)
+        .normalize();
+      const dot = forward.dot(movementDir);
+      const crossY = forward.x * movementDir.z - forward.z * movementDir.x;
+      const signedAngle = Math.atan2(crossY, dot);
+      const deg = THREE.MathUtils.radToDeg(signedAngle);
+      const absDeg = Math.abs(deg);
+
+      // Animation Selection
+      if (len < 8) {
+        // Close to target -> Strike
+        if (currentAction !== "StrikeForwardJog")
+          setCurrentAction("StrikeForwardJog");
+      } else {
+        // Far from target -> Jog logic
+        if (absDeg < 20) {
+          if (currentAction !== "JogForward") setCurrentAction("JogForward");
+        } else if (deg >= 20 && deg <= 160) {
+          if (currentAction !== "JogForwardDiagonalLeft")
+            setCurrentAction("JogForwardDiagonalLeft");
+        } else if (deg <= -20 && deg >= -140) {
+          if (currentAction !== "JogForwardDiagonalRight")
+            setCurrentAction("JogForwardDiagonalRight");
+        } else {
+          // behind / sharp turn
+          if (currentAction !== "JogForward") setCurrentAction("JogForward");
+        }
+      }
+    } else {
+      if (currentAction !== "DefensiveIdle") setCurrentAction("DefensiveIdle");
     }
   });
 
@@ -243,11 +354,51 @@ export default function GameModel(props: GameModelProps) {
   }
 
   return (
-    <group ref={group} {...props} dispose={null}>
-      <primitive object={fbxModel} />
-      <Outlines thickness={1.5} color="black" angle={0} />
-    </group>
+    <RigidBody
+      ref={rb}
+      gravityScale={0}
+      type="kinematicPosition"
+      colliders={false}
+      {...props}
+      onCollisionEnter={({ other }) => {
+        if (other.rigidBodyObject?.name === "ball") {
+          const impulseStrength = 200;
+
+          // Base forward vector (model facing -Z)
+          const forward = new THREE.Vector3(0, 0, 1);
+
+          // Get rigidbody rotation (Rapier's quaternion -> THREE.Quaternion)
+          const rot = rb.current?.rotation();
+          if (rot) {
+            const quat = new THREE.Quaternion(rot.x, rot.y, rot.z, rot.w);
+            forward.applyQuaternion(quat);
+          }
+
+          forward.normalize().multiplyScalar(impulseStrength);
+          forward.y = 20; // some lift
+
+          other.rigidBody?.applyImpulse(
+            { x: forward.x, y: forward.y, z: forward.z },
+            true,
+          );
+        }
+      }}
+    >
+      <group ref={group} dispose={null}>
+        {/* Physics collider (tuned to your model size) */}
+        <CapsuleCollider args={[30, 15]} position={[0, 10, 0]} />
+
+        {/* Visual model */}
+        <primitive object={fbxModel} dispose={null} />
+        <Outlines thickness={1.5} color="black" angle={0} />
+      </group>
+    </RigidBody>
   );
 }
 
 useFBX.preload("/models/in-game/game_model_1.fbx");
+useFBX.preload("/models/in-game/animations/DefensiveIdle.fbx");
+useFBX.preload("/models/in-game/animations/JogForward.fbx");
+useFBX.preload("/models/in-game/animations/JogForwardDiagonalLeft.fbx");
+useFBX.preload("/models/in-game/animations/JogForwardDiagonalRight.fbx");
+useFBX.preload("/models/in-game/animations/StrikeForwardJog.fbx");

@@ -6,8 +6,8 @@ import * as THREE from "three";
 import { Outlines, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
 import { JSX } from "react/jsx-runtime";
+import { RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -23,30 +23,32 @@ export function Ball(props: JSX.IntrinsicElements["group"]) {
 
   const meshRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 2;
-      meshRef.current.rotation.x += delta * 1.5;
+  // useFrame((state, delta) => {
+  //   if (meshRef.current) {
+  //     meshRef.current.rotation.y += delta * 2;
+  //     meshRef.current.rotation.x += delta * 1.5;
 
-      // Sine wave movement for bobbing effect
-      // state.clock.elapsedTime gives continuously increasing time
-      // Math.sin creates value between -1 and 1
-      // Multiply by amplitude (e.g., 2) and add frequency (e.g., * 2)
-      meshRef.current.position.z = Math.sin(state.clock.elapsedTime * 2) * 5;
-    }
-  });
+  //     // Sine wave movement for bobbing effect
+  //     // state.clock.elapsedTime gives continuously increasing time
+  //     // Math.sin creates value between -1 and 1
+  //     // Multiply by amplitude (e.g., 2) and add frequency (e.g., * 2)
+  //     meshRef.current.position.z = Math.sin(state.clock.elapsedTime * 2) * 5;
+  //   }
+  // });
 
   return (
     <group {...props} dispose={null}>
-      <mesh
-        ref={meshRef}
-        castShadow
-        receiveShadow
-        geometry={nodes.Ball.geometry}
-        material={nodes.Ball.material}
-      >
-        <Outlines thickness={0.5} color="black" angle={0} />
-      </mesh>
+      <RigidBody colliders="ball" restitution={1.5} name="ball" type="dynamic">
+        <mesh
+          ref={meshRef}
+          castShadow
+          receiveShadow
+          geometry={nodes.Ball.geometry}
+          material={nodes.Ball.material}
+        >
+          <Outlines thickness={0.5} color="black" angle={0} />
+        </mesh>
+      </RigidBody>
     </group>
   );
 }

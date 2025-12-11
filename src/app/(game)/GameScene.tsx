@@ -7,13 +7,17 @@ import {
   Sky,
 } from "@react-three/drei";
 import Stadium from "../../components/models/in-game/Stadium";
-import GameModel from "../../components/models/in-game/GameModel";
 import { Leva, useControls } from "leva";
+import { Physics } from "@react-three/rapier";
 import { Ball } from "../../components/models/in-game/Ball";
+import { useRef } from "react";
+import GameModel from "../../components/models/in-game/GameModel";
+import { Group } from "three";
 
 type Props = {};
 
 export default function GameScene({}: Props) {
+  const ballRef = useRef<Group>(null);
   const { camPosX, camPosY, camPosZ, camRotX, zoom } = useControls("Camera", {
     // Top-down soccer view: camera high above, slightly behind, looking down at field
     camPosX: { value: 0, min: -200, max: 200, step: 0.1 },
@@ -81,10 +85,13 @@ export default function GameScene({}: Props) {
     scale: { value: 0.1, min: 0.1, max: 20, step: 0.1 },
   });
 
+  const ballControls = useControls("Ball", {
+    pos: { value: { x: 0, y: 120, z: -42 }, step: 1 },
+  });
+
   return (
     <div className="h-dvh w-full">
       <Canvas
-        // camera={cameraSettings}
         gl={{ ...glSettings, powerPreference: "high-performance" as const }}
         dpr={dpr}
         className="pointer-events-auto"
@@ -103,82 +110,87 @@ export default function GameScene({}: Props) {
           far={1000}
         />
         <Suspense fallback={null}>
-          {enableOrbitControls && <OrbitControls {...orbitControlsSettings} />}
-          <Sky sunPosition={[10, 10, 0]} />
-          <ContactShadows
-            frames={1}
-            scale={10}
-            position={[0, -2, 0]}
-            blur={4}
-            opacity={0.2}
-          />
-          <Stadium
-            position={[x, y, z]}
-            scale={scale}
-            rotation={[rotationX, rotationY, rotationZ]}
-          />
-          <GameModel
-            body_type={0}
-            skin_color={0}
-            beard_type={0}
-            hair_type={0}
-            hair_color={0}
-            visor_type={0}
-            visor_color={0}
-            team_id={1}
-            animationName="DefensiveIdle"
-            goalkeeper={{ isGoalKeeper: true, type: 0 }}
-            isTeamMate={true}
-            position={[
-              model1Controls.pos.x,
-              model1Controls.pos.y,
-              model1Controls.pos.z,
-            ]}
-            rotation={[0, model1Controls.rotY, 0]}
-            scale={model1Controls.scale}
-          />
-          <GameModel
-            body_type={1}
-            skin_color={1}
-            beard_type={1}
-            hair_type={1}
-            hair_color={2}
-            visor_type={1}
-            visor_color={1}
-            team_id={1}
-            animationName="StrikeForwardJog"
-            goalkeeper={{ isGoalKeeper: false, type: 0 }}
-            isTeamMate={true}
-            position={[
-              model2Controls.pos.x,
-              model2Controls.pos.y,
-              model2Controls.pos.z,
-            ]}
-            rotation={[0, model2Controls.rotY, 0]}
-            scale={model2Controls.scale}
-          />
-          <GameModel
-            body_type={2}
-            skin_color={2}
-            beard_type={0}
-            hair_type={0}
-            hair_color={4}
-            visor_type={2}
-            visor_color={2}
-            team_id={2}
-            animationName="DefensiveIdle"
-            goalkeeper={{ isGoalKeeper: false, type: 0 }}
-            isTeamMate={false}
-            position={[
-              model3Controls.pos.x,
-              model3Controls.pos.y,
-              model3Controls.pos.z,
-            ]}
-            rotation={[0, model3Controls.rotY, 0]}
-            scale={model3Controls.scale}
-          />
+          <Physics gravity={[0, -30, 0]} colliders={"ball"}>
+            {enableOrbitControls && (
+              <OrbitControls {...orbitControlsSettings} />
+            )}
+            <Sky sunPosition={[10, 10, 0]} />
+            <ContactShadows
+              frames={1}
+              scale={10}
+              position={[0, -2, 0]}
+              blur={4}
+              opacity={0.2}
+            />
+            <Stadium
+              position={[x, y, z]}
+              scale={scale}
+              rotation={[rotationX, rotationY, rotationZ]}
+            />
 
-          <Ball position={[0, 115, -42]} scale={0.5} />
+            <Ball
+              ref={ballRef}
+              position={[
+                ballControls.pos.x,
+                ballControls.pos.y,
+                ballControls.pos.z,
+              ]}
+              scale={0.5}
+            />
+            <GameModel
+              body_type={0}
+              skin_color={0}
+              beard_type={0}
+              hair_type={0}
+              hair_color={0}
+              visor_type={0}
+              visor_color={0}
+              team_id={1}
+              animationName="DefensiveIdle"
+              goalkeeper={{ isGoalKeeper: true, type: 0 }}
+              isTeamMate={true}
+              position={[model1Controls.pos.x, 111, model1Controls.pos.z]}
+              rotation={[0, model1Controls.rotY, 0]}
+              scale={model1Controls.scale}
+            />
+            <GameModel
+              body_type={1}
+              skin_color={1}
+              beard_type={1}
+              hair_type={1}
+              hair_color={2}
+              visor_type={1}
+              visor_color={1}
+              team_id={1}
+              animationName="StrikeForwardJog"
+              goalkeeper={{ isGoalKeeper: false, type: 0 }}
+              isTeamMate={true}
+              position={[model2Controls.pos.x, 111, model2Controls.pos.z]}
+              rotation={[0, model2Controls.rotY, 0]}
+              scale={model2Controls.scale}
+            />
+            <GameModel
+              body_type={2}
+              skin_color={2}
+              beard_type={0}
+              hair_type={0}
+              hair_color={4}
+              visor_type={2}
+              visor_color={2}
+              team_id={2}
+              animationName="DefensiveIdle"
+              goalkeeper={{ isGoalKeeper: false, type: 0 }}
+              isTeamMate={false}
+              position={[model3Controls.pos.x, 111, model3Controls.pos.z]}
+              rotation={[0, model2Controls.rotY, 0]}
+              scale={model3Controls.scale}
+              targetPosition={[
+                ballRef.current?.position.x || 0,
+                ballRef.current?.position.y || 150,
+                ballRef.current?.position.z || -42,
+              ]}
+            />
+          </Physics>
         </Suspense>
       </Canvas>
     </div>
