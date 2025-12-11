@@ -103,7 +103,7 @@ export default function GameScene({}: Props) {
           far={1000}
         />
         <Suspense fallback={null}>
-          {false && <OrbitControls {...orbitControlsSettings} />}
+          {enableOrbitControls && <OrbitControls {...orbitControlsSettings} />}
           <Sky sunPosition={[10, 10, 0]} />
           <ContactShadows
             frames={1}
