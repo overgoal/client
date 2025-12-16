@@ -146,7 +146,7 @@ export default function GameScene({}: Props) {
               visor_type={0}
               visor_color={0}
               team_id={1}
-              animationName="DefensiveIdle"
+              animationName="GoalkeeperCatchLeft"
               goalkeeper={{ isGoalKeeper: true, type: 0 }}
               isTeamMate={true}
               position={[model1Controls.pos.x, 111, model1Controls.pos.z]}

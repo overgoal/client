@@ -61,7 +61,7 @@ export default function Stadium(props: JSX.IntrinsicElements["group"]) {
       mat.map.wrapS = THREE.RepeatWrapping;
       mat.map.wrapT = THREE.RepeatWrapping;
       mat.map.colorSpace = THREE.SRGBColorSpace;
-      mat.map.repeat.set(8, 8);
+      mat.map.repeat.set(12, 12);
       mat.map.offset.set(0, 0);
     }
     // Reduce contrast by lifting shadows with emissive
