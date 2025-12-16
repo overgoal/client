@@ -7,17 +7,15 @@ import {
   Sky,
 } from "@react-three/drei";
 import Stadium from "../../components/models/in-game/Stadium";
-import { Leva, useControls } from "leva";
+import { useControls } from "leva";
 import { Physics } from "@react-three/rapier";
 import { Ball } from "../../components/models/in-game/Ball";
-import { useRef } from "react";
 import GameModel from "../../components/models/in-game/GameModel";
-import { Group } from "three";
+import { Leva } from "leva";
 
 type Props = {};
 
 export default function GameScene({}: Props) {
-  const ballRef = useRef<Group>(null);
   const { camPosX, camPosY, camPosZ, camRotX, zoom } = useControls("Camera", {
     // Top-down soccer view: camera high above, slightly behind, looking down at field
     camPosX: { value: 0, min: -200, max: 200, step: 0.1 },
@@ -85,10 +83,6 @@ export default function GameScene({}: Props) {
     scale: { value: 0.1, min: 0.1, max: 20, step: 0.1 },
   });
 
-  const ballControls = useControls("Ball", {
-    pos: { value: { x: 0, y: 120, z: -42 }, step: 1 },
-  });
-
   return (
     <div className="h-dvh w-full">
       <Canvas
@@ -100,7 +94,7 @@ export default function GameScene({}: Props) {
           background: "transparent", // Make canvas background transparent
         }}
       >
-        <Leva hidden />
+        <Leva hidden /> 
         <OrthographicCamera
           makeDefault
           position={[camPosX, camPosY, camPosZ]}
@@ -128,15 +122,8 @@ export default function GameScene({}: Props) {
               rotation={[rotationX, rotationY, rotationZ]}
             />
 
-            <Ball
-              ref={ballRef}
-              position={[
-                ballControls.pos.x,
-                ballControls.pos.y,
-                ballControls.pos.z,
-              ]}
-              scale={0.5}
-            />
+              <Ball />
+
             <GameModel
               body_type={0}
               skin_color={0}
@@ -184,11 +171,7 @@ export default function GameScene({}: Props) {
               position={[model3Controls.pos.x, 111, model3Controls.pos.z]}
               rotation={[0, model2Controls.rotY, 0]}
               scale={model3Controls.scale}
-              targetPosition={[
-                ballRef.current?.position.x || 0,
-                ballRef.current?.position.y || 150,
-                ballRef.current?.position.z || -42,
-              ]}
+              targetPosition={null}
             />
           </Physics>
         </Suspense>

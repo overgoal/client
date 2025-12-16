@@ -115,5 +115,5 @@ export interface GameModelProps {
     type: 0 | 1;
   };
   isTeamMate: boolean;
-  targetPosition?: [number, number, number];
+  targetPosition?: [number, number, number] | null;
 }
