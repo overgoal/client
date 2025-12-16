@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { Outlines, useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { JSX, useMemo } from "react";
+import { RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -60,7 +61,7 @@ export default function Stadium(props: JSX.IntrinsicElements["group"]) {
       mat.map.wrapS = THREE.RepeatWrapping;
       mat.map.wrapT = THREE.RepeatWrapping;
       mat.map.colorSpace = THREE.SRGBColorSpace;
-      mat.map.repeat.set(8, 8);
+      mat.map.repeat.set(12, 12);
       mat.map.offset.set(0, 0);
     }
     // Reduce contrast by lifting shadows with emissive
@@ -108,14 +109,16 @@ export default function Stadium(props: JSX.IntrinsicElements["group"]) {
           geometry={nodes.PitchBanner.geometry}
           material={nodes.PitchBanner.material}
         ></mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Grass_mesh.geometry}
-          material={grassMaterial}
-          position={[0, 0.2, 0]}
-          scale={[1525.289, 50.843, 2287.934]}
-        ></mesh>
+        <RigidBody type="fixed" colliders="trimesh">
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Grass_mesh.geometry}
+            material={grassMaterial}
+            position={[0, 0.2, 0]}
+            scale={[1525.289, 50.843, 2287.934]}
+          />
+        </RigidBody>
         <mesh
           castShadow
           receiveShadow

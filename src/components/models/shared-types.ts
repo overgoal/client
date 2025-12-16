@@ -113,6 +113,7 @@ export interface GameModelProps {
   goalkeeper: {
     isGoalKeeper: boolean;
     type: 0 | 1;
-  }
+  };
   isTeamMate: boolean;
+  targetPosition?: [number, number, number] | null;
 }
