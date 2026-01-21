@@ -102,7 +102,7 @@ export default function GameScene({}: Props) {
           background: "transparent", // Make canvas background transparent
         }}
       >
-        <Leva hidden />
+        {/* <Leva hidden /> */}
         <OrthographicCamera
           makeDefault
           position={[camPosX, camPosY, camPosZ]}

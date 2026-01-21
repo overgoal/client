@@ -1,13 +1,14 @@
 import { Effect } from "postprocessing";
-import { Uniform } from "three";
+import { Uniform, Color } from "three";
 
 export class BlueVignetteEffect extends Effect {
-  constructor({ strength = 0.5, radius = 0.75 } = {}) {
+  constructor({ strength = 0.5, radius = 0.75, color = "#0F0052" } = {}) {
     super(
       "BlueVignetteEffect",
       /* glsl */ `
         uniform float strength;
         uniform float radius;
+        uniform vec3 color;
 
         void mainImage(
           const in vec4 inputColor,
@@ -18,22 +19,21 @@ export class BlueVignetteEffect extends Effect {
           float dist = length(centered);
 
           float vignette = smoothstep(radius - 0.2, 0.9, dist);
-          vec3 blueTint = vec3(15.0 / 255.0, 0.0 / 255.0, 82.0 / 255.0);
-        // vec3 blueTint = vec3(1.0, 0.0, 0.0);
-
-          vec3 color = mix(
+          
+          vec3 mixedColor = mix(
             inputColor.rgb,
-            inputColor.rgb * blueTint,
+            inputColor.rgb * color,
             vignette * strength
           );
 
-          outputColor = vec4(color, inputColor.a);
+          outputColor = vec4(mixedColor, inputColor.a);
         }
       `,
       {
-        uniforms: new Map([
+        uniforms: new Map<string, Uniform>([
           ["strength", new Uniform(strength)],
           ["radius", new Uniform(radius)],
+          ["color", new Uniform(new Color(color))],
         ]),
       },
     );

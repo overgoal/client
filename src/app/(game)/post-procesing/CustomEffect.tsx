@@ -1,12 +1,14 @@
 import { Effect } from "postprocessing";
-import { Uniform, Vector2 } from "three";
+import { Uniform, Vector2, Color } from "three";
 
 export class CRTEffect extends Effect {
-  constructor() {
+  constructor({ intensity = 0.3, tintColor = "#0FADFF" } = {}) {
     super(
       "CRTEffect",
       /* glsl */ `
         uniform vec2 resolution;
+        uniform float intensity;
+        uniform vec3 tintColor;
 
         void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
         {
@@ -23,13 +25,12 @@ export class CRTEffect extends Effect {
                 lcdColor.rgb = vec3(1.0);
             }
 
-            vec3 tint = vec3(15.0, 173.0, 255.0) / 255.0;
             vec4 finalColor = inputColor * lcdColor;
-            outputColor = mix(finalColor, finalColor * vec4(tint, 1.0), .3);
+            outputColor = mix(finalColor, finalColor * vec4(tintColor, 1.0), intensity);
         }
       `,
       {
-        uniforms: new Map([
+        uniforms: new Map<string, Uniform>([
           [
             "resolution",
             new Uniform(
@@ -39,6 +40,8 @@ export class CRTEffect extends Effect {
               ),
             ),
           ],
+          ["intensity", new Uniform(intensity)],
+          ["tintColor", new Uniform(new Color(tintColor))],
         ]),
       },
     );
