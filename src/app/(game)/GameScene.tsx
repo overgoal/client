@@ -11,7 +11,12 @@ import { useControls } from "leva";
 import { Physics } from "@react-three/rapier";
 import { Ball } from "../../components/models/in-game/Ball";
 import GameModel from "../../components/models/in-game/GameModel";
-import { Leva } from "leva";
+// import { Leva } from "leva";
+// import { useGameStore } from "../../context/game-store";
+import { View } from "@react-three/drei";
+// import BallScene from "./BallScene";
+// import BallAngleOverlay from "./BallAngleOverlay";
+import GameEffects from "./post-procesing/GameEffects";
 
 type Props = {};
 
@@ -83,8 +88,11 @@ export default function GameScene({}: Props) {
     scale: { value: 0.1, min: 0.1, max: 20, step: 0.1 },
   });
 
+  // const targetPosition = useGameStore((state) => state.ballPosition);
+  // const setBallPosition = useGameStore((state) => state.setBallPosition);
+
   return (
-    <div className="h-dvh w-full">
+    <div className="relative h-dvh w-full">
       <Canvas
         gl={{ ...glSettings, powerPreference: "high-performance" as const }}
         dpr={dpr}
@@ -94,7 +102,7 @@ export default function GameScene({}: Props) {
           background: "transparent", // Make canvas background transparent
         }}
       >
-        <Leva hidden /> 
+        {/* <Leva hidden /> */}
         <OrthographicCamera
           makeDefault
           position={[camPosX, camPosY, camPosZ]}
@@ -122,7 +130,7 @@ export default function GameScene({}: Props) {
               rotation={[rotationX, rotationY, rotationZ]}
             />
 
-              <Ball />
+            <Ball />
 
             <GameModel
               body_type={0}
@@ -175,7 +183,10 @@ export default function GameScene({}: Props) {
             />
           </Physics>
         </Suspense>
+        <View.Port />
+        <GameEffects />
       </Canvas>
+      {/* <BallAngleOverlay /> */}
     </div>
   );
 }

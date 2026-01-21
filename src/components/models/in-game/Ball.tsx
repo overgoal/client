@@ -8,6 +8,7 @@ import { useThree } from "@react-three/fiber";
 import { GLTF } from "three-stdlib";
 import { useMemo, useRef, useState } from "react";
 import { RigidBody, RapierRigidBody } from "@react-three/rapier";
+// import { useGameStore } from "../../../context/game-store";
 
 type GLTFResult = GLTF & {
   nodes: {

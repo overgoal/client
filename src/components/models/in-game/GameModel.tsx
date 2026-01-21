@@ -10,6 +10,7 @@ import {
   RapierRigidBody,
   RigidBody,
 } from "@react-three/rapier";
+import { useGameStore } from "../../../context/game-store";
 
 const getBodyModel = (body_type: number) => {
   switch (body_type) {
@@ -31,6 +32,12 @@ export default function GameModel(props: GameModelProps) {
   // --- NEW: Animation state refs ---
   const previousActionRef = useRef<THREE.AnimationAction | null>(null);
   const idleInitializedRef = useRef(false);
+
+  // Get ball position from store (selective subscription - only re-renders when ballPosition changes)
+  // const ballPosition = useGameStore((state) => state.ballPosition);
+
+  // Use targetPosition prop if provided, otherwise fallback to ball position from store
+  // const targetPosition = props.targetPosition;
 
   // Load FBX model
   const fbxModel = useLoader(FBXLoader, getBodyModel(props.body_type));
@@ -381,6 +388,7 @@ export default function GameModel(props: GameModelProps) {
             { x: forward.x, y: forward.y, z: forward.z },
             true,
           );
+          useGameStore.getState().setIsBallKicked(true);
         }
       }}
     >
