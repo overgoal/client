@@ -11,7 +11,7 @@ import { useControls } from "leva";
 import { Physics } from "@react-three/rapier";
 import { Ball } from "../../components/models/in-game/Ball";
 import GameModel from "../../components/models/in-game/GameModel";
-import { Leva } from "leva";
+// import { Leva } from "leva";
 // import { useGameStore } from "../../context/game-store";
 import { View } from "@react-three/drei";
 // import BallScene from "./BallScene";

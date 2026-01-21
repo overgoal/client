@@ -34,10 +34,10 @@ export default function GameModel(props: GameModelProps) {
   const idleInitializedRef = useRef(false);
 
   // Get ball position from store (selective subscription - only re-renders when ballPosition changes)
-  const ballPosition = useGameStore((state) => state.ballPosition);
+  // const ballPosition = useGameStore((state) => state.ballPosition);
 
   // Use targetPosition prop if provided, otherwise fallback to ball position from store
-  const targetPosition = props.targetPosition;
+  // const targetPosition = props.targetPosition;
 
   // Load FBX model
   const fbxModel = useLoader(FBXLoader, getBodyModel(props.body_type));
